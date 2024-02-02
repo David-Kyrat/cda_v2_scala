@@ -87,3 +87,4 @@ clean:
 
 __clean__:
 	-@rm -f files/res/pdf/*.pdf files/res/md/*.md files/res/log/*.log &> /dev/null
+#jar cvfm MyFatJar.jar  META-INF/MANIFEST.MF -C out/ . -C lib/ .

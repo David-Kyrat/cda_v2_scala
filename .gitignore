@@ -17,3 +17,4 @@ jar
 *.gz
 *.rpm
 Output.jar
+temp

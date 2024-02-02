@@ -1,0 +1,8 @@
+#!/bin/zsh
+
+rm temp -r &> /dev/null
+mkdir temp
+for jar in lib/*.jar; do
+    (cd temp && jar xf ../"$jar")
+done
+jar cvfm MyFatJar.jar META-INF/MANIFEST.MF -C out/ . -C temp/ .

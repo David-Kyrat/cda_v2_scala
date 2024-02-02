@@ -1,8 +1,19 @@
-#!/bin/zsh
+#!/bin/bash
 
-rm temp -r &> /dev/null
-mkdir temp
-for jar in lib/*.jar; do
-    (cd temp && jar xf ../"$jar")
+jar_loc="out/production"
+jar_dir="$jar_loc/jars"
+lib_dir="$PWD/lib"
+echo "lib_dir: $lib_dir"
+
+rm $jar_dir -r &> /dev/null
+mkdir -p $jar_dir
+cd $jar_dir || exit 1
+
+for jar in $lib_dir/*.jar; do
+    jar xf "$jar"
 done
-jar cvfm MyFatJar.jar META-INF/MANIFEST.MF -C out/ . -C temp/ .
+cd $lib_dir/.. || exit 1
+
+pkg_name="MyFatJar.jar"
+rm $pkg_name &> /dev/null
+jar cvfm $pkg_name META-INF/MANIFEST.MF -C out/ . -C $jar_dir .

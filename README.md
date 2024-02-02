@@ -11,3 +11,18 @@ However:
 The configuration files *fli_scala.iml, .idea/* ... are left in this repository on purpose, to simplify further tinkering
 of build configuration with IntelliJ.
 The end project doesn't require Intellij, or any specific configuration file to run (aside of the Makefile of course).
+
+---
+
+To package jar into fat jar, we just needed to include ***the extracted content of each jar instead of the jars themself***.
+i.e. Something like:
+
+```bash
+mkdir temp
+for jar in lib/*.jar; do
+    (cd temp && jar xf ../"$jar")
+done
+jar cvfm MyFatJar.jar META-INF/MANIFEST.MF -C out/ . -C temp/ .
+rm -r temp
+```
+

@@ -14,7 +14,7 @@ import scala.collection.mutable.ArrayBuffer
 object Serializer {
     // Begin and end symbol of yaml header in markdown file
     val yamlHeaderSep = "---"
-    val resDirpath = "files/res/"
+    val resDirpath = "files/res"
     val mdDir = f"$resDirpath/md"
     val pdfDir = f"$resDirpath/pdf"
     val templatePath = f"$resDirpath/templates"
@@ -57,6 +57,7 @@ object Serializer {
         // path to the necessary files on the classpath, i.e. in the jar i.e. to give to `getClass.getResourceAsStream()`
         val templatesResourceStreamPath = templatesDestPath.map(_.replace("files", ""))
         Files.createDirectories(Path.of(templatePath))
+        println("extracting " + templatesResourceStreamPath + " to " + templatesDestPath)
         Utils.extractFileFromCPIfNotExists(templatesResourceStreamPath, templatesDestPath.map(Path.of(_)))
     }
 

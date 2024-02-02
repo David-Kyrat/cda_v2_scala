@@ -111,7 +111,7 @@ object Utils {
               })
         }
     }
-    
+
 
     /**
      * Mostly useful once project is packed as a jar and we want to extract resources from it.
@@ -128,6 +128,7 @@ object Utils {
           .zip(destPaths)
           .filterNot((_, dest) => Files.exists(dest))
           .foreach((src, dest) =>
+              println("extracting " + src + " to " + dest)
               val reader = new BufferedReader(new InputStreamReader(Utils.getClass.getResourceAsStream(src), UTF_8))
               val pw = new PrintWriter(Files.newBufferedWriter(dest))
               reader.lines().forEach(pw.println(_))
@@ -297,7 +298,8 @@ object Utils {
 
     def closeLogWriter(): Unit = {
         if (logWrtr != null) {
-            logWrtr.flush(); logWrtr.close()
+            logWrtr.flush();
+            logWrtr.close()
         }
     }
 

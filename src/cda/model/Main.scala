@@ -81,7 +81,6 @@ object Main {
      * @return (`studyPlan_abbreviation -> (studyPlan_id, studyPlan_fullName)`) mapping
      */
     private def getAbbrevMap: Map[String, (Int, String)] = {
-        println("Reading abbreviations file at " + abbrevFilePath.toAbsolutePath + " exists ? " + abbrevFilePath.toFile.exists() + " " + Files.exists(abbrevFilePath))
         Utils
           .readLines(abbrevFilePath)
           .map(_.split("\t")) // split each line of tsv file (tab separated value)
@@ -94,10 +93,15 @@ object Main {
     private def main(courseCodes: ParSet[String], sps: ParSet[Int]): Unit = {
         // FIXME: Even when setting PandocCommand.exec(silent=false)
         //    stderr is not printed to console. i.e. nothing tells us whether pandoc failed, and if it did => no way of knowing why
+        if (courseCodes.nonEmpty && sps.nonEmpty) {
+            println("extracting templates")
+            Serializer.extractTemplatesIfNotExists()
+            println("extracting templates -- done")
+        }
         if (courseCodes.nonEmpty) {
             new Thread(() => {
                 val mdFiles = courseCodes.map(Course(_).saveToMarkdown())
-                Serializer.extractTemplatesIfNotExists()
+//                Serializer.extractTemplatesIfNotExists()
                 Serializer.mdToPdf(mdFiles)
             }).start()
         }
@@ -111,7 +115,6 @@ object Main {
             // ERROR: even if its pretty, don't do StudyPlan(_).saveToMarkdown => first handle error returned by constructor of StudyPlan!
             new Thread(() =>
                 val mdFiles = sps.flatMap(StudyPlan(_).saveToMarkdown(courseCodes))
-                Serializer.extractTemplatesIfNotExists()
                 Serializer.mdToPdf(mdFiles)
             ).start()
         }

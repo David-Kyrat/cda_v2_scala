@@ -26,9 +26,9 @@ object App {
             val y2 = App.getClass.getResourceAsStream("/res/templates/template.html") 
             val y3 = App.getClass.getResourceAsStream("/res/templates/unige.png")
             println(s"App.getClass.getResourceAsStream('/res/abbrev.tsv') is null: ${y == null}")
-            println(s"App.getClass.getResourceAsStream('res/templates/course-desc.css') is null: ${y1 == null}")
-            println(s"App.getClass.getResourceAsStream('res/templates/template.html  ') is null: ${y2 == null}")
-            println(s"App.getClass.getResourceAsStream('res/templates/unige.png ') is null: ${y3 == null}")
+            println(s"App.getClass.getResourceAsStream('/res/templates/course-desc.css') is null: ${y1 == null}")
+            println(s"App.getClass.getResourceAsStream('/res/templates/template.html  ') is null: ${y2 == null}")
+            println(s"App.getClass.getResourceAsStream('/res/templates/unige.png ') is null: ${y3 == null}")
             println("----")
             val guiMain = new jfxuserform.Main()
             // launch gui and blocks until gui is closed

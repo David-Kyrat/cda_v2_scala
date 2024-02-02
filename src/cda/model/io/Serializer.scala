@@ -141,6 +141,7 @@ object Serializer {
 
     /** Buffered writing */
     private def writes(br: BufferedWriter, contents: String*) = for (s <- contents) write(br, s)
+    private var print_flag = 0
 
     /**
      * Serialize a `Course` into a markdown file that can be used to fill
@@ -157,9 +158,10 @@ object Serializer {
         // val name = f"desc-${course.year}-${course.id}.md"
         val name = mdFileName(course)
         val path = Utils.pathOf(f"md/$name")
-        if (VERBOSE) {
+        if (VERBOSE && print_flag == 0) {
             val tmp = Utils.pathOf("<some_resource>")
             println(f"  ---- Saving ${course.id} to ${path.toAbsolutePath.normalize()}\n Because Utils.pathOf('<some_resource>') gives ${tmp.toAbsolutePath.normalize()}\n")
+            print_flag += 1
         }
 
         val br = new BufferedWriter(new FileWriter(path.toAbsolutePath.toString, UTF_8))

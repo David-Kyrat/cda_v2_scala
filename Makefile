@@ -1,5 +1,5 @@
 # cda (root package name) stands for Course-Description-Automation
-.PHONY: package all clean __clean__
+.PHONY: package all clean __clean__ log cat_log
 
 LIB2 = /home/noahl/.sdkman/candidates/scala/current/lib/scala3-library_3-3.3.1.jar:/home/noahl/.sdkman/candidates/scala/current/lib/scala-library-2.13.10.jar:/home/noahl/tests/scalafx/fli_scala/lib/core-12.62.7.jar:/home/noahl/tests/scalafx/fli_scala/lib/jvm-driver-9.4.3.jar:/home/noahl/tests/scalafx/fli_scala/lib/jfoenix-19.0.1.jar:/home/noahl/.m2/repository/com/google/code/gson/gson/2.8.5/gson-2.8.5.jar:/home/noahl/.m2/repository/org/scala-lang/modules/scala-parallel-collections_3/1.0.4/scala-parallel-collections_3-1.0.4.jar
 
@@ -74,6 +74,8 @@ show_pdf_dir:
 
 cat_log:
 	cat "files/res/log/cda-err.log"
+
+log: cat_log
 
 # jar cant access libraries from inside it
 #cd out && jar cfvm ../Output.jar ../META-INF/MANIFEST.MF cda/* jfxuserform/* ../lib/*  ../files/* && cd ..

@@ -16,6 +16,7 @@ import scala.collection.{View, mutable}
 import scala.jdk.CollectionConverters.*
 import scala.jdk.StreamConverters.*
 import scala.util.{Try, Success, Failure}
+import cda.model.Main.VERBOSE
 
 /**
  * Represents a Study Plan (i.e. Computer Science Bachelor)
@@ -237,7 +238,7 @@ object StudyPlan extends (Int => StudyPlan) {
                     case Success(succ) => true
                     case Failure(s) => {
                         Utils.log(s"$tried\n$s")
-                        println(s"Failed. Reason: $s")
+                        if (VERBOSE) println(s"Failed. Reason: $s")
                         false
                     }
                 }

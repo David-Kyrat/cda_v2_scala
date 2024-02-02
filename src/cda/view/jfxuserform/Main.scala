@@ -1,6 +1,7 @@
 package cda.view.jfxuserform
 
 import cda.model.Utils.{pathOf, abbrevFilename}
+import cda.model.Utils
 import cda.App.abbrevFilePath
 import javafx.application.Application
 import javafx.scene.image.Image
@@ -111,6 +112,7 @@ class Main extends Application {
         Platform.startup(() => {
             this.init()
             val url = "https://raw.githubusercontent.com/David-Kyrat/Course-Description-Automation/master/files/res/abbrev.tsv"
+            Utils.log("Downloading abbreviations file from " + url)
             val abbrevFilePath = args.lastOption.getOrElse(dlAbbrevFileIfNotExist(url))
             stageRef.set(new ChoosingStage("Course Description Automation", abbrevFilePath))
             addIconsToStage(stage)

@@ -98,9 +98,6 @@ object Main {
             }).start()
         }
         if (sps.nonEmpty) {
-            val x = sps.map(sp => StudyPlan(sp))
-            val _x = x.head
-            println(f"StudyPlan $_x has ${_x.courses.size} courses")
             /* NOTE:
              * - construct each plan study from each study plan id
              * - save each course inside each one to markdown ignoring the ones in `courseCodes`
@@ -136,6 +133,10 @@ object Main {
                   please contact the developer by sending him everything present in the "files/res/log" folder)
                   """)
             }
+        finally
+            // TODO: MAKE THIS PRINT GET EXECUTED WHEN JVM EXITS (I.e. when all threads are done)
+            println("Done.")
+
     }
 }
 

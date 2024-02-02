@@ -15,6 +15,7 @@ import scala.collection.parallel.immutable.ParVector
 import scala.collection.{View, mutable}
 import scala.jdk.CollectionConverters.*
 import scala.jdk.StreamConverters.*
+import scala.util.{Try, Success, Failure}
 
 /**
  * Represents a Study Plan (i.e. Computer Science Bachelor)
@@ -32,7 +33,7 @@ final case class StudyPlan private (id: Int, courses: ParVector[Course]) {
      * @param toIgnore set of course id to ignore (i.e. that are already being generated)
      * @return names of Markdown files
      */
-    def saveToMarkdown(toIgnore: ParSet[String] = ParSet.empty[String]): ParVector[String] = 
+    def saveToMarkdown(toIgnore: ParSet[String] = ParSet.empty[String]): ParVector[String] =
         courses
             .filterNot(course => toIgnore.contains(course.id))
             .map(_.saveToMarkdown())
@@ -44,16 +45,16 @@ object StudyPlan extends (Int => StudyPlan) {
 
     /** WARN: APPLY LINEARLY IN ORDER! */
     private lazy val cleaningsToApply = Vector(
-      "Baccalauréat universitaire en" -> "Bachelor en",
-      "Baccalauréat universitaire" -> "Bachelor",
-      "Baccalauréat univ." -> "Bachelor",
-      "Maîtrise universitaire en" -> "Master en",
-      "Maîtrise universitaire" -> "Master",
-      "Maîtrise univ. en" -> "Master",
-      "Maîtrise univ." -> "Master",
-      "(en cours de saisie)" -> "",
-      " ès " -> " ",
-      " </I>" -> ""
+        "Baccalauréat universitaire en" -> "Bachelor en",
+        "Baccalauréat universitaire" -> "Bachelor",
+        "Baccalauréat univ." -> "Bachelor",
+        "Maîtrise universitaire en" -> "Master en",
+        "Maîtrise universitaire" -> "Master",
+        "Maîtrise univ. en" -> "Master",
+        "Maîtrise univ." -> "Master",
+        "(en cours de saisie)" -> "",
+        " ès " -> " ",
+        " </I>" -> ""
     )
 
     /**
@@ -95,38 +96,38 @@ object StudyPlan extends (Int => StudyPlan) {
     }
 
     private lazy val toSkip: Set[String] = Set(
-      "of",
-      "in",
-      "for",
-      "the",
-      "ès",
-      "&",
-      "la",
-      "le",
-      "l'",
-      "de",
-      "d'",
-      "du",
-      "et",
-      "en",
-      "aux",
-      "au",
-      "des",
-      ",",
-      ";",
-      ":",
-      "\"",
-      "'",
-      "-",
-      ".",
-      "_",
-      "'",
-      "/",
-      "",
-      "<",
-      "(",
-      ")",
-      " "
+        "of",
+        "in",
+        "for",
+        "the",
+        "ès",
+        "&",
+        "la",
+        "le",
+        "l'",
+        "de",
+        "d'",
+        "du",
+        "et",
+        "en",
+        "aux",
+        "au",
+        "des",
+        ",",
+        ";",
+        ":",
+        "\"",
+        "'",
+        "-",
+        ".",
+        "_",
+        "'",
+        "/",
+        "",
+        "<",
+        "(",
+        ")",
+        " "
     )
     private lazy val postCleanDelete: Set[Char] = Set('<', '(', ')', ':', '>', ';', '/', '>')
     private lazy val postCleanReplace: Map[Char, Char] = HashMap('À' -> 'A', 'È' -> 'E', 'É' -> 'E')
@@ -230,7 +231,17 @@ object StudyPlan extends (Int => StudyPlan) {
         jsArr.asList.parallelStream // not guaranteed to return a parallel stream
             .parallel // will do nothing if stream is already parellel
             .map(_.getAsStr("teachingCode"))
-            .map(Course(_))
+            .map(str => scala.util.Try(Course(str)))
+            .filter(tried =>
+                tried match {
+                    case Success(succ) => true
+                    case Failure(s) => {
+                        println(s"Failed. Reason: $s")
+                        false
+                    }
+                }
+            )
+            .map(_.get)
             .toScala(ParVector)
     }
 
@@ -283,7 +294,6 @@ object StudyPlan extends (Int => StudyPlan) {
         val obj: JsonObject = get(id.toString)
         // val courses: ParVector[Course] = extracListTeachings(obj).par.map(Course(_)).to(ParVector)
         val courses = extracListTeachings(obj).to(ParVector)
-        println(f"StudyPlan $id has ${courses.size} courses")
         new StudyPlan(id, courses)
     }
 }

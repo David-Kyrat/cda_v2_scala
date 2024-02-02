@@ -283,6 +283,7 @@ object StudyPlan extends (Int => StudyPlan) {
         val obj: JsonObject = get(id.toString)
         // val courses: ParVector[Course] = extracListTeachings(obj).par.map(Course(_)).to(ParVector)
         val courses = extracListTeachings(obj).to(ParVector)
+        println(f"StudyPlan $id has ${courses.size} courses")
         new StudyPlan(id, courses)
     }
 }

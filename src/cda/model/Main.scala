@@ -98,12 +98,16 @@ object Main {
             }).start()
         }
         if (sps.nonEmpty) {
+            val x = sps.map(sp => StudyPlan(sp))
+            val _x = x.head
+            println(f"StudyPlan $_x has ${_x.courses.size} courses")
             /* NOTE:
              * - construct each plan study from each study plan id
              * - save each course inside each one to markdown ignoring the ones in `courseCodes`
              * - `saveToMarkdown()` returns the name of the created file so we have a
              *   ParSet of ParVector of filename that we flatten to pass to `mdToPdf()`
              */
+            // ERROR: even if its pretty, don't do StudyPlan(_).saveToMarkdown => first handle error returned by constructor of StudyPlan!
             new Thread(() =>
                 Serializer
                     .mdToPdf(sps.flatMap(StudyPlan(_).saveToMarkdown(courseCodes)))

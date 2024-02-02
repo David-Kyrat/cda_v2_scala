@@ -26,7 +26,7 @@ run: app
 	
 # Main App
 app:
-	@scala-cli . -cp $(CP) $(RES) --main-class $(MAIN)
+	@scala-cli . -cp $(CP) $(RES) --main-class $(MAIN) -- $(N)
 
 # JavaFx User Form
 gui:

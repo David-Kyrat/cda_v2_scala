@@ -43,7 +43,7 @@ class Main extends Application {
      *    Otherwise waiting in the main thread for the JavaFX Application to finish
      *    (by checking in a loop if `stage != null`) holds (i.e. never ends)
      */
-    private var stageRef = new AtomicReference[ChoosingStage](null)
+    private val stageRef = new AtomicReference[ChoosingStage](null)
 
     private def stage = stageRef.get()
 
@@ -70,10 +70,9 @@ class Main extends Application {
     private def dlAbbrevFileIfNotExist(url: String): String = {
         println("Downloading abbreviations file from " + url)
         val source = Source.fromURL(url)
-        val path = Utils.pathOf("abbrevs.tsv")
-        Files.writeString(path, source.mkString, UTF_8, CREATE, WRITE, TRUNCATE_EXISTING)
+        Files.writeString(cda.App.abbrevFilePath, source.mkString, UTF_8, CREATE, WRITE, TRUNCATE_EXISTING)
         source.close()
-        path.toAbsolutePath.toString
+        cda.App.abbrevFilePath.toAbsolutePath.toString
     }
 
     /**
@@ -132,7 +131,7 @@ class Main extends Application {
     override def stop(): Unit = silenceBurningWaveLogsAfterStageClose()
 
     /**
-     * Exits JavaFx Application thread, and call the overidden `stop()` method from `javafx.Application`
+     * Exits JavaFx Application thread, and call the overridden `stop()` method from `javafx.Application`
      * (needs to be done manually when using an instance of this was used launch it instead of `Application.launch`)
      */
 }

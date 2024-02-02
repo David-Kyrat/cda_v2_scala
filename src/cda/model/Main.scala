@@ -7,7 +7,7 @@ import cda.model.net.exception.*
 import cda.model.{Course, StudyPlan, Utils}
 import cda.App.abbrevFilePath
 
-import java.nio.file.Path
+import java.nio.file.{Files, Path}
 import java.util.Locale
 import scala.collection.parallel.CollectionConverters.*
 import scala.collection.parallel.mutable.ParArray
@@ -80,12 +80,15 @@ object Main {
      *
      * @return (`studyPlan_abbreviation -> (studyPlan_id, studyPlan_fullName)`) mapping
      */
-    private def getAbbrevMap: Map[String, (Int, String)] = Utils
-        .readLines(abbrevFilePath)
-        .map(_.split("\t")) // split each line of tsv file (tab separated value)
-        .map(s => (s(1), (s(2).toInt, s(0)))) // WARN: each line is of the form "FullName   Abbreviation   Id"
-        .toSet
-        .toMap;
+    private def getAbbrevMap: Map[String, (Int, String)] = {
+        println("Reading abbreviations file at " + abbrevFilePath.toAbsolutePath + " exists ? " + abbrevFilePath.toFile.exists() + " " + Files.exists(abbrevFilePath))
+        Utils
+          .readLines(abbrevFilePath)
+          .map(_.split("\t")) // split each line of tsv file (tab separated value)
+          .map(s => (s(1), (s(2).toInt, s(0)))) // WARN: each line is of the form "FullName   Abbreviation   Id"
+          .toSet
+          .toMap
+    }
 
     /** 'real' Main with parsed user input */
     private def main(courseCodes: ParSet[String], sps: ParSet[Int]): Unit = {

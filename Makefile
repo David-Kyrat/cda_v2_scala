@@ -64,11 +64,13 @@ java: build
 	# mkdir -p jar && cp files jar -rf && cp lib jar -rf && mv cda.jar jar
 
 # Project.scala handles dependencies
-package: build
+package2: build
 	scala-cli package . --with-compiler --main-class cda.App -f --assembly
 
 fat_jar: build
 	./package_fat_jar
+
+package: fat_jar
 
 # scala-cli package . --dep "com.google.code.gson:gson:2.10.1","org.scala-lang.modules:scala-parallel-collections_3:1.0.4" --jar "/home/noahl/.sdkman/candidates/scala/current/lib/scala3-library_3-3.3.1.jar:/home/noahl/.sdkman/candidates/scala/current/lib/scala-library-2.13.10.jar:/home/noahl/tests/scalafx/fli_scala/lib/core-12.62.7.jar:/home/noahl/tests/scalafx/fli_scala/lib/jvm-driver-9.4.3.jar:/home/noahl/tests/scalafx/fli_scala/lib/jfoenix-19.0.1.jar" --main-class cda.App -f 
 

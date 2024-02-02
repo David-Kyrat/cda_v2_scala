@@ -1,0 +1,12 @@
+in out dir:
+cda/*.class cda/model/*.class cda/model/io/*.class cda/model/net/*.class cda/model/net/exception/*.class cda/model/pandoc/*.class cda/model/sealedconcept/*.class cda/view/helpers/*.class cda/view/jfxuserform/*.class cda/view/jfxuserform/utilities/*.class
+
+
+jar cfvm Output.jar ../META-INF/MANIFEST.MF  cda/*.class cda/model/*.class cda/model/io/*.class cda/model/net/*.class cda/model/net/exception/*.class cda/model/pandoc/*.class cda/model/sealedconcept/*.class cda/view/helpers/*.class cda/view/jfxuserform/*.class cda/view/jfxuserform/utilities/*.class
+
+
+jar cfvm Output.jar ../META-INF/MANIFEST.MF  cda/*.class cda/model/*.class cda/model/io/*.class cda/model/net/*.class cda/model/net/exception/*.class cda/model/pandoc/*.class cda/model/sealedconcept/*.class cda/view/helpers/*.class cda/view/jfxuserform/*.class cda/view/jfxuserform/utilities/*.class lib/* ../files/*
+
+
+Seems to work: (not for resources tho)
+jar cfvm Output.jar ../META-INF/MANIFEST.MF cda/* jfxuserform/* lib/*   lib/* ../files/*

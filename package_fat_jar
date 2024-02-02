@@ -15,5 +15,7 @@ done
 cd $lib_dir/.. || exit 1
 
 pkg_name="MyFatJar.jar"
+[[ $# -gt 0 ]] && pkg_name="$1"
+echo $pkg_name
 rm $pkg_name &> /dev/null
 jar cvfm $pkg_name META-INF/MANIFEST.MF -C out/ . -C $jar_dir .

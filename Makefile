@@ -17,6 +17,8 @@ MODEL_MAIN = cda.model.Main
 MAIN = cda.App
 CLI_ARGS = files/res/abbrev.tsv
 CP_FILE = classpath.txt
+OUT_JAR = MyFatJar.jar
+
 # HINT: To see the different main classes that can be run use the --interactive switch (target `int`)
 # 		=> will prompt user to select a main class to run
 
@@ -68,7 +70,7 @@ package2: build
 	scala-cli package . --with-compiler --main-class cda.App -f --assembly
 
 fat_jar: build
-	./package_fat_jar
+	./package_fat_jar $(OUT_JAR)
 
 package: fat_jar
 

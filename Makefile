@@ -72,6 +72,9 @@ package2: build
 show_pdf_dir:
 	ls "files/res/pdf"
 
+cat_log:
+	cat "files/res/log/cda-err.log"
+
 # jar cant access libraries from inside it
 #cd out && jar cfvm ../Output.jar ../META-INF/MANIFEST.MF cda/* jfxuserform/* ../lib/*  ../files/* && cd ..
 
@@ -81,4 +84,4 @@ clean:
 	-@ make __clean__ -s
 
 __clean__:
-	-@rm files/res/pdf/*.pdf files/res/md/*.md &> /dev/null
+	-@rm -f files/res/pdf/*.pdf files/res/md/*.md files/res/log/*.log &> /dev/null

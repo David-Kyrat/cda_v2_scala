@@ -133,9 +133,9 @@ object Main {
                   please contact the developer by sending him everything present in the "files/res/log" folder)
                   """)
             }
-        finally
-            // TODO: MAKE THIS PRINT GET EXECUTED WHEN JVM EXITS (I.e. when all threads are done)
-            println("Done.")
+        // finally
+        // TODO: MAKE THIS PRINT GET EXECUTED WHEN JVM EXITS (I.e. when all threads are done)
+        // println("Done.")
 
     }
 }

@@ -236,6 +236,7 @@ object StudyPlan extends (Int => StudyPlan) {
                 tried match {
                     case Success(succ) => true
                     case Failure(s) => {
+                        Utils.log(s"$tried\n$s")
                         println(s"Failed. Reason: $s")
                         false
                     }

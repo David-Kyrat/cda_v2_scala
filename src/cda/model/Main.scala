@@ -97,7 +97,6 @@ object Main {
         if (courseCodes.nonEmpty) {
             new Thread(() => {
                 val mdFiles = courseCodes.map(Course(_).saveToMarkdown())
-                //                Serializer.extractTemplatesIfNotExists()
                 Serializer.mdToPdf(mdFiles)
             }).start()
         }
@@ -111,10 +110,7 @@ object Main {
             // ERROR: even if its pretty, don't do StudyPlan(_).saveToMarkdown => first handle error returned by constructor of StudyPlan!
             new Thread(() =>
                 // err in studyPlan
-                val x = sps.map(p => StudyPlan(p))
-                println(f"${x.head.id} has ${x.head.courses.size} courses")
                 val mdFiles = sps.flatMap(StudyPlan(_).saveToMarkdown(courseCodes))
-                println(f"mdFiles: ${mdFiles.mkString(" ")}")
                 Serializer.mdToPdf(mdFiles)
             ).start()
         }

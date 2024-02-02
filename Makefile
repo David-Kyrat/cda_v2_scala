@@ -67,7 +67,22 @@ java: build
 
 # Project.scala handles dependencies
 package2: build
-	scala-cli package . --with-compiler --main-class cda.App -f --assembly
+	scala-cli package . --main-class $(MAIN) -f --assembly
+
+
+
+
+# Define the path to the One-JAR boot-manifest.mf file
+BOOT_MANIFEST=META-INF/boot-manifest.mf
+ASSEMBLY_JAR=CDA.jar
+ONE_JAR_BOOT=lib/one-jar-boot-0.97.jar
+ONE_JAR_FILE=MyFatJarOneJar.jar
+MAIN = cda.App
+
+# Target to create a One-JAR package
+one-jar:
+	./one_jar_pkg
+
 
 fat_jar: build
 	./package_fat_jar $(OUT_JAR)

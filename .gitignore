@@ -9,6 +9,7 @@ files/res/pdf
 !files/res/templates
 jar
 *.db
+temp-one-jar
 
 *.aux
 *.fdb_latexmk
@@ -18,3 +19,4 @@ jar
 *.rpm
 Output.jar
 temp
+*.jar

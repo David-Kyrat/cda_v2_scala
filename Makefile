@@ -83,6 +83,9 @@ MAIN = cda.App
 one-jar:
 	./one_jar_pkg
 
+one-jar-refresh:
+	./one_jar_pkg_refresh
+
 
 fat_jar: build
 	./package_fat_jar $(OUT_JAR)

@@ -2,7 +2,7 @@ package cda.model
 
 import cda.model.Main.VERBOSE
 
-import java.io.File
+import java.io.{BufferedReader, File, InputStreamReader, PrintWriter}
 import scala.collection.immutable
 import scala.jdk.CollectionConverters.*
 import scala.sys.env
@@ -111,6 +111,27 @@ object Utils {
               })
         }
     }
+    
+
+    /**
+     * Mostly useful once project is packed as a jar and we want to extract resources from it.
+     * For each filepath in `resourceStreamPath`
+     * Extracts its content from classpath (using `getClass.getResourceAsStream`) and writes it to the path
+     * pointed to by `destPaths`
+     *
+     * @param resourceStreamPaths list of paths to pass to `getClass.getResourceAsStream`.
+     *                            NB: each path in `resourceStreamPaths` must be prefixed by "/" to target the start of the res dir
+     * @param destPaths           list of paths to write the content of the corresponding `resourceStreamPaths`
+     */
+    def extractFileFromCPIfNotExists(resourceStreamPaths: IndexedSeq[String], destPaths: IndexedSeq[Path]): Unit =
+        resourceStreamPaths
+          .zip(destPaths)
+          .filterNot((_, dest) => Files.exists(dest))
+          .foreach((src, dest) =>
+              val reader = new BufferedReader(new InputStreamReader(Utils.getClass.getResourceAsStream(src), UTF_8))
+              val pw = new PrintWriter(Files.newBufferedWriter(dest))
+              reader.lines().forEach(pw.println(_))
+          )
 
     /**
      * De-facto way of accessing resources in this project.

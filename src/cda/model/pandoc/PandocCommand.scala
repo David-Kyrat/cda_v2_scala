@@ -6,7 +6,13 @@ import scala.sys.process.*
 import cda.model.pandoc.PandocTest as pt
 import cda.model.pandoc.Timer.*
 import cda.model.pandoc.PandocTest.test_cda_convert_1time
+
+import java.io.{BufferedInputStream, BufferedReader, InputStreamReader, OutputStreamWriter, PrintWriter}
+import java.nio.charset.StandardCharsets.UTF_8
+import java.nio.file
+import java.nio.file.{Files, Path}
 import scala.language.postfixOps
+import cda.model.Utils
 
 /**
  * @param pandoc_path - Absolute path to pandoc executable.
@@ -142,8 +148,8 @@ case class PandocCommand(val pandoc_path: String, private val cmds: ArrayBuffer[
             cmds.toVector.par.map(pandoc_path +: _ run processLogger)
      */
     override def toString(): String = cmds
-        .map(_.mkString(before_each_cmd, " ", after_each_cmd))
-        .mkString("", f"$between_all_cmd \\\n", "\n")
+      .map(_.mkString(before_each_cmd, " ", after_each_cmd))
+      .mkString("", f"$between_all_cmd \\\n", "\n")
 
 //
 // ============= OBJECT ================
@@ -160,6 +166,7 @@ object PandocCommand:
     def apply(pandoc_path: String, cmds: Vector[String]*) = new PandocCommand(pandoc_path, cmds.to(ArrayBuffer))
 
     def apply(cmds: Vector[String]*) = new PandocCommand(extractPandocPath, cmds.to(ArrayBuffer))
+
     def apply(cmds: ArrayBuffer[Vector[String]]) = new PandocCommand(extractPandocPath, cmds)
 
     /* def apply(cmds: String*): PandocCommand =
@@ -178,16 +185,14 @@ object PandocCommand:
      */
     def waitAllInNewThread(processes: IndexedSeq[Process]) =
         // val ts = ArrayBuffer[Thread]() // thread to wait for completion (wait for completion of all but they still run concurrently, at least thats the intentded behavior).
-
         processes.foreach(proc =>
             val x = new Thread(() =>
                 // create new thread to wait on current process and get its exit code
                 val exitCode = proc.exitValue()
-                // println(f"\n\nprocess $proc\t Exit value: $exitCode")
             ) // .start()
-            // ts += x
             x.start()
         )
+
 
     /**
      * Not actual testing suite, just basic running use case to see the output
@@ -196,17 +201,18 @@ object PandocCommand:
         import cda.model.pandoc.PandocTest as Pt
         println("\n")
         pt.test_time_1by1_background()
-        /* pt.test_extract_all_exit_codes_in_separate_threads()
-        time_average({ pt.test_extract_all_exit_codes_in_separate_threads() }, 25)
-        pt.test_with_par_array() */
-        // pt.test_time_1by1_background()
-        /* time_average(
-            {
-                pt.test_time_full_1by1_bg
-            },
-            5
-        ) */
-        // test_cda_convert_1time()
 
-        // pt.test_cda_convert_2time()
-        // pt.test_time_1by1_background()
+/* pt.test_extract_all_exit_codes_in_separate_threads()
+time_average({ pt.test_extract_all_exit_codes_in_separate_threads() }, 25)
+pt.test_with_par_array() */
+// pt.test_time_1by1_background()
+/* time_average(
+    {
+        pt.test_time_full_1by1_bg
+    },
+    5
+) */
+// test_cda_convert_1time()
+
+// pt.test_cda_convert_2time()
+// pt.test_time_1by1_background()

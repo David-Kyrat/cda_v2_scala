@@ -2,14 +2,13 @@ package cda.model.io
 
 import scala.collection.immutable.ArraySeq
 import scala.collection.parallel.ParIterable
-
 import java.io.{BufferedWriter, FileWriter, PrintWriter}
 import java.nio.charset.StandardCharsets.UTF_8
-import java.nio.file.Path
+import java.nio.file.{Files, Path}
 import cda.model.{Course, Utils}
-
 import cda.model.Main.VERBOSE
 import cda.model.pandoc.PandocCommand
+
 import scala.collection.mutable.ArrayBuffer
 
 object Serializer {
@@ -24,9 +23,10 @@ object Serializer {
 
     /**
      * Pandoc opts except input and output
+     *
      * @param htmlTemplate Path to the html template that pandoc will use to convert the
-     * data in the markdown file to the final pdf we want
-     * @param cssFile Path to the css file styling the pandoc template
+     *                     data in the markdown file to the final pdf we want
+     * @param cssFile      Path to the css file styling the pandoc template
      */
     private val pandocOpts = Vector(
         f"--template=$htmlTemplate",
@@ -44,6 +44,21 @@ object Serializer {
         cssFile,
         "-o"
     )
+
+    /**
+     * Check if the necessary directories and files for pandoc to convert correctly exist, 
+     * if not create them by searching them on classpath (with `getClass.getResourceAsStream()`)
+     * and writing them to paths defined at the top of this object.
+     * see `Utils.createFileFromCPIfNotExists()` for more details
+     */
+    def extractTemplatesIfNotExists(): Unit = {
+        // file necessary for pandoc to convert markdown to pdf
+        val templatesDestPath = IndexedSeq(htmlTemplate, cssFile, f"$templatePath/unige.png")
+        // path to the necessary files on the classpath, i.e. in the jar i.e. to give to `getClass.getResourceAsStream()`
+        val templatesResourceStreamPath = templatesDestPath.map(_.replace("files", ""))
+        Files.createDirectories(Path.of(templatePath))
+        Utils.extractFileFromCPIfNotExists(templatesResourceStreamPath, templatesDestPath.map(Path.of(_)))
+    }
 
     /**
      * @param mdInput name of markdown file to convert
@@ -64,6 +79,7 @@ object Serializer {
      * Use pandoc to fill an html template with the info in the corresponding markdown file
      * and converts it directly to pdf.
      * Launch each pandoc conversion as a background process until there's no more filename in `mdFileNames`
+     *
      * @param mdFileNames ParIterable[String] Any parallel collection containing the name of markdown file
      */
     def mdToPdf(mdFileNames: ParIterable[String]): Unit =
@@ -82,7 +98,8 @@ object Serializer {
 
     /**
      * Format given parameters in a yaml fmt i.e. "key: value"
-     * @param key String
+     *
+     * @param key   String
      * @param value String
      */
     def yamlFmt[T](key: String, value: T): String = f"$key: \"$value\""
@@ -91,7 +108,7 @@ object Serializer {
     def yamlFmTOpt[T](key: String, value: Option[T]) =
         value match {
             case Some(t) => yamlFmt(key, value)
-            case None    => ""
+            case None => ""
             // case Some(t) => f"$key: \"$t\""
         }
 
@@ -100,7 +117,7 @@ object Serializer {
      * i.e. Do nothing if `Option` is None and writes the "regular"
      * serialization on extracted object to `wr` if it is `Some`
      *
-     * @param wr `BufferedWriter` to write to
+     * @param wr     `BufferedWriter` to write to
      * @param course course to extract optional fields from
      */
     def yamlWriteCourseOpt(br: BufferedWriter, course: Course) = {
@@ -108,7 +125,7 @@ object Serializer {
         keyOptValuePair.map(pair =>
             pair._2 match {
                 case Some(value) => write(br, yamlFmtMultiLineStr(pair._1, value.toString))
-                case None        => ()
+                case None => ()
             }
         )
     }
@@ -116,7 +133,8 @@ object Serializer {
     /**
      * Format given parameters in a yaml fmt i.e. "key: value",
      * where value is a string over several lines (i.e. with '\n' characters in it)
-     * @param key String
+     *
+     * @param key   String
      * @param value String
      */
     def yamlFmtMultiLineStr(key: String, value: String) = {
@@ -137,10 +155,13 @@ object Serializer {
     }
 
     /** Buffered writing */
-    private def write(br: BufferedWriter, content: String) = { br.write(content + "\n") }
+    private def write(br: BufferedWriter, content: String) = {
+        br.write(content + "\n")
+    }
 
     /** Buffered writing */
     private def writes(br: BufferedWriter, contents: String*) = for (s <- contents) write(br, s)
+
     private var print_flag = 0
 
     /**
@@ -169,14 +190,16 @@ object Serializer {
         }
 
         val br = new BufferedWriter(new FileWriter(path.toAbsolutePath.toString, UTF_8))
+
         def write(content: String) = br.write(content + "\n")
+
         def writes(contents: String*) = for (s <- contents) write(s)
 
         write(yamlHeaderSep)
         writes(
             yamlFmt("title", course.title),
-//            yamlFmt("author", course.authors.mkString(", ") + f"  -  ${course.id}"),
-//            yamlFmt("author", f"${course.id} | " + course.authors.mkString(", ")),
+            //            yamlFmt("author", course.authors.mkString(", ") + f"  -  ${course.id}"),
+            //            yamlFmt("author", f"${course.id} | " + course.authors.mkString(", ")),
             yamlFmt("author", course.authors.mkString(", ")),
             yamlFmt("course_code", course.id),
             yamlFmt("weekly_hours", course.hoursNb.sum),

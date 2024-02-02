@@ -93,8 +93,9 @@ object Main {
         //    stderr is not printed to console. i.e. nothing tells us whether pandoc failed, and if it did => no way of knowing why
         if (courseCodes.nonEmpty) {
             new Thread(() => {
-                Serializer
-                    .mdToPdf(courseCodes.map(Course(_).saveToMarkdown()))
+                val mdFiles = courseCodes.map(Course(_).saveToMarkdown())
+                Serializer.extractTemplatesIfNotExists()
+                Serializer.mdToPdf(mdFiles)
             }).start()
         }
         if (sps.nonEmpty) {
@@ -106,8 +107,9 @@ object Main {
              */
             // ERROR: even if its pretty, don't do StudyPlan(_).saveToMarkdown => first handle error returned by constructor of StudyPlan!
             new Thread(() =>
-                Serializer
-                    .mdToPdf(sps.flatMap(StudyPlan(_).saveToMarkdown(courseCodes)))
+                val mdFiles = sps.flatMap(StudyPlan(_).saveToMarkdown(courseCodes))
+                Serializer.extractTemplatesIfNotExists()
+                Serializer.mdToPdf(mdFiles)
             ).start()
         }
         println(f"Files are being generated at \"${Utils.pathOf("pdf").toAbsolutePath}\". Please wait...")

@@ -39,7 +39,7 @@ int:
 
 # HK: No need to pass "--jar $(LIB)" if "project.scala" is correctly configured at root of project (i.e. same place as build.sbt)
 build:
-	scala-cli compile .  --with-compiler  $(RES) -d out
+	scala-cli compile . -deprecation --with-compiler  $(RES) -d out
 
 # Build and use switch to tell scala-cli to print the whole classpath, so that we can run the
 # program with java by just specifying "-cp $(cat classpath.txt)"

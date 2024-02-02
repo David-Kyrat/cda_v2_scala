@@ -58,6 +58,7 @@ object Serializer {
         val templatesResourceStreamPath = templatesDestPath.map(_.replace("files", ""))
         Files.createDirectories(Path.of(templatePath))
         println("extracting " + templatesResourceStreamPath + " to " + templatesDestPath)
+//        templatesDestPath.foreach(p => println(Files.exists(Path.of(p))))
         Utils.extractFileFromCPIfNotExists(templatesResourceStreamPath, templatesDestPath.map(Path.of(_)))
     }
 

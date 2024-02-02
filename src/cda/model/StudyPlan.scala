@@ -229,20 +229,22 @@ object StudyPlan extends (Int => StudyPlan) {
      * the conversion to scala collection was performed using a `LazyList` to optimize performance.
      */
     private def extractCourses(jsArr: JsonArray) = {
+        System.exit(1)
+        println(jsArr)
         jsArr.asList.parallelStream // not guaranteed to return a parallel stream
-            .parallel // will do nothing if stream is already parellel
-            .map(_.getAsStr("teachingCode"))
-            .map(str => scala.util.Try(Course(str)))
-            .filter(tried =>
-                tried match {
-                    case Success(succ) => true
-                    case Failure(s) => {
-                        Utils.log(s"$tried\n$s")
-                        if (VERBOSE) println(s"Failed. Reason: $s")
-                        false
-                    }
-                }
-            )
+          .parallel // will do nothing if stream is already parellel
+          .map(_.getAsStr("teachingCode"))
+          .map(str => {println(str); scala.util.Try(Course(str)) } )
+          .filter {
+              case Success(s) => 
+                  println(s"Success: $s")
+                  true
+              case tried@Failure(s) =>
+                  Utils.log(s"$tried\n$s")
+                  println(s"Failed. Reason: $s")
+//                  if (VERBOSE) println(s"Failed. Reason: $s")
+                  false
+          }
             .map(_.get)
             .toScala(ParVector)
     }
@@ -294,8 +296,11 @@ object StudyPlan extends (Int => StudyPlan) {
     @throws(classOf[StudyPlanNotFoundException])
     override def apply(id: Int): StudyPlan = {
         val obj: JsonObject = get(id.toString)
+//        println(obj)
+        extracListTeachings(obj)
         // val courses: ParVector[Course] = extracListTeachings(obj).par.map(Course(_)).to(ParVector)
         val courses = extracListTeachings(obj).to(ParVector)
+        println("CHIBRE")
         new StudyPlan(id, courses)
     }
 }

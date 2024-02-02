@@ -42,7 +42,7 @@ object Main {
     private def checkIdOrAbbrev(cleanInput: String): Int =
         Try(cleanInput.toInt) match {
             case Success(intId: Int) => intId
-            case Failure(_)          => abbrevMap(cleanInput)._1
+            case Failure(_) => abbrevMap(cleanInput)._1
         }
 
     /**
@@ -93,15 +93,11 @@ object Main {
     private def main(courseCodes: ParSet[String], sps: ParSet[Int]): Unit = {
         // FIXME: Even when setting PandocCommand.exec(silent=false)
         //    stderr is not printed to console. i.e. nothing tells us whether pandoc failed, and if it did => no way of knowing why
-        if (courseCodes.nonEmpty && sps.nonEmpty) {
-            println("extracting templates")
-            Serializer.extractTemplatesIfNotExists()
-            println("extracting templates -- done")
-        }
+        if (courseCodes.nonEmpty || sps.nonEmpty) Serializer.extractTemplatesIfNotExists()
         if (courseCodes.nonEmpty) {
             new Thread(() => {
                 val mdFiles = courseCodes.map(Course(_).saveToMarkdown())
-//                Serializer.extractTemplatesIfNotExists()
+                //                Serializer.extractTemplatesIfNotExists()
                 Serializer.mdToPdf(mdFiles)
             }).start()
         }
@@ -114,7 +110,11 @@ object Main {
              */
             // ERROR: even if its pretty, don't do StudyPlan(_).saveToMarkdown => first handle error returned by constructor of StudyPlan!
             new Thread(() =>
+                // err in studyPlan
+                val x = sps.map(p => StudyPlan(p))
+                println(f"${x.head.id} has ${x.head.courses.size} courses")
                 val mdFiles = sps.flatMap(StudyPlan(_).saveToMarkdown(courseCodes))
+                println(f"mdFiles: ${mdFiles.mkString(" ")}")
                 Serializer.mdToPdf(mdFiles)
             ).start()
         }
@@ -136,7 +136,8 @@ object Main {
             case err: Throwable => {
                 Utils.log(err, s"${err.getClass}\t  ${err.getMessage}")
                 err.printStackTrace()
-                System.err.println("""An unexpected error happened during the pdf generation.
+                System.err.println(
+                    """An unexpected error happened during the pdf generation.
                   Please try again. See files/res/cda-err.log for more details. (If the error persists,
                   please contact the developer by sending him everything present in the "files/res/log" folder)
                   """)

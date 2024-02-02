@@ -22,24 +22,22 @@ object App {
         try
             verbose = args.contains("verbose")
             val y = App.getClass.getResourceAsStream("/res/abbrev.tsv")
-            val y1 = App.getClass.getResourceAsStream("/res/templates/course-desc.css") 
-            val y2 = App.getClass.getResourceAsStream("/res/templates/template.html") 
+            val y1 = App.getClass.getResourceAsStream("/res/templates/course-desc.css")
+            val y2 = App.getClass.getResourceAsStream("/res/templates/template.html")
             val y3 = App.getClass.getResourceAsStream("/res/templates/unige.png")
             println(s"App.getClass.getResourceAsStream('/res/abbrev.tsv') is null: ${y == null}")
             println(s"App.getClass.getResourceAsStream('/res/templates/course-desc.css') is null: ${y1 == null}")
-            println(s"App.getClass.getResourceAsStream('/res/templates/template.html  ') is null: ${y2 == null}")
-            println(s"App.getClass.getResourceAsStream('/res/templates/unige.png ') is null: ${y3 == null}")
+            println(s"App.getClass.getResourceAsStream('/res/templates/template.html') is null: ${y2 == null}")
+            println(s"App.getClass.getResourceAsStream('/res/templates/unige.png') is null: ${y3 == null}")
             println("----")
-            val guiMain = new jfxuserform.Main()
+//            val guiMain = new jfxuserform.Main()
             // launch gui and blocks until gui is closed
-            val guiArgs = Files.exists(abbrevFilePath) match
-                case true  => Array(absAbbrevFilePath)
-                case false => Array[String]()
-            guiMain.start(guiArgs)
-            val userResponse = guiMain.serializedOutput.get
+//            val guiArgs = if Files.exists(abbrevFilePath) then Array(absAbbrevFilePath) else Array[String]()
+//            guiMain.start(guiArgs)
+//            val userResponse = guiMain.serializedOutput.get
             // FIXME: Even when setting PandocCommand.exec(silent=false)
             //    stderr is not printed to console. i.e. nothing tells us whether pandoc failed, and if it did => no way of knowing why
-            // val userResponse = "11M020,11M010,12m061,11X001#"
+             val userResponse = "#BM"
             modelMain.main(Array(userResponse))
         catch case e: Throwable => e.printStackTrace()
         finally {

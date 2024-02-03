@@ -26,6 +26,12 @@
             <artifactId>scala3-library_3</artifactId>
             <version>${scala.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_3</artifactId>
+            <version>3.2.9</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <!-- Include resource directories -->

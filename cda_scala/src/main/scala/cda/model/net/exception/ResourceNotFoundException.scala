@@ -8,6 +8,6 @@ trait ResourceNotFoundException extends Exception {
 
 object ResourceNotFoundException {
 
-    def fmtErr(resName: String) = f"$resName was not found. If this course exists and was not removed, please check the spelling (or your internet connection) and retry."
+    def fmtErr(resName: String) = f"$resName was not found. If this course exists and was not removed, please check its spelling (or your internet connection) and retry."
 }
 

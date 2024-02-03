@@ -31,7 +31,8 @@ jobs:
       run: mvn -q -B package --file pom.xml
     - name: Rename archive
       run: |
+          find . -name "*.jar"
           rm target/cda.jar
-          mv target/cda-with-dependencies.jar target/cda.jar
+          mv target/cda-jar-with-dependencies.jar target/cda.jar
     - name: Run archive
       run: java -jar target/cda.jar

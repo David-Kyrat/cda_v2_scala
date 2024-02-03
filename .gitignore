@@ -21,4 +21,4 @@ Output.jar
 temp
 *.jar
 
-./cda_scala/target/
+cda_scala/target/

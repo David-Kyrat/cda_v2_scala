@@ -1,0 +1,10 @@
+JAVA:=java
+JAR:=$(JAR)
+
+all: run
+
+run:
+	$(JAVA) -jar $(JAR)
+
+verbose:
+	$(JAVA) -jar $(JAR) -- verbose

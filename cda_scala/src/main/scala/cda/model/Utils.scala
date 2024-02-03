@@ -16,6 +16,9 @@ import java.nio.file.attribute.FileAttribute
 import java.nio.file.{Files, Path, Paths}
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.nio.channels.Channels
+import java.io.FileOutputStream
+import java.net.URL
 
 object Utils {
     val LOG_MAX_SIZE = 50 << 20 // 5MB
@@ -118,6 +121,24 @@ object Utils {
                 })
         }
     }
+
+    /**
+     * Download file from remote url as raw bytes (useful to download images,
+     * pdf...) i.e. do not use any method from scala.io are anything also that
+     * automatically insert line endings and such
+     *
+     * @param url - url of the file to download
+     * @param path - path to save the file to
+     */
+    def dlBinFile(url: String, path: String) =
+        Try {
+            val readableByteChannel = Channels.newChannel(URL(url).openStream());
+            val fileOutputStream = new FileOutputStream(path);
+            val fileChannel = fileOutputStream.getChannel();
+            fileChannel.transferFrom(readableByteChannel, 0, Long.MaxValue);
+        } match
+            case Success(_) => ()
+            case Failure(e) => Utils.log(s"$e: Error downloading file from $url to $path")
 
     /**
      * Mostly useful once project is packed as a jar and we want to extract

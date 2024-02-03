@@ -32,6 +32,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption.*
 import scala.io.Source
+import scala.util.{Try, Success, Failure}
 
 /* class App extends Application:
     override def start(primaryStage: Stage): Unit =
@@ -57,45 +58,11 @@ object App:
     val abbrevFilePath: Path = pathOf(abbrevFilename)
     val absAbbrevFilePath: String = abbrevFilePath.normalize().toString
 
-    /**
-     * Download file from remote url as raw bytes (useful to download images,
-     * pdf...) i.e. do not use any method from scala.io are anything also that
-     * automatically insert line endings and such
-     *
-     * @param url
-     *   url of the file to download
-     * @param path
-     */
-    def dlBinFile(url: String, path: String) =
-        println()
     def gettemplatesContent() =
-        /* val x = "/res/templates/template.html"
-        val reader = new BufferedReader(new InputStreamReader(getClass.getResourceAsStream(x), UTF_8))
-        // println(reader.lines().toList())
-        Files.createDirectories(Path.of(cda.model.io.Serializer.templatePath))
-        val tmp2 = Path.of("files/res/templates/template.html")
-        val tmp = Files.newBufferedWriter(tmp2)
-        val pw = new PrintWriter(tmp)
-        reader.lines().forEach(pw.println(_))
-        pw.close()
-        reader.close() */
-        // Serializer.extractTemplatesIfNotExists()
-        val url =
-            "https://github.com/David-Kyrat/Course-Description-Automation/raw/master/files/res/templates/unige.png"
+        Serializer.extractTemplatesIfNotExists()
+        /* val url = "https://github.com/David-Kyrat/Course-Description-Automation/raw/master/files/res/templates/unige.png"
         val filename = Serializer.templatePath + "/unige.png"
-        try {
-            val readableByteChannel = Channels.newChannel(URL(url).openStream());
-            val fileOutputStream = new FileOutputStream(filename);
-            val fileChannel = fileOutputStream.getChannel();
-            fileChannel.transferFrom(readableByteChannel, 0, Long.MaxValue);
-        } catch {
-            case e: java.io.IOException => "error occured"
-        }
-        // val source = Source.fromURL(url)
-        // val tmp = source.reader()
-        // Files.write(Path.of(Serializer.templatePath + "/unige.png"),
-        //     source., CREATE, WRITE, TRUNCATE_EXISTING)
-        // source.close()
+        Utils.dlBinFile(url, filename) */
 
     def main(args: Array[String]): Unit =
         try

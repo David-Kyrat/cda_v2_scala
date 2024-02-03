@@ -20,6 +20,7 @@ object Serializer {
     val templatePath = f"$resDirpath/templates"
     private val cssFile = f"$templatePath/course-desc.css"
     private val htmlTemplate = f"$templatePath/template.html"
+    val unigeLogoUrl = "https://github.com/David-Kyrat/Course-Description-Automation/raw/master/files/res/templates/unige.png"
 
     /**
      * Pandoc opts except input and output
@@ -46,21 +47,24 @@ object Serializer {
     )
 
     /**
-     * Check if the necessary directories and files for pandoc to convert correctly exist, 
+     * Check if the necessary directories and files for pandoc to convert correctly exist,
      * if not create them by searching them on classpath (with `getClass.getResourceAsStream()`)
      * and writing them to paths defined at the top of this object.
      * see `Utils.createFileFromCPIfNotExists()` for more details
      */
     def extractTemplatesIfNotExists(): Unit = {
-        // WARN: handle 
         // file necessary for pandoc to convert markdown to pdf
-        val templatesDestPath = IndexedSeq(htmlTemplate, cssFile, f"$templatePath/unige.png")
+        val templatesDestPath = IndexedSeq(htmlTemplate, cssFile)
         // path to the necessary files on the classpath, i.e. in the jar i.e. to give to `getClass.getResourceAsStream()`
         val templatesResourceStreamPath = templatesDestPath.map(_.replace("files", ""))
         Files.createDirectories(Path.of(templatePath))
         println("extracting " + templatesResourceStreamPath + " to " + templatesDestPath)
-//        templatesDestPath.foreach(p => println(Files.exists(Path.of(p))))
+        // templatesDestPath.foreach(p => println(Files.exists(Path.of(p))))
         Utils.extractFileFromCPIfNotExists(templatesResourceStreamPath, templatesDestPath.map(Path.of(_)))
+        val img = f"$templatePath/unige.png"
+        if !Files.exists(Path.of(img)) then
+            if (VERBOSE) println("extracting " + unigeLogoUrl + " to " + img)
+            Utils.dlBinFile(unigeLogoUrl, img)
     }
 
     /**
@@ -111,7 +115,7 @@ object Serializer {
     def yamlFmTOpt[T](key: String, value: Option[T]) =
         value match {
             case Some(t) => yamlFmt(key, value)
-            case None => ""
+            case None    => ""
             // case Some(t) => f"$key: \"$t\""
         }
 
@@ -128,7 +132,7 @@ object Serializer {
         keyOptValuePair.map(pair =>
             pair._2 match {
                 case Some(value) => write(br, yamlFmtMultiLineStr(pair._1, value.toString))
-                case None => ()
+                case None        => ()
             }
         )
     }

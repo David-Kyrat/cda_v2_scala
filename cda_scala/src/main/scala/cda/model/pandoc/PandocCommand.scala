@@ -1,6 +1,5 @@
 package cda.model.pandoc
 
-
 import scala.collection.mutable.ArrayBuffer
 import scala.sys.process.*
 import cda.model.pandoc.PandocTest as pt
@@ -148,8 +147,8 @@ case class PandocCommand(val pandoc_path: String, private val cmds: ArrayBuffer[
             cmds.toVector.par.map(pandoc_path +: _ run processLogger)
      */
     override def toString(): String = cmds
-      .map(_.mkString(before_each_cmd, " ", after_each_cmd))
-      .mkString("", f"$between_all_cmd \\\n", "\n")
+        .map(_.mkString(before_each_cmd, " ", after_each_cmd))
+        .mkString("", f"$between_all_cmd \\\n", "\n")
 
 //
 // ============= OBJECT ================
@@ -192,7 +191,6 @@ object PandocCommand:
             ) // .start()
             x.start()
         )
-
 
     /**
      * Not actual testing suite, just basic running use case to see the output

@@ -38,6 +38,21 @@ object App:
     val abbrevFilePath: Path = pathOf(abbrevFilename)
     val absAbbrevFilePath: String = abbrevFilePath.normalize().toString
 
+    /* def main(args: Array[String]): Unit =
+        try
+            verbose = args.contains("verbose")
+            val guiMain = new jfxuserform.Main()
+            // launch gui and blocks until gui is closed
+            val guiArgs = if Files.exists(abbrevFilePath) then Array(absAbbrevFilePath) else Array[String]()
+            guiMain.start(guiArgs)
+            val userResponse = guiMain.serializedOutput.get
+            // FIXME: Even when setting PandocCommand.exec(silent=false)
+            //    stderr is not printed to console. i.e. nothing tells us whether pandoc failed, and if it did => no way of knowing why
+            // val userResponse = "#BM"
+            modelMain.main(Array(userResponse))
+        catch case e: Throwable => e.printStackTrace()
+        finally onExit() */
+
     def main(args: Array[String]): Unit =
         println("Hello World!")
         Application.launch(classOf[App], args: _*)
@@ -46,19 +61,3 @@ object App:
      * See `ch.view.jfxuserform.Main.silenceBurningWaveLogsAfterStageClose()` for more details.
      */
     private def onExit(): Unit = jfxuserform.Main.silenceBurningWaveLogsAfterStageClose()
-
-    /* def main(args: Array[String]): Unit =
-        VBox subroot = new VBox(100, board, playerHand);
-    BorderPane root = new BorderPane(subroot);
-
-    Scene scene = new Scene(root, W, H);
-    scene
-        .getStylesheets()
-        .add(getClass().getResource("/style.css").toExternalForm());
-
-    primaryStage.setTitle("Card Game with MaterialFX");
-    primaryStage.setScene(scene);
-    primaryStage.centerOnScreen();
-    primaryStage.show();
-
-    println("Hello World!") */

@@ -1,129 +1,187 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>cda</groupId>
-    <artifactId>cda_scala</artifactId>
-    <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
-    <name>cda_scala</name>
-    <properties>
-        <scala.version>3.3.1</scala.version>
-        <scala.maven.plugin.version>4.5.6</scala.maven.plugin.version>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-    </properties>
-    <url>http://maven.apache.org</url>
-    <dependencies>
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala3-library_3</artifactId>
-            <version>${scala.version}</version>
-        </dependency>
-        <!-- Gson Dependency -->
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.10.1</version>
-        </dependency>
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>cda</groupId>
+  <artifactId>cda_scala</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>cda_scala</name>
+  <properties>
+    <scala.version>3.3.1</scala.version>
+    <scala.maven.plugin.version>4.5.6</scala.maven.plugin.version>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
+    <local.dependencies.path>/home/noahl/tests/scalafx/fli_scala/lib</local.dependencies.path>
+  </properties>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala3-library_3</artifactId>
+      <version>${scala.version}</version>
+    </dependency>
+    <!-- Gson Dependency -->
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.10.1</version>
+    </dependency>
 
-        <!-- Scala Parallel Collections -->
-        <dependency>
-            <groupId>org.scala-lang.modules</groupId>
-            <artifactId>scala-parallel-collections_3</artifactId>
-            <version>1.0.4</version>
-        </dependency>
+    <!-- Scala Parallel Collections -->
+    <dependency>
+      <groupId>org.scala-lang.modules</groupId>
+      <artifactId>scala-parallel-collections_3</artifactId>
+      <version>1.0.4</version>
+    </dependency>
 
-        <!-- Include your local jars as system scope dependencies -->
-        <dependency>
-            <groupId>local</groupId>
+    <dependency>
+      <groupId>local</groupId>
+      <artifactId>jfoenix</artifactId>
+      <version>19.0.1</version>
+      <scope>system</scope>
+      <systemPath>${local.dependencies.path}/jfoenix-19.0.1.jar</systemPath>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/us.ihmc/jfoenix -->
+    <!-- <dependency>
+            <groupId>us.ihmc</groupId>
             <artifactId>jfoenix</artifactId>
-            <version>19.0.1</version>
-            <scope>system</scope>
-            <systemPath>/home/noahl/tests/scalafx/fli_scala/lib/jfoenix-19.0.1.jar</systemPath>
-        </dependency>
-        <dependency>
+            <version>17-0.1.1</version>
+        </dependency> -->
+
+    <!-- https://mvnrepository.com/artifact/org.burningwave/core -->
+    <dependency>
+      <groupId>org.burningwave</groupId>
+      <artifactId>core</artifactId>
+      <version>12.62.7</version>
+    </dependency>
+
+    <!-- Include your local jars as system scope dependencies -->
+    <!-- <dependency>
             <groupId>local</groupId>
             <artifactId>core</artifactId>
             <version>12.62.7</version>
             <scope>system</scope>
-            <systemPath>/home/noahl/tests/scalafx/fli_scala/lib/core-12.62.7.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>local</groupId>
-            <artifactId>jvm-driver</artifactId>
-            <version>9.4.3</version>
-            <scope>system</scope>
-            <systemPath>/home/noahl/tests/scalafx/fli_scala/lib/jvm-driver-9.4.3.jar</systemPath>
-        </dependency>
-    </dependencies>
-    <build>
-        <!-- Include resource directories -->
-        <resources>
-            <resource>
-                <directory>/home/noahl/tests/scalafx/fli_scala/cda_scala/src/main/files</directory>
-            </resource>
-        </resources>
-        <plugins>
-            <!-- Scala Maven Plugin -->
-            <plugin>
-                <groupId>net.alchim31.maven</groupId>
-                <artifactId>scala-maven-plugin</artifactId>
-                <version>${scala.maven.plugin.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            <systemPath>${local.dependencies.path}/core-12.62.7.jar</systemPath>
+        </dependency> -->
+    <dependency>
+      <groupId>local</groupId>
+      <artifactId>jvm-driver</artifactId>
+      <version>9.4.3</version>
+      <scope>system</scope>
+      <systemPath>${local.dependencies.path}/jvm-driver-9.4.3.jar</systemPath>
+    </dependency>
+  </dependencies>
+  <build>
+    <!-- Include resource directories -->
+    <resources>
+      <resource>
+        <directory>src/main/files</directory>
+      </resource>
+    </resources>
+    <plugins>
+      <!-- Scala Maven Plugin -->
+      <plugin>
+        <groupId>net.alchim31.maven</groupId>
+        <artifactId>scala-maven-plugin</artifactId>
+        <version>${scala.maven.plugin.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+              <goal>testCompile</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
 
-            <!-- Maven Compiler Plugin (for Java sources if present) -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                </configuration>
-            </plugin>
+      <!-- Maven Compiler Plugin (for Java sources if present) -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
+        </configuration>
+      </plugin>
 
-            <!-- Maven Assembly Plugin (for creating a fat jar) -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.3.0</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>cda.App</mainClass>
-                        </manifest>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
-                        <phase>package</phase> <!-- bind to the packaging phase -->
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.0.0</version>
-                <configuration>
-                    <mainClass>cda.App</mainClass> <!-- Replace with your actual main class -->
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+      <!-- Maven Assembly Plugin (for creating a fat jar) -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.3.0</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>cda.App</mainClass>
+            </manifest>
+          </archive>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id> <!-- this is used for inheritance merges -->
+            <phase>package</phase> <!-- bind to the packaging phase -->
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.0.0</version>
+        <configuration>
+          <mainClass>cda.App</mainClass> <!-- Replace with your actual main class -->
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.3.0</version> <!-- You can specify the version here -->
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
+              <filters>
+                <filter>
+                  <artifact>local:jfoenix</artifact>
+                  <includes>
+                    <include>**</include>
+                  </includes>
+                </filter>
+                <filter>
+                  <artifact>local:core</artifact>
+                  <includes>
+                    <include>**</include>
+                  </includes>
+                </filter>
+                <filter>
+                  <artifact>local:jvm-driver</artifact>
+                  <includes>
+                    <include>**</include>
+                  </includes>
+                </filter>
+              </filters>
+              <transformers>
+                <transformer
+                  implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>cda.App</mainClass> <!-- Replace with your actual main
+                                    class -->
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

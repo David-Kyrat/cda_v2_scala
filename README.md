@@ -5,6 +5,8 @@
 To package the app + dependencies into an uber-jar / fat-jar, a refactored version of the project using maven was created here  
 to take advantage of the plugins that seem to be the only working solution after trying a lot of alternatives.
 
+NB: Now this branch was merged into master on the 03.02.24
+
 ---
 
 ## Rest of the README

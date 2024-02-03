@@ -1,12 +1,19 @@
 # Fancy-Login-Form
 
 [Course-Description-Automation](https://github.com/David-Kyrat/Course-Description-Automation) Project directly integrated with the gui,
-refactored 100% in scala / integrated java. 
+refactored 100% in scala / integrated java.
 (no more jar from a separate project for the gui and no more Rust)
+
+<div style="display: flex; justify-content: space-around">
+
+<img src="./src/main/files/res/screenshot1.png" height="400">
+<img src="./src/main/files/res/screenshot2.png" height="350">
+
+</div>
 
 ## Running the project
 
-``` bash
+```bash
 git clone https://github.com/David-Kyrat/cda_v2_scala.git
 cd cda_v2_scala
 make run
@@ -14,7 +21,7 @@ make run
 
 or manually
 
-``` bash
+```bash
 git clone https://github.com/David-Kyrat/cda_v2_scala.git
 cd cda_v2_scala
 mvn clean package
@@ -23,9 +30,8 @@ java -jar target/cda-jar-with-dependencies.jar
 
 ## Building the fat jar
 
-``` bash
+```bash
 make
 ```
 
 file is located in `target/cda.jar`
-

@@ -39,8 +39,6 @@ jobs:
         run: |
           source "$HOME/.sdkman/bin/sdkman-init.sh"
           sdk install java 19.0.2.fx-librca
-          export JAVA_HOME="$HOME/.sdkman/candidates/java/current"
-          export PATH="$JAVA_HOME/bin:$PATH"
 
       - name: test java and add to path
         run: |
@@ -48,12 +46,10 @@ jobs:
           source "$HOME/.sdkman/bin/sdkman-init.sh"
           export JAVA_HOME="$HOME/.sdkman/candidates/java/current"
           export PATH="$JAVA_HOME/bin:$PATH"
-          java --version
-          ./mvnw --version
-          make clean run
+          # make clean run
 
-      # - name: compile with mvnw and run
-        # run: make clean run
+      - name: compile with mvnw and run
+        run: make clean run
 
       # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
       - name: Update dependency graph

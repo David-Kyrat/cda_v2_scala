@@ -15,7 +15,6 @@ import java.awt.datatransfer.StringSelection;
 public final class AbbrevDisplayer {
     private final static float scaleX = 1.4f, scaleY = 1.1f;
     private final static double rootDefWidth = 981.2, rootDefHeight = 615.5;
-    //! FIX: CHECK IF PATH IS CORRECT ONCE PACKAGED
     private final double baseWidth, baseHeight;
     private final ChoosingStage choosingStage;
     private final JFXTableView tableView;

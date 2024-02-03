@@ -518,3 +518,7 @@ body {
 .level2.important > p {
     margin-top: 0;
 }
+
+#t1 {
+    width: 80%;
+}

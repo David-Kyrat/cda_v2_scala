@@ -52,6 +52,7 @@ object Serializer {
      * see `Utils.createFileFromCPIfNotExists()` for more details
      */
     def extractTemplatesIfNotExists(): Unit = {
+        // WARN: handle 
         // file necessary for pandoc to convert markdown to pdf
         val templatesDestPath = IndexedSeq(htmlTemplate, cssFile, f"$templatePath/unige.png")
         // path to the necessary files on the classpath, i.e. in the jar i.e. to give to `getClass.getResourceAsStream()`

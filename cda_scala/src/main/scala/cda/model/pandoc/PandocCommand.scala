@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets.UTF_8
 import java.nio.file
 import java.nio.file.{Files, Path}
 import scala.language.postfixOps
-import cda.model.Utils
+import cda.model.Main.VERBOSE
 
 /**
  * @param pandoc_path - Absolute path to pandoc executable.
@@ -89,7 +89,7 @@ case class PandocCommand(val pandoc_path: String, private val cmds: ArrayBuffer[
      * ```
      */
     def exec(silent: Boolean = true) =
-        // if (ch.Main.VERBOSE) println(f"\n cmds:\n$this")
+        if (VERBOSE) println(f"\n cmds:\n$this")
         if silent then
             val processLogger = ProcessLogger(_ => (), _ => ())
             cmds.map(pandoc_path +: _ run processLogger).toVector

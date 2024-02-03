@@ -75,7 +75,7 @@ class Main extends Application {
      *            i.e. of the form `https://raw.githubusercontent.com/Name/Repo/branch/path/to/file`
      * @return Absolute path to the abbreviations file (as string)
      */
-    private def dlAbbrevFileIfNotExist(url: String): String = {
+    private def dlAbbrevFile(url: String): String = {
         println("Downloading abbreviations file from " + url)
         val source = Source.fromURL(url)
         Files.writeString(cda.App.abbrevFilePath, source.mkString, UTF_8, CREATE, WRITE, TRUNCATE_EXISTING)
@@ -94,7 +94,7 @@ class Main extends Application {
         if (primaryStage != null) primaryStage.close()
         // unique argument is the path to the abbreviations file
         val url = "https://raw.githubusercontent.com/David-Kyrat/Course-Description-Automation/master/files/res/abbrev.tsv"
-        val abbrevFilePath = getParameters.getRaw.asScala.lastOption.getOrElse(dlAbbrevFileIfNotExist(url))
+        val abbrevFilePath = getParameters.getRaw.asScala.lastOption.getOrElse(dlAbbrevFile(url))
         stageRef.set(new ChoosingStage("Course Description Automation", abbrevFilePath))
         addIconsToStage(stage)
         // System.setOut(stdout) // enable back console output
@@ -120,7 +120,7 @@ class Main extends Application {
             this.init()
             val url = "https://raw.githubusercontent.com/David-Kyrat/Course-Description-Automation/master/files/res/abbrev.tsv"
             // Utils.log("Downloading abbreviations file from " + url)
-            val abbrevFilePath = args.lastOption.getOrElse(dlAbbrevFileIfNotExist(url))
+            val abbrevFilePath = args.lastOption.getOrElse(dlAbbrevFile(url))
                 // val cs = new ChoosingStage("Course Description Automation", abbrevFilePath)
                 stageRef.set(new ChoosingStage("Course Description Automation", abbrevFilePath))
                 addIconsToStage(stage)

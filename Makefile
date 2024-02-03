@@ -1,16 +1,17 @@
-LT:=lsd  -hF --tree --group-dirs=first
+# LT:=lsd  -hF --tree --group-dirs=first
 JARNAME=cda
 
-all: run
+all: package
 
-run:
-	mvn package exec:java
+run: package
+	java -jar target/$(JARNAME).jar
+	
 
 log:
-	bat files/res/log/cda-err.log
+	cat files/res/log/cda-err.log
 
 show_pdf:
-	@$(LT) files/res/md/ files/res/pdf
+	@ls files/res/md/ files/res/pdf
 
 clean:
 	mvn clean
@@ -19,6 +20,6 @@ clean:
 # i.e. when creating the fatjar mvn keep the old jar (cda.jar) and calls the fatjar differently (cda-jar-with-dependencies.jar)
 # this is a workaround to keep the jar name consistent and remove the old jar
 package:
-	mvn package
+	./mvnw package
 	rm target/$(JARNAME).jar
 	mv target/$(JARNAME)-jar-with-dependencies.jar target/$(JARNAME).jar

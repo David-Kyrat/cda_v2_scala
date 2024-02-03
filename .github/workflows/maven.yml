@@ -44,7 +44,10 @@ jobs:
 
       - name: test java and add to path
         run: |
+          source "$HOME/.bashrc"
           source "$HOME/.sdkman/bin/sdkman-init.sh"
+          export JAVA_HOME="$HOME/.sdkman/candidates/java/current"
+          export PATH="$JAVA_HOME/bin:$PATH"
           java --version
           ./mvnw --version
           make clean run

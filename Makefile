@@ -20,6 +20,6 @@ clean:
 # i.e. when creating the fatjar mvn keep the old jar (cda.jar) and calls the fatjar differently (cda-jar-with-dependencies.jar)
 # this is a workaround to keep the jar name consistent and remove the old jar
 package:
-	./mvnw package
+	./mvnw -q package
 	rm target/$(JARNAME).jar
 	mv target/$(JARNAME)-jar-with-dependencies.jar target/$(JARNAME).jar

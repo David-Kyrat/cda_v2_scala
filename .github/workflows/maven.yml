@@ -27,15 +27,25 @@ jobs:
       #   distribution: 'liberica-full'
       #   cache: maven
       # Installing it manually:
-      - name: Set up JDK 19 (liberica full)
+      # - name: Set up JDK 19 (liberica full)
+      #   run: |
+      #     curl -LOSs https://download.bell-sw.com/java/19.0.2+9/bellsoft-jdk19.0.2+9-linux-amd64-full.deb
+      #     sudo apt install ./bellsoft-jdk19.0.2+9-linux-amd64-full.deb
+      - name: install sdkman
         run: |
-          curl -LOSs https://download.bell-sw.com/java/19.0.2+9/bellsoft-jdk19.0.2+9-linux-amd64-full.deb
-          sudo apt install ./bellsoft-jdk19.0.2+9-linux-amd64-full.deb
+          curl -s "https://get.sdkman.io" | bash
+          source "$HOME/.sdkman/bin/sdkman-init.sh"
+      - name: install java
+        run: |
+          yes | sdk install java 19.0.2.fx-librca
+          export JAVA_HOME="$HOME/.sdkman/candidates/java/current"
+
       - name: test java and add to path
         run: |
           which java
           whereis java
-          ls -la $(wich java)
+          ls -la $(which java)
+          echo $JAVA_HOME
 
       - name: compile with mvnw and run
         run: make clean run

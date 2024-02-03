@@ -14,7 +14,6 @@ import javafx.stage.Stage
 import com.jfoenix.controls.JFXTextField
 import com.jfoenix.controls.JFXTextField.*
 
-
 import java.io.OutputStream.nullOutputStream
 import java.io.PrintStream
 import java.nio.charset.StandardCharsets
@@ -97,7 +96,6 @@ class Main extends Application {
         val abbrevFilePath = getParameters.getRaw.asScala.lastOption.getOrElse(dlAbbrevFile(url))
         stageRef.set(new ChoosingStage("Course Description Automation", abbrevFilePath))
         addIconsToStage(stage)
-        // System.setOut(stdout) // enable back console output
         stage.startAndShow()
     }
 
@@ -121,11 +119,9 @@ class Main extends Application {
             val url = "https://raw.githubusercontent.com/David-Kyrat/Course-Description-Automation/master/files/res/abbrev.tsv"
             // Utils.log("Downloading abbreviations file from " + url)
             val abbrevFilePath = args.lastOption.getOrElse(dlAbbrevFile(url))
-                // val cs = new ChoosingStage("Course Description Automation", abbrevFilePath)
-                stageRef.set(new ChoosingStage("Course Description Automation", abbrevFilePath))
-                addIconsToStage(stage)
-                // System.setOut(stdout) // enable back console output
-                stage.startAndShow()
+            stageRef.set(new ChoosingStage("Course Description Automation", abbrevFilePath))
+            addIconsToStage(stage)
+            stage.startAndShow()
         })
         // Waits for the JavaFX application to finish
         while (serializedOutput.isEmpty) {}
@@ -133,7 +129,8 @@ class Main extends Application {
 
     override def init(): Unit = {
         super.init()
-        // System.setOut(nullPrintStream) // prevent Burningwave from flooding stdout with logs when JFX Apps starts
+        // WARN: this line below is needed even if jvmVerson is never used, to startup something from the Burningwave jvm-driver library
+        //  that allows Jfoenix (material JFX components) to be loaded correctly
         jvmVersion = org.burningwave.core.assembler.StaticComponentContainer.JVMInfo.getVersion
     }
 
@@ -153,14 +150,12 @@ object Main {
      * prevent org.Burningwave.* from flooding stdout & stderr with logs when JVM exits
      */
     def silenceBurningWaveLogsAfterStageClose(): Unit = {
-        // System.setOut(nullPrintStream)
-        // System.setErr(nullPrintStream)
+        System.setOut(nullPrintStream)
+        System.setErr(nullPrintStream)
     }
 
     def main(args: Array[String]): Unit = {
         Application.launch(classOf[Main], args: _*)
-        silenceBurningWaveLogsAfterStageClose()
-        // return serializedOutput;
     }
 
 }

@@ -181,12 +181,7 @@ public final class ChoosingStage extends FancyStage {
         // JavaFx Application should exit when this window is closed without clicking on
         // generate button
         this.onCloseRequestProperty()
-            .setValue(v -> {
-                // PrintStream nullPrintStream = new PrintStream( OutputStream.nullOutputStream());
-                // System.setOut(nullPrintStream);
-                // System.setErr(nullPrintStream);
-                System.exit(0);
-            });
+            .setValue(v -> System.exit(0));
     }
 
     /**

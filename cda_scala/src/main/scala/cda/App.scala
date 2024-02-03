@@ -16,12 +16,16 @@ import javafx.application.{Application, Platform}
 import java.nio.file.Files
 
 import java.nio.file.Path
+import com.jfoenix.controls.JFXTextField
 
 class App extends Application:
     override def start(primaryStage: Stage): Unit =
         val subroot = new VBox(100)
         subroot.setPrefSize(500, 200)
         val root = new BorderPane(subroot)
+        val tf = JFXTextField()
+        tf.setPromptText("Enter your name")
+        subroot.getChildren().add(tf)
 
         val scene = new Scene(root, 800, 800)
         primaryStage.setTitle("Card Game with MaterialFX")

@@ -17,6 +17,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: nicolabeghin/liberica-openjdk-with-javafx:latest
 
     steps:
       - uses: actions/checkout@v3
@@ -29,11 +30,10 @@ jobs:
       #   distribution: 'liberica-full'
       #   cache: maven
       # Installing it manually:
-
-      - name: Set up JDK 21
-        run: |
-          curl -LOSs https://github.com/bell-sw/Liberica/releases/download/21.0.2+14/bellsoft-jdk21.0.2+14-linux-amd64-full.deb
-          sudo apt install ./bellsoft-jdk21.0.2+14-linux-amd64-full.deb
+      # - name: Set up JDK 21
+      #   run: |
+      #     curl -LOSs https://github.com/bell-sw/Liberica/releases/download/21.0.2+14/bellsoft-jdk21.0.2+14-linux-amd64-full.deb
+      #     sudo apt install ./bellsoft-jdk21.0.2+14-linux-amd64-full.deb
 
       - name: compile with mvnw and run
         run: make run

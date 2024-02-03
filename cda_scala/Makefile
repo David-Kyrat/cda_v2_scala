@@ -1,4 +1,4 @@
 all: run
 
 run:
-	mvn compile exec:java
+	mvn clean compile exec:java

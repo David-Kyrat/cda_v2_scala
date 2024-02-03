@@ -10,7 +10,6 @@ import cda.model.sealedconcept.*
 import cda.model.sealedconcept.CourseHours.CourseHoursBuilder
 import cda.model.{Course, Utils}
 import com.google.gson.{JsonElement, JsonObject}
-
 import scala.collection.mutable.ArrayBuffer
 import scala.jdk.CollectionConverters.*
 import scala.util.{Failure, Success, Try}

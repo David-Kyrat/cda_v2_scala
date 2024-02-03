@@ -15,6 +15,13 @@
             "/home/noahl/tests/scalafx/fli_scala/cda_scala/target/classes",
             "/home/noahl/.m2/repository/org/scala-lang/scala3-library_3/3.3.1/scala3-library_3-3.3.1.jar",
             "/home/noahl/.m2/repository/org/scala-lang/scala-library/2.13.10/scala-library-2.13.10.jar",
+            "/home/noahl/.m2/repository/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar",
+            "/home/noahl/.m2/repository/org/scala-lang/modules/scala-parallel-collections_3/1.0.4/scala-parallel-collections_3-1.0.4.jar",
+            "/home/noahl/tests/scalafx/fli_scala/lib/jfoenix-19.0.1.jar",
+            "/home/noahl/.m2/repository/org/burningwave/core/12.62.7/core-12.62.7.jar",
+            "/home/noahl/.m2/repository/org/burningwave/jvm-driver/8.14.1/jvm-driver-8.14.1.jar",
+            "/home/noahl/.m2/repository/io/github/toolfactory/jvm-driver/9.4.3/jvm-driver-9.4.3.jar",
+            "/home/noahl/tests/scalafx/fli_scala/lib/jvm-driver-9.4.3.jar",
             "/home/noahl/.m2/repository/org/scala-lang/scala3-library_3/3.3.1/scala3-library_3-3.3.1.jar",
             "/home/noahl/.m2/repository/org/scala-lang/scala-library/2.13.10/scala-library-2.13.10.jar"
         ],
@@ -136,6 +143,22 @@
         "resolution": {
             "modules": [
                 {
+                    "organization": "com.google.code.gson",
+                    "name": "gson",
+                    "version": "2.10.1",
+                    "artifacts": [
+                        {
+                            "name": "gson",
+                            "path": "/home/noahl/.m2/repository/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar"
+                        },
+                        {
+                            "name": "gson",
+                            "classifier": "sources",
+                            "path": "/home/noahl/.m2/repository/com/google/code/gson/gson/2.10.1/gson-2.10.1-sources.jar"
+                        }
+                    ]
+                },
+                {
                     "organization": "org.scala-lang",
                     "name": "scala-library",
                     "version": "2.13.10",
@@ -152,6 +175,22 @@
                     ]
                 },
                 {
+                    "organization": "org.scala-lang.modules",
+                    "name": "scala-parallel-collections_3",
+                    "version": "1.0.4",
+                    "artifacts": [
+                        {
+                            "name": "scala-parallel-collections_3",
+                            "path": "/home/noahl/.m2/repository/org/scala-lang/modules/scala-parallel-collections_3/1.0.4/scala-parallel-collections_3-1.0.4.jar"
+                        },
+                        {
+                            "name": "scala-parallel-collections_3",
+                            "classifier": "sources",
+                            "path": "/home/noahl/.m2/repository/org/scala-lang/modules/scala-parallel-collections_3/1.0.4/scala-parallel-collections_3-1.0.4-sources.jar"
+                        }
+                    ]
+                },
+                {
                     "organization": "org.scala-lang",
                     "name": "scala3-library_3",
                     "version": "3.3.1",
@@ -164,6 +203,76 @@
                             "name": "scala3-library_3",
                             "classifier": "sources",
                             "path": "/home/noahl/.m2/repository/org/scala-lang/scala3-library_3/3.3.1/scala3-library_3-3.3.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "local",
+                    "name": "jvm-driver",
+                    "version": "9.4.3",
+                    "artifacts": [
+                        {
+                            "name": "jvm-driver",
+                            "path": "/home/noahl/tests/scalafx/fli_scala/lib/jvm-driver-9.4.3.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.burningwave",
+                    "name": "jvm-driver",
+                    "version": "8.14.1",
+                    "artifacts": [
+                        {
+                            "name": "jvm-driver",
+                            "path": "/home/noahl/.m2/repository/org/burningwave/jvm-driver/8.14.1/jvm-driver-8.14.1.jar"
+                        },
+                        {
+                            "name": "jvm-driver",
+                            "classifier": "sources",
+                            "path": "/home/noahl/.m2/repository/org/burningwave/jvm-driver/8.14.1/jvm-driver-8.14.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "local",
+                    "name": "jfoenix",
+                    "version": "19.0.1",
+                    "artifacts": [
+                        {
+                            "name": "jfoenix",
+                            "path": "/home/noahl/tests/scalafx/fli_scala/lib/jfoenix-19.0.1.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "io.github.toolfactory",
+                    "name": "jvm-driver",
+                    "version": "9.4.3",
+                    "artifacts": [
+                        {
+                            "name": "jvm-driver",
+                            "path": "/home/noahl/.m2/repository/io/github/toolfactory/jvm-driver/9.4.3/jvm-driver-9.4.3.jar"
+                        },
+                        {
+                            "name": "jvm-driver",
+                            "classifier": "sources",
+                            "path": "/home/noahl/.m2/repository/io/github/toolfactory/jvm-driver/9.4.3/jvm-driver-9.4.3-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.burningwave",
+                    "name": "core",
+                    "version": "12.62.7",
+                    "artifacts": [
+                        {
+                            "name": "core",
+                            "path": "/home/noahl/.m2/repository/org/burningwave/core/12.62.7/core-12.62.7.jar"
+                        },
+                        {
+                            "name": "core",
+                            "classifier": "sources",
+                            "path": "/home/noahl/.m2/repository/org/burningwave/core/12.62.7/core-12.62.7-sources.jar"
                         }
                     ]
                 }

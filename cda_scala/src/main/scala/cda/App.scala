@@ -38,7 +38,7 @@ object App:
     val abbrevFilePath: Path = pathOf(abbrevFilename)
     val absAbbrevFilePath: String = abbrevFilePath.normalize().toString
 
-    /* def main(args: Array[String]): Unit =
+    def main(args: Array[String]): Unit =
         try
             verbose = args.contains("verbose")
             val guiMain = new jfxuserform.Main()
@@ -51,11 +51,11 @@ object App:
             // val userResponse = "#BM"
             modelMain.main(Array(userResponse))
         catch case e: Throwable => e.printStackTrace()
-        finally onExit() */
+        finally onExit()
 
-    def main(args: Array[String]): Unit =
+    /* def main(args: Array[String]): Unit =
         println("Hello World!")
-        Application.launch(classOf[App], args: _*)
+        Application.launch(classOf[App], args: _*) */
 
     /**
      * See `ch.view.jfxuserform.Main.silenceBurningWaveLogsAfterStageClose()` for more details.

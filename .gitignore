@@ -11,6 +11,7 @@ jar
 *.db
 temp-one-jar
 
+**/.bloop
 *.aux
 *.fdb_latexmk
 *.fls
@@ -22,3 +23,5 @@ temp
 *.jar
 
 cda_scala/target/
+cda_scala/files/
+

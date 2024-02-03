@@ -1,28 +1,31 @@
 package cda.view.jfxuserform
 
-import cda.model.Utils.{pathOf, abbrevFilename}
-import cda.model.Utils
 import cda.App.abbrevFilePath
+import cda.model.Utils
+import cda.model.Utils.abbrevFilename
+import cda.model.Utils.pathOf
+import cda.view.jfxuserform.Main.nullPrintStream
+import cda.view.jfxuserform.Main.silenceBurningWaveLogsAfterStageClose
 import javafx.application.Application
+import javafx.application.Platform
 import javafx.scene.image.Image
 import javafx.stage.Stage
-import cda.view.jfxuserform.Main.{nullPrintStream, silenceBurningWaveLogsAfterStageClose}
 
 import java.io.OutputStream.nullOutputStream
 import java.io.PrintStream
 import java.nio.charset.StandardCharsets
 import java.nio.charset.StandardCharsets.UTF_8
+import java.nio.file.Files
+import java.nio.file.OpenOption
+import java.nio.file.Path
+import java.nio.file.StandardOpenOption
 import java.nio.file.StandardOpenOption.*
-import java.nio.file.{Files, OpenOption, Path, StandardOpenOption}
+import java.nio.file.attribute.FileAttribute
 import java.util
 import java.util.List
+import java.util.concurrent.atomic.AtomicReference
 import scala.io.Source
 import scala.jdk.CollectionConverters.*
-import java.nio.file.attribute.FileAttribute
-import javafx.application.Platform
-import cda.model.Utils
-
-import java.util.concurrent.atomic.AtomicReference
 
 class Main extends Application {
     private var jvmVersion: Int = 0
@@ -111,7 +114,7 @@ class Main extends Application {
         Platform.startup(() => {
             this.init()
             val url = "https://raw.githubusercontent.com/David-Kyrat/Course-Description-Automation/master/files/res/abbrev.tsv"
-            Utils.log("Downloading abbreviations file from " + url)
+            // Utils.log("Downloading abbreviations file from " + url)
             val abbrevFilePath = args.lastOption.getOrElse(dlAbbrevFileIfNotExist(url))
             stageRef.set(new ChoosingStage("Course Description Automation", abbrevFilePath))
             addIconsToStage(stage)

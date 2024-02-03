@@ -14,7 +14,7 @@ show_pdf:
 	@ls files/res/md/ files/res/pdf
 
 clean:
-	mvn clean
+	./mvnw clean
 
 # call maven package and rename the <jarName>-with-dependencies.jar to <jarnName>.jar
 # i.e. when creating the fatjar mvn keep the old jar (cda.jar) and calls the fatjar differently (cda-jar-with-dependencies.jar)

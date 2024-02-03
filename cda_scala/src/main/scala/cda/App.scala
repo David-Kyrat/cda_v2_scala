@@ -58,12 +58,6 @@ object App:
     val abbrevFilePath: Path = pathOf(abbrevFilename)
     val absAbbrevFilePath: String = abbrevFilePath.normalize().toString
 
-    def gettemplatesContent() =
-        Serializer.extractTemplatesIfNotExists()
-        /* val url = "https://github.com/David-Kyrat/Course-Description-Automation/raw/master/files/res/templates/unige.png"
-        val filename = Serializer.templatePath + "/unige.png"
-        Utils.dlBinFile(url, filename) */
-
     def main(args: Array[String]): Unit =
         try
             verbose = args.contains("verbose")
@@ -72,12 +66,10 @@ object App:
             val guiArgs =
                 if Files.exists(abbrevFilePath) then Array(absAbbrevFilePath)
                 else Array[String]()
-            // guiMain.start(guiArgs)
-            // val userResponse = guiMain.serializedOutput.get
+            guiMain.start(guiArgs)
+            val userResponse = guiMain.serializedOutput.get
             // val userResponse = "#BM"
-            // modelMain.main(Array(userResponse))
-            gettemplatesContent()
-
+            modelMain.main(Array(userResponse))
         catch
             case e: Throwable => e.printStackTrace()
             // finally onExit()

@@ -58,12 +58,14 @@ object Serializer {
         // path to the necessary files on the classpath, i.e. in the jar i.e. to give to `getClass.getResourceAsStream()`
         val templatesResourceStreamPath = templatesDestPath.map(_.replace("files", ""))
         Files.createDirectories(Path.of(templatePath))
-        println("extracting " + templatesResourceStreamPath + " to " + templatesDestPath)
+        if VERBOSE then println("extracting " + templatesResourceStreamPath + " to " + templatesDestPath)
         // templatesDestPath.foreach(p => println(Files.exists(Path.of(p))))
+
         Utils.extractFileFromCPIfNotExists(templatesResourceStreamPath, templatesDestPath.map(Path.of(_)))
+
         val img = f"$templatePath/unige.png"
         if !Files.exists(Path.of(img)) then
-            if (VERBOSE) println("extracting " + unigeLogoUrl + " to " + img)
+            if VERBOSE then println(f"downloading $unigeLogoUrl to $img")
             Utils.dlBinFile(unigeLogoUrl, img)
     }
 
@@ -71,10 +73,9 @@ object Serializer {
      * @param mdInput name of markdown file to convert
      * @return Arguments to pass to pandoc as a vector e.g. `in.md -t html5 --template... -o output.pdf`
      */
-    private def pandocArgs(mdFileName: String) = {
+    private def pandocArgs(mdFileName: String) =
         val pdfName = mdFileName.replace(".md", ".pdf")
         f"$mdDir/$mdFileName" +: pandocOpts :+ f"$pdfDir/$pdfName"
-    }
 
     private def mdFileName(course: Course) =
         f"desc-${course.year}-${course.id}.md"
@@ -99,9 +100,7 @@ object Serializer {
      * @param ymlStmt
      * @return
      */
-    def sanitizeForYaml(ymlStmt: String): String = {
-        ""
-    }
+    def sanitizeForYaml(ymlStmt: String): String = ""
 
     /**
      * Format given parameters in a yaml fmt i.e. "key: value"
@@ -113,11 +112,10 @@ object Serializer {
 
     // unused
     def yamlFmTOpt[T](key: String, value: Option[T]) =
-        value match {
+        value match
             case Some(t) => yamlFmt(key, value)
             case None    => ""
             // case Some(t) => f"$key: \"$t\""
-        }
 
     /**
      * Writes optional fields of given course to given writer.
@@ -186,15 +184,13 @@ object Serializer {
         // val name = f"desc-${course.year}-${course.id}.md"
         val name = mdFileName(course)
         val path = Utils.pathOf(f"md/$name")
-        if (VERBOSE) {
+        if VERBOSE then
             this.synchronized {
-                if (print_flag <= 0) {
+                if print_flag <= 0 then
                     val tmp = Utils.pathOf("<some_resource>")
                     println(f"  ---- Saving ${course.id} to ${path.toAbsolutePath.normalize()}\n Because Utils.pathOf('<some_resource>') gives ${tmp.toAbsolutePath.normalize()}\n")
                     print_flag += 1
-                }
             }
-        }
 
         val br = new BufferedWriter(new FileWriter(path.toAbsolutePath.toString, UTF_8))
 
@@ -223,11 +219,11 @@ object Serializer {
             yamlFmtMultiLineStr("description", Utils.sanitize(course.description))
         )
         val ch = course.hoursNb
-        if (ch.seminaire > 0) {
-            if (ch.practice > 0) write(yamlFmt("practice_hours", course.hoursNb.practice))
+        if ch.seminaire > 0 then
+            if ch.practice > 0 then write(yamlFmt("practice_hours", course.hoursNb.practice))
             val toWrite = yamlFmt("sem_hours", course.hoursNb.seminaire)
             write(toWrite)
-        } else write(yamlFmt("practice_hours", course.hoursNb.practice))
+        else write(yamlFmt("practice_hours", course.hoursNb.practice))
         write(yamlHeaderSep)
         br.flush
         br.close

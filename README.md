@@ -1,5 +1,14 @@
 # Fancy-Login-Form
 
+## Maven branch
+
+To package the app + dependencies into an uber-jar / fat-jar, a refactored version of the project using maven was created here  
+to take advantage of the plugins that seem to be the only working solution after trying a lot of alternatives.
+
+---
+
+## Rest of the README
+
 Rebuilt in scala for better integration with Course-Description-Automation project.
 
 **NB**: This project is simply the GUI for the [Course-Description-Automation](https://github.com/David-Kyrat/Course-Description-Automation) project.
@@ -14,15 +23,4 @@ The end project doesn't require Intellij, or any specific configuration file to 
 
 ---
 
-To package jar into fat jar, we just needed to include ***the extracted content of each jar instead of the jars themself***.
-i.e. Something like:
-
-```bash
-mkdir temp
-for jar in lib/*.jar; do
-    (cd temp && jar xf ../"$jar")
-done
-jar cvfm MyFatJar.jar META-INF/MANIFEST.MF -C out/ . -C temp/ .
-rm -r temp
-```
 

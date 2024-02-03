@@ -1,2 +1,0 @@
-One-Jar-Main-Class: cda.App
-One-Jar-Main-Class: cda.App

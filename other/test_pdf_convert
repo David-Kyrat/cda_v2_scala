@@ -1,9 +1,0 @@
-#!/usr/bin/env zsh
-# Stonks:
-# - pagedjs-cli : remove padding
-#
-#
-#
-# eng="pagedjs-cli"
-eng="wkhtmltopdf"
-/usr/bin/pandoc files/res/templates/desc-2022-13X001.html -f html -t pdf --pdf-engine "$eng" -V margin-top=0 -V margin-left=3 -V margin-right=0 -V margin-bottom=0 --css files/res//templates/course-desc.css -o files/res//pdf/desc-2022-13X001.pdf

@@ -1,5 +1,0 @@
-#!/usr/bin/env zsh
-
-for pdf in $(ls files/res/pdf/*.pdf); do
-    pdfinfo $pdf | rg Pages | awk '{print $2}'
-done

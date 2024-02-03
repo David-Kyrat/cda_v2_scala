@@ -28,7 +28,7 @@ jobs:
         distribution: 'liberica'
         cache: maven
     - name: Install Make
-      run: apt-get -y install make
+      run: sudo apt -y install make
     - name: compile with mvnw and run
       run:  make run
 

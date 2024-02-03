@@ -1,0 +1,9 @@
+cda/view/helpers/Nodes.class
+cda/view/jfxuserform/FancyStage.class
+cda/view/jfxuserform/JFXTableView$VPair.class
+cda/view/jfxuserform/AbbrevDisplayer.class
+cda/view/jfxuserform/utilities/PPair.class
+cda/view/jfxuserform/utilities/Pair.class
+cda/view/jfxuserform/ChoosingStage.class
+cda/view/jfxuserform/JFXTableView.class
+cda/view/jfxuserform/utilities/Quintuple.class

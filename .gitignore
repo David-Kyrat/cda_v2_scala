@@ -8,6 +8,7 @@ files/res/md
 files/res/pdf
 !files/res/templates
 jar
+
 *.db
 temp-one-jar
 
@@ -25,3 +26,5 @@ temp
 cda_scala/target/
 cda_scala/files/
 
+cda_scala_mvn/target/
+cda_scala_mvn/files/

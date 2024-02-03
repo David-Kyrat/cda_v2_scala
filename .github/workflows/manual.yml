@@ -1,0 +1,39 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Java CI with Make (Manual)
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      # Can't find an action to target the jdk-full version of liberica (the one with javafx included)
+      - name: install sdkman to avoid path and java_home problem
+        run: |
+          curl -s "https://get.sdkman.io" | bash
+          source "$HOME/.sdkman/bin/sdkman-init.sh"
+      - name: install java
+        run: |
+          source "$HOME/.sdkman/bin/sdkman-init.sh"
+          sdk install java 19.0.2.fx-librca
+
+      - name: add java to path & compile with mvnw
+        run: |
+          source "$HOME/.bashrc"
+          source "$HOME/.sdkman/bin/sdkman-init.sh"
+          export JAVA_HOME="$HOME/.sdkman/candidates/java/current"
+          export PATH="$JAVA_HOME/bin:$PATH"
+          make clean run

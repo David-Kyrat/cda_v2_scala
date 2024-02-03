@@ -4,12 +4,13 @@
 refactored 100% in scala / integrated java.
 (no more jar from a separate project for the gui and no more Rust)
 
-<div style="display: flex; justify-content: space-around">
 
-<img src="./src/main/files/res/screenshot1.png" height="400">
-<img src="./src/main/files/res/screenshot2.png" height="350">
+<p align="center">
+  <img src="./src/main/files/res/screenshot1.png" height="400" hspace="3%">
 
-</div>
+  <img src="./src/main/files/res/screenshot2.png" height="350" hspace="3%">
+</p>
+
 
 ## Running the project
 

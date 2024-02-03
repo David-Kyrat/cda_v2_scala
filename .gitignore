@@ -31,3 +31,7 @@ cda_scala_mvn/files/
 RunnerScriptForClientPackageMakefile
 target
 files
+
+.classpath
+.settings
+.project

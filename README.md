@@ -1,14 +1,5 @@
 # Fancy-Login-Form
 
-## Maven branch
-
-To package the app + dependencies into an uber-jar / fat-jar, a refactored version of the project using maven was created here  
-to take advantage of the plugins that seem to be the only working solution after trying a lot of alternatives.
-
----
-
-## Rest of the README
-
 Rebuilt in scala for better integration with Course-Description-Automation project.
 
 **NB**: This project is simply the GUI for the [Course-Description-Automation](https://github.com/David-Kyrat/Course-Description-Automation) project.

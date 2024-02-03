@@ -31,6 +31,11 @@ jobs:
         run: |
           curl -LOSs https://download.bell-sw.com/java/19.0.2+9/bellsoft-jdk19.0.2+9-linux-amd64-full.deb
           sudo apt install ./bellsoft-jdk19.0.2+9-linux-amd64-full.deb
+      - name: test java and add to path
+        run: |
+          which java
+          whereis java
+          ls -la $(wich java)
 
       - name: compile with mvnw and run
         run: make clean run

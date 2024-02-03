@@ -302,9 +302,9 @@ object StudyPlan extends (Int => StudyPlan) {
         case Success(s) =>
           true
         case tried @ Failure(s) =>
-          Utils.log(s"Failed. Reason: $s")
+          Utils.log(s"$s")
           // if VERBOSE then println(s"Failed. Reason: $s")
-          System.err.println(s"Failed. Reason: $s")
+          System.err.println(s)
           false
       }
       .map(_.get)

@@ -1,0 +1,70 @@
+/* #2e354f */
+
+.loginTopLbl {
+    -fx-font-family: "System Bold";
+    -fx-font-size: 14.0;
+    -fx-font-weight: Bold;
+    -fx-text-fill: white;
+}
+
+.loginField, .loginBtn {
+    -fx-font-size: 16.0;
+    -fx-text-fill: white;
+}
+
+.signupLabel, .qrBtn, .addBtn {
+    -fx-font-size: 13.0;
+    /*-fx-text-fill: #8c90b3;*/
+    -fx-text-fill: #5b9cff;
+    -fx-font-style: italic;
+    -fx-font-weight: lighter;
+    /*-fx-background-color: #414f72;*/
+    -fx-background-color: #374361;
+}
+
+.signupLabelBorder{
+    /*-fx-text-fill: #b6b8ce;*/
+    -fx-text-fill: #90bcff;
+    -fx-font-style: italic;
+    -fx-background-color: #414f72;
+    /*-fx-border-color: #212945;*/
+    /*-fx-border-width: 1.5;*/
+    /*-fx-border-style: solid;*/
+}
+
+.courseSelectionViewCtnr {
+    -fx-background-color: #2e354f;
+    -fx-border-color: #212945;
+    -fx-border-width: 1.5;
+    -fx-border-style: solid;
+    -fx-fill: white;
+}
+
+
+.lighterBorder {
+    -fx-border-color: #9c9eb1;
+    -fx-border-width: 1;
+    -fx-border-style: solid;
+}
+
+.abbrevColumnContainer {
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+    -fx-font-size: 16.0;
+    -fx-font-weight: bold;
+}
+
+.addBtn {
+    -fx-font-style: normal;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-color: #4c5d87;
+    -fx-padding: 10px;
+    /*-fx-effect: dropshadow(gaussian, #131620, 12, 0.7, 0, 5);*/
+}
+
+.loginBtn {
+    -fx-background-color: #43BB73;
+    -fx-effect: dropshadow(gaussian, #131620, 20, 0.5, 0, 5);
+    -fx-background-radius: 0;
+}

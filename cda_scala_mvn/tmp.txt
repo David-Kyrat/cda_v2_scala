@@ -1,1 +1,0 @@
-/usr/bin/pandoc files/res/md/desc-2023-14F018.md --template=files/res/templates/template.html --pdf-engine wkhtmltopdf -V margin-top=0 -V margin-left=3 -V margin-right=0 -V margin-bottom=0 --css files/res/templates/course-desc.css -o files/res/pdf/desc-2023-14F018.pdf

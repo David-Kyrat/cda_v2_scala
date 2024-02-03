@@ -27,10 +27,10 @@ jobs:
       #   distribution: 'liberica-full'
       #   cache: maven
       # Installing it manually:
-      - name: Set up JDK 21 (liberica full)
+      - name: Set up JDK 19 (liberica full)
         run: |
-          curl -LOSs https://github.com/bell-sw/Liberica/releases/download/21.0.2+14/bellsoft-jdk21.0.2+14-linux-amd64-full.deb
-          sudo apt install ./bellsoft-jdk21.0.2+14-linux-amd64-full.deb
+          curl -LOSs https://download.bell-sw.com/java/19.0.2+9/bellsoft-jdk19.0.2+9-linux-amd64-full.deb
+          sudo apt install ./bellsoft-jdk19.0.2+9-linux-amd64-full.deb
 
       - name: compile with mvnw and run
         run: make clean run

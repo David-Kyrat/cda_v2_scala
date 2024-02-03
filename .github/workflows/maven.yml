@@ -46,6 +46,7 @@ jobs:
         run: |
           source "$HOME/.sdkman/bin/sdkman-init.sh"
           java --version
+          ./mvnw --version
           make clean run
 
       # - name: compile with mvnw and run

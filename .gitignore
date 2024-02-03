@@ -20,3 +20,5 @@ temp-one-jar
 Output.jar
 temp
 *.jar
+
+./cda_scala/target/

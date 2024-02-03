@@ -35,15 +35,6 @@
       <artifactId>scala-parallel-collections_3</artifactId>
       <version>1.0.4</version>
     </dependency>
-
-    <!-- <dependency>
-      <groupId>local</groupId>
-      <artifactId>jfoenix</artifactId>
-      <version>19.0.1</version>
-      <scope>system</scope>
-      <systemPath>${local.dependencies.path}/jfoenix-19.0.1.jar</systemPath>
-    </dependency> -->
-    <!-- https://mvnrepository.com/artifact/us.ihmc/jfoenix -->
     <dependency>
       <groupId>us.ihmc</groupId>
       <artifactId>jfoenix</artifactId>
@@ -62,23 +53,6 @@
       <artifactId>jvm-driver</artifactId>
       <version>8.15.0</version>
     </dependency>
-
-
-    <!-- Include your local jars as system scope dependencies -->
-    <!-- <dependency>
-            <groupId>local</groupId>
-            <artifactId>core</artifactId>
-            <version>12.62.7</version>
-            <scope>system</scope>
-            <systemPath>${local.dependencies.path}/core-12.62.7.jar</systemPath>
-        </dependency> -->
-    <!-- <dependency>
-      <groupId>local</groupId>
-      <artifactId>jvm-driver</artifactId>
-      <version>9.4.3</version>
-      <scope>system</scope>
-      <systemPath>${local.dependencies.path}/jvm-driver-9.4.3.jar</systemPath>
-    </dependency> -->
   </dependencies>
   <build>
     <!-- Include resource directories -->
@@ -163,31 +137,10 @@
             </goals>
             <configuration>
               <createDependencyReducedPom>false</createDependencyReducedPom>
-              <!-- <filters>
-                <filter>
-                  <artifact>local:jfoenix</artifact>
-                  <includes>
-                    <include>**</include>
-                  </includes>
-                </filter>
-                <filter>
-                  <artifact>local:core</artifact>
-                  <includes>
-                    <include>**</include>
-                  </includes>
-                </filter>
-                <filter>
-                  <artifact>local:jvm-driver</artifact>
-                  <includes>
-                    <include>**</include>
-                  </includes>
-                </filter>
-              </filters> -->
               <transformers>
                 <transformer
                   implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>cda.App</mainClass> <!-- Replace with your actual main
-                                    class -->
+                  <mainClass>cda.App</mainClass>
                 </transformer>
               </transformers>
             </configuration>

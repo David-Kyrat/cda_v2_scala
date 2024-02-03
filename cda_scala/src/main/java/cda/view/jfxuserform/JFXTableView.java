@@ -93,7 +93,8 @@ public class JFXTableView {
         tableView.setShowRoot(false);
         tableView.setEditable(false);
         tableView.getColumns().setAll(tableColumns);
-        tableView.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
+        // tableView.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
+        tableView.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
 
         this.parentRoot = Nodes.setUpNewVBox(5, Pos.TOP_CENTER, true, createLabel(), tableView);
 

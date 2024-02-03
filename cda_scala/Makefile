@@ -1,4 +1,7 @@
 all: run
 
 run:
-	mvn clean compile exec:java
+	mvn package exec:java
+
+log:
+	bat files/res/log/cda-err.log

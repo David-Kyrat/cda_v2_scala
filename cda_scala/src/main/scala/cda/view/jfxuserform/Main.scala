@@ -11,6 +11,10 @@ import javafx.application.Platform
 import javafx.scene.image.Image
 import javafx.stage.Stage
 
+import com.jfoenix.controls.JFXTextField
+import com.jfoenix.controls.JFXTextField.*
+
+
 import java.io.OutputStream.nullOutputStream
 import java.io.PrintStream
 import java.nio.charset.StandardCharsets
@@ -40,7 +44,8 @@ class Main extends Application {
 
     private def addIconsToStage(stage: Stage): Unit = stage.getIcons.addAll(getIcons)
 
-    /** This variable needs to be an AtomicReference because it is accessed from several threads:
+    /**
+     * This variable needs to be an AtomicReference because it is accessed from several threads:
      *  - The JavaFX Application Thread
      *  - And the thread that calls `Main.main()`
      *    Otherwise waiting in the main thread for the JavaFX Application to finish
@@ -55,7 +60,7 @@ class Main extends Application {
      */
     def serializedOutput: Option[String] = stage match {
         case null => None
-        case _ => Option(stage.getSerializedOutput)
+        case _    => Option(stage.getSerializedOutput)
     }
 
     /**
@@ -116,10 +121,30 @@ class Main extends Application {
             val url = "https://raw.githubusercontent.com/David-Kyrat/Course-Description-Automation/master/files/res/abbrev.tsv"
             // Utils.log("Downloading abbreviations file from " + url)
             val abbrevFilePath = args.lastOption.getOrElse(dlAbbrevFileIfNotExist(url))
-            stageRef.set(new ChoosingStage("Course Description Automation", abbrevFilePath))
-            addIconsToStage(stage)
-            System.setOut(stdout) // enable back console output
-            stage.startAndShow()
+            try {
+                val cs = new ChoosingStage("Course Description Automation", abbrevFilePath)
+                stageRef.set(cs)
+                addIconsToStage(stage)
+                System.setOut(stdout) // enable back console output
+                stage.startAndShow()
+            } 
+            catch {
+                case e: Throwable =>
+                    println("==========================\n\n\n\n")
+                    e.printStackTrace()
+                    println("==========================\n\n\n\n")
+            }
+            /* cs match {
+                case scala.util.Success(value) =>
+                    stageRef.set(value)
+                case scala.util.Failure(exception) =>
+                    println("==========================\n\n\n\n")
+                    exception.printStackTrace()
+                    println("==========================\n\n\n\n")
+                    System.exit(1)
+                // stageRef.set(new ChoosingStage("Course Description Automation", abbrevFilePath))
+            } */
+            // stageRef.set(new ChoosingStage("Course Description Automation", abbrevFilePath))
         })
         // Waits for the JavaFX application to finish
         while (serializedOutput.isEmpty) {}

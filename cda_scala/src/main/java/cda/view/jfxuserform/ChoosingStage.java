@@ -4,6 +4,8 @@ import static cda.view.helpers.Nodes.addClass;
 import static javafx.scene.paint.Color.WHITE;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashSet;
@@ -13,6 +15,7 @@ import java.util.function.BinaryOperator;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTextField;
 
 import cda.view.helpers.Nodes;
@@ -152,7 +155,9 @@ public final class ChoosingStage extends FancyStage {
 
         // JavaFx Application should exit when this window is closed without clicking on generate button
         this.onCloseRequestProperty().setValue(v -> {
-            cda.view.jfxuserform.Main.silenceBurningWaveLogsAfterStageClose();
+            PrintStream nullPrintStream = new PrintStream(OutputStream.nullOutputStream());
+            System.setOut(nullPrintStream);
+            System.setErr(nullPrintStream);
             System.exit(0);
         });
     }

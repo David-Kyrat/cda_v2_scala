@@ -5,7 +5,7 @@
   <groupId>cda</groupId>
   <artifactId>cda_scala</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>2.0</version>
   <name>cda_scala</name>
   <properties>
     <scala.version>3.3.1</scala.version>
@@ -13,6 +13,7 @@
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
     <local.dependencies.path>/home/noahl/tests/scalafx/fli_scala/lib</local.dependencies.path>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <url>http://maven.apache.org</url>
   <dependencies>
@@ -40,7 +41,7 @@
       <artifactId>jfoenix</artifactId>
       <version>19.0.1</version>
       <scope>system</scope>
-      <systemPath>/home/noahl/tests/scalafx/fli_scala/lib/jfoenix-19.0.1.jar</systemPath>
+      <systemPath>${local.dependencies.path}/jfoenix-19.0.1.jar</systemPath>
     </dependency>
     <!-- https://mvnrepository.com/artifact/us.ihmc/jfoenix -->
     <!-- <dependency>
@@ -55,6 +56,13 @@
       <artifactId>core</artifactId>
       <version>12.62.7</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.burningwave/jvm-driver -->
+    <dependency>
+      <groupId>org.burningwave</groupId>
+      <artifactId>jvm-driver</artifactId>
+      <version>8.15.0</version>
+    </dependency>
+
 
     <!-- Include your local jars as system scope dependencies -->
     <!-- <dependency>
@@ -64,13 +72,13 @@
             <scope>system</scope>
             <systemPath>${local.dependencies.path}/core-12.62.7.jar</systemPath>
         </dependency> -->
-    <dependency>
+    <!-- <dependency>
       <groupId>local</groupId>
       <artifactId>jvm-driver</artifactId>
       <version>9.4.3</version>
       <scope>system</scope>
       <systemPath>${local.dependencies.path}/jvm-driver-9.4.3.jar</systemPath>
-    </dependency>
+    </dependency> -->
   </dependencies>
   <build>
     <!-- Include resource directories -->

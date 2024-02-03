@@ -21,17 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       # Can't find an action to target the jdk-full version of liberica (the one with javafx included)
-      # uses: actions/setup-java@v3
-      # with:
-      #   java-version: '21'
-      #   distribution: 'liberica-full'
-      #   cache: maven
-      # Installing it manually:
-      # - name: Set up JDK 19 (liberica full)
-      #   run: |
-      #     curl -LOSs https://download.bell-sw.com/java/19.0.2+9/bellsoft-jdk19.0.2+9-linux-amd64-full.deb
-      #     sudo apt install ./bellsoft-jdk19.0.2+9-linux-amd64-full.deb
-      - name: install sdkman
+      - name: install sdkman to avoid path and java_home problem
         run: |
           curl -s "https://get.sdkman.io" | bash
           source "$HOME/.sdkman/bin/sdkman-init.sh"
@@ -40,16 +30,13 @@ jobs:
           source "$HOME/.sdkman/bin/sdkman-init.sh"
           sdk install java 19.0.2.fx-librca
 
-      - name: test java and add to path
+      - name: add java to path & compile with mvnw
         run: |
           source "$HOME/.bashrc"
           source "$HOME/.sdkman/bin/sdkman-init.sh"
           export JAVA_HOME="$HOME/.sdkman/candidates/java/current"
           export PATH="$JAVA_HOME/bin:$PATH"
-          # make clean run
-
-      - name: compile with mvnw and run
-        run: make clean run
+          make clean run
 
       # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
       # - name: Update dependency graph

@@ -37,7 +37,8 @@ jobs:
           source "$HOME/.sdkman/bin/sdkman-init.sh"
       - name: install java
         run: |
-          yes | sdk install java 19.0.2.fx-librca
+          source "/home/runner/.sdkman/bin/sdkman-init.sh"
+          sdk install java 19.0.2.fx-librca
           export JAVA_HOME="$HOME/.sdkman/candidates/java/current"
 
       - name: test java and add to path

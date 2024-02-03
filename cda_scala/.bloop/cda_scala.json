@@ -5,6 +5,7 @@
         "directory": "/home/noahl/tests/scalafx/fli_scala/cda_scala",
         "workspaceDir": "/home/noahl/tests/scalafx/fli_scala/cda_scala",
         "sources": [
+            "/home/noahl/tests/scalafx/fli_scala/cda_scala/src/main/java",
             "/home/noahl/tests/scalafx/fli_scala/cda_scala/src/main/scala"
         ],
         "dependencies": [

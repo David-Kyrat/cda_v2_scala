@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install Make wget
-        run: sudo apt -y install make wget
+        run: sudo apt -y install make curl
       # Can't find an action to target the jdk-full version of liberica (the one with javafx included)
       # uses: actions/setup-java@v3
       # with:
@@ -32,7 +32,7 @@ jobs:
 
       - name: Set up JDK 21
         run: |
-          wget https://github.com/bell-sw/Liberica/releases/download/21.0.2+14/bellsoft-jdk21.0.2+14-linux-amd64-full.deb
+          curl -LOSs https://github.com/bell-sw/Liberica/releases/download/21.0.2+14/bellsoft-jdk21.0.2+14-linux-amd64-full.deb
           sudo apt install ./bellsoft-jdk21.0.2+14-linux-amd64-full.deb
 
       - name: compile with mvnw and run

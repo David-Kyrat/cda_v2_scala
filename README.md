@@ -1,6 +1,6 @@
 # Fancy-Login-Form
 
-Rebuilt in scala for better integration with Course-Description-Automation project.
+Rebuilt in scala for better integration with Course-Description-Automation project. (Using scala-cli in this branch, in the end maven was used on master branch)
 
 **NB**: This project is simply the GUI for the [Course-Description-Automation](https://github.com/David-Kyrat/Course-Description-Automation) project.
 It was before "hidden" in a jar in the resource directory that was "manually" launched with shell command.  

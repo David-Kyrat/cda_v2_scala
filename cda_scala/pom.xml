@@ -16,21 +16,45 @@
     <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala3-library_3</artifactId>
             <version>${scala.version}</version>
         </dependency>
+        <!-- Gson Dependency -->
         <dependency>
-            <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_3</artifactId>
-            <version>3.2.9</version>
-            <scope>test</scope>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
+        </dependency>
+
+        <!-- Scala Parallel Collections -->
+        <dependency>
+            <groupId>org.scala-lang.modules</groupId>
+            <artifactId>scala-parallel-collections_3</artifactId>
+            <version>1.0.4</version>
+        </dependency>
+
+        <!-- Include your local jars as system scope dependencies -->
+        <dependency>
+            <groupId>local</groupId>
+            <artifactId>jfoenix</artifactId>
+            <version>19.0.1</version>
+            <scope>system</scope>
+            <systemPath>/home/noahl/tests/scalafx/fli_scala/lib/jfoenix-19.0.1.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>local</groupId>
+            <artifactId>core</artifactId>
+            <version>12.62.7</version>
+            <scope>system</scope>
+            <systemPath>/home/noahl/tests/scalafx/fli_scala/lib/core-12.62.7.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>local</groupId>
+            <artifactId>jvm-driver</artifactId>
+            <version>9.4.3</version>
+            <scope>system</scope>
+            <systemPath>/home/noahl/tests/scalafx/fli_scala/lib/jvm-driver-9.4.3.jar</systemPath>
         </dependency>
     </dependencies>
     <build>

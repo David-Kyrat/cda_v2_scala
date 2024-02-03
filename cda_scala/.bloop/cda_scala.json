@@ -165,22 +165,6 @@
                             "path": "/home/noahl/.m2/repository/org/scala-lang/scala3-library_3/3.3.1/scala3-library_3-3.3.1-sources.jar"
                         }
                     ]
-                },
-                {
-                    "organization": "junit",
-                    "name": "junit",
-                    "version": "3.8.1",
-                    "artifacts": [
-                        {
-                            "name": "junit",
-                            "path": "/home/noahl/.m2/repository/junit/junit/3.8.1/junit-3.8.1.jar"
-                        },
-                        {
-                            "name": "junit",
-                            "classifier": "sources",
-                            "path": "/home/noahl/.m2/repository/junit/junit/3.8.1/junit-3.8.1-sources.jar"
-                        }
-                    ]
                 }
             ]
         },

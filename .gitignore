@@ -29,3 +29,5 @@ cda_scala/files/
 cda_scala_mvn/target/
 cda_scala_mvn/files/
 RunnerScriptForClientPackageMakefile
+target
+files

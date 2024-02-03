@@ -27,13 +27,13 @@ jobs:
       #   distribution: 'liberica-full'
       #   cache: maven
       # Installing it manually:
-      - name: Set up JDK 21
+      - name: Set up JDK 21 (liberica full)
         run: |
           curl -LOSs https://github.com/bell-sw/Liberica/releases/download/21.0.2+14/bellsoft-jdk21.0.2+14-linux-amd64-full.deb
           sudo apt install ./bellsoft-jdk21.0.2+14-linux-amd64-full.deb
 
       - name: compile with mvnw and run
-        run: make run
+        run: make clean run
 
       # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
       - name: Update dependency graph

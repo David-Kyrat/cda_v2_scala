@@ -97,7 +97,7 @@ class Main extends Application {
         val abbrevFilePath = getParameters.getRaw.asScala.lastOption.getOrElse(dlAbbrevFileIfNotExist(url))
         stageRef.set(new ChoosingStage("Course Description Automation", abbrevFilePath))
         addIconsToStage(stage)
-        System.setOut(stdout) // enable back console output
+        // System.setOut(stdout) // enable back console output
         stage.startAndShow()
     }
 
@@ -121,30 +121,11 @@ class Main extends Application {
             val url = "https://raw.githubusercontent.com/David-Kyrat/Course-Description-Automation/master/files/res/abbrev.tsv"
             // Utils.log("Downloading abbreviations file from " + url)
             val abbrevFilePath = args.lastOption.getOrElse(dlAbbrevFileIfNotExist(url))
-            try {
-                val cs = new ChoosingStage("Course Description Automation", abbrevFilePath)
-                stageRef.set(cs)
+                // val cs = new ChoosingStage("Course Description Automation", abbrevFilePath)
+                stageRef.set(new ChoosingStage("Course Description Automation", abbrevFilePath))
                 addIconsToStage(stage)
-                System.setOut(stdout) // enable back console output
+                // System.setOut(stdout) // enable back console output
                 stage.startAndShow()
-            } 
-            catch {
-                case e: Throwable =>
-                    println("==========================\n\n\n\n")
-                    e.printStackTrace()
-                    println("==========================\n\n\n\n")
-            }
-            /* cs match {
-                case scala.util.Success(value) =>
-                    stageRef.set(value)
-                case scala.util.Failure(exception) =>
-                    println("==========================\n\n\n\n")
-                    exception.printStackTrace()
-                    println("==========================\n\n\n\n")
-                    System.exit(1)
-                // stageRef.set(new ChoosingStage("Course Description Automation", abbrevFilePath))
-            } */
-            // stageRef.set(new ChoosingStage("Course Description Automation", abbrevFilePath))
         })
         // Waits for the JavaFX application to finish
         while (serializedOutput.isEmpty) {}
@@ -152,7 +133,7 @@ class Main extends Application {
 
     override def init(): Unit = {
         super.init()
-        System.setOut(nullPrintStream) // prevent Burningwave from flooding stdout with logs when JFX Apps starts
+        // System.setOut(nullPrintStream) // prevent Burningwave from flooding stdout with logs when JFX Apps starts
         jvmVersion = org.burningwave.core.assembler.StaticComponentContainer.JVMInfo.getVersion
     }
 
@@ -172,8 +153,8 @@ object Main {
      * prevent org.Burningwave.* from flooding stdout & stderr with logs when JVM exits
      */
     def silenceBurningWaveLogsAfterStageClose(): Unit = {
-        System.setOut(nullPrintStream)
-        System.setErr(nullPrintStream)
+        // System.setOut(nullPrintStream)
+        // System.setErr(nullPrintStream)
     }
 
     def main(args: Array[String]): Unit = {

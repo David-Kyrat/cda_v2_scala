@@ -61,7 +61,7 @@ case class PandocCommand(val pandoc_path: String, private val cmds: ArrayBuffer[
      *
      * @return corresponding proccessBuilder
      */
-    def toProcessBuilder() =
+    private def toProcessBuilder() =
         println()
 
     /**
@@ -70,7 +70,7 @@ case class PandocCommand(val pandoc_path: String, private val cmds: ArrayBuffer[
      *
      * @return list of proccessBuilders
      */
-    def toProcessBuilders() =
+    private def toProcessBuilders() =
         println()
 
     // TODO: update doc with the one from launch_1by1_background

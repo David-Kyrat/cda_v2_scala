@@ -145,6 +145,9 @@
         <version>3.0.0</version>
         <configuration>
           <mainClass>cda.App</mainClass> <!-- Replace with your actual main class -->
+          <arguments>
+            <argument>verbose</argument>
+          </arguments>
         </configuration>
       </plugin>
       <plugin>

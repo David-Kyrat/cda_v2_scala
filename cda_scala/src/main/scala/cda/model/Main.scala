@@ -133,8 +133,8 @@ object Main {
                 Utils.log(err, s"${err.getClass}\t  ${err.getMessage}")
                 err.printStackTrace()
                 System.err.println(
-                    """An unexpected error happened during the pdf generation.
-                  Please try again. See files/res/cda-err.log for more details. (If the error persists,
+                    f"An unexpected error (${err.getMessage()}) happened during the pdf generation.\n" +
+                  """Please try again. See files/res/cda-err.log for more details. (If the error persists,
                   please contact the developer by sending him everything present in the "files/res/log" folder)
                   """)
             }

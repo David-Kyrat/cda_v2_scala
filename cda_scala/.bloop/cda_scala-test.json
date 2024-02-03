@@ -17,11 +17,23 @@
             "/home/noahl/.m2/repository/org/scala-lang/scala-library/2.13.10/scala-library-2.13.10.jar",
             "/home/noahl/.m2/repository/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar",
             "/home/noahl/.m2/repository/org/scala-lang/modules/scala-parallel-collections_3/1.0.4/scala-parallel-collections_3-1.0.4.jar",
-            "/home/noahl/tests/scalafx/fli_scala/lib/jfoenix-19.0.1.jar",
+            "/home/noahl/.m2/repository/us/ihmc/jfoenix/17-0.1.1/jfoenix-17-0.1.1.jar",
+            "/home/noahl/.m2/repository/org/openjfx/javafx-fxml/17.0.2/javafx-fxml-17.0.2-win.jar",
+            "/home/noahl/.m2/repository/org/openjfx/javafx-fxml/17.0.2/javafx-fxml-17.0.2-linux.jar",
+            "/home/noahl/.m2/repository/org/openjfx/javafx-controls/17.0.2/javafx-controls-17.0.2-win.jar",
+            "/home/noahl/.m2/repository/org/openjfx/javafx-controls/17.0.2/javafx-controls-17.0.2-linux.jar",
+            "/home/noahl/.m2/repository/org/openjfx/javafx-controls/17.0.2/javafx-controls-17.0.2.jar",
+            "/home/noahl/.m2/repository/org/openjfx/javafx-swing/17.0.2/javafx-swing-17.0.2-win.jar",
+            "/home/noahl/.m2/repository/org/openjfx/javafx-swing/17.0.2/javafx-swing-17.0.2-linux.jar",
+            "/home/noahl/.m2/repository/org/openjfx/javafx-graphics/17.0.2/javafx-graphics-17.0.2-win.jar",
+            "/home/noahl/.m2/repository/org/openjfx/javafx-graphics/17.0.2/javafx-graphics-17.0.2-linux.jar",
+            "/home/noahl/.m2/repository/org/openjfx/javafx-graphics/17.0.2/javafx-graphics-17.0.2.jar",
+            "/home/noahl/.m2/repository/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2-win.jar",
+            "/home/noahl/.m2/repository/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2-linux.jar",
+            "/home/noahl/.m2/repository/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2.jar",
             "/home/noahl/.m2/repository/org/burningwave/core/12.62.7/core-12.62.7.jar",
-            "/home/noahl/.m2/repository/org/burningwave/jvm-driver/8.14.1/jvm-driver-8.14.1.jar",
-            "/home/noahl/.m2/repository/io/github/toolfactory/jvm-driver/9.4.3/jvm-driver-9.4.3.jar",
-            "/home/noahl/tests/scalafx/fli_scala/lib/jvm-driver-9.4.3.jar",
+            "/home/noahl/.m2/repository/org/burningwave/jvm-driver/8.15.0/jvm-driver-8.15.0.jar",
+            "/home/noahl/.m2/repository/io/github/toolfactory/jvm-driver/9.6.0/jvm-driver-9.6.0.jar",
             "/home/noahl/.m2/repository/org/scala-lang/scala3-library_3/3.3.1/scala3-library_3-3.3.1.jar",
             "/home/noahl/.m2/repository/org/scala-lang/scala-library/2.13.10/scala-library-2.13.10.jar"
         ],
@@ -143,6 +155,174 @@
         "resolution": {
             "modules": [
                 {
+                    "organization": "org.openjfx",
+                    "name": "javafx-controls",
+                    "version": "17.0.2",
+                    "artifacts": [
+                        {
+                            "name": "javafx-controls",
+                            "classifier": "win",
+                            "path": "/home/noahl/.m2/repository/org/openjfx/javafx-controls/17.0.2/javafx-controls-17.0.2-win.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "us.ihmc",
+                    "name": "jfoenix",
+                    "version": "17-0.1.1",
+                    "artifacts": [
+                        {
+                            "name": "jfoenix",
+                            "path": "/home/noahl/.m2/repository/us/ihmc/jfoenix/17-0.1.1/jfoenix-17-0.1.1.jar"
+                        },
+                        {
+                            "name": "jfoenix",
+                            "classifier": "sources",
+                            "path": "/home/noahl/.m2/repository/us/ihmc/jfoenix/17-0.1.1/jfoenix-17-0.1.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.openjfx",
+                    "name": "javafx-base",
+                    "version": "17.0.2",
+                    "artifacts": [
+                        {
+                            "name": "javafx-base",
+                            "classifier": "win",
+                            "path": "/home/noahl/.m2/repository/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2-win.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang.modules",
+                    "name": "scala-parallel-collections_3",
+                    "version": "1.0.4",
+                    "artifacts": [
+                        {
+                            "name": "scala-parallel-collections_3",
+                            "path": "/home/noahl/.m2/repository/org/scala-lang/modules/scala-parallel-collections_3/1.0.4/scala-parallel-collections_3-1.0.4.jar"
+                        },
+                        {
+                            "name": "scala-parallel-collections_3",
+                            "classifier": "sources",
+                            "path": "/home/noahl/.m2/repository/org/scala-lang/modules/scala-parallel-collections_3/1.0.4/scala-parallel-collections_3-1.0.4-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.openjfx",
+                    "name": "javafx-swing",
+                    "version": "17.0.2",
+                    "artifacts": [
+                        {
+                            "name": "javafx-swing",
+                            "classifier": "linux",
+                            "path": "/home/noahl/.m2/repository/org/openjfx/javafx-swing/17.0.2/javafx-swing-17.0.2-linux.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.openjfx",
+                    "name": "javafx-swing",
+                    "version": "17.0.2",
+                    "artifacts": [
+                        {
+                            "name": "javafx-swing",
+                            "classifier": "win",
+                            "path": "/home/noahl/.m2/repository/org/openjfx/javafx-swing/17.0.2/javafx-swing-17.0.2-win.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang",
+                    "name": "scala3-library_3",
+                    "version": "3.3.1",
+                    "artifacts": [
+                        {
+                            "name": "scala3-library_3",
+                            "path": "/home/noahl/.m2/repository/org/scala-lang/scala3-library_3/3.3.1/scala3-library_3-3.3.1.jar"
+                        },
+                        {
+                            "name": "scala3-library_3",
+                            "classifier": "sources",
+                            "path": "/home/noahl/.m2/repository/org/scala-lang/scala3-library_3/3.3.1/scala3-library_3-3.3.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.openjfx",
+                    "name": "javafx-base",
+                    "version": "17.0.2",
+                    "artifacts": [
+                        {
+                            "name": "javafx-base",
+                            "path": "/home/noahl/.m2/repository/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2.jar"
+                        },
+                        {
+                            "name": "javafx-base",
+                            "classifier": "sources",
+                            "path": "/home/noahl/.m2/repository/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.openjfx",
+                    "name": "javafx-controls",
+                    "version": "17.0.2",
+                    "artifacts": [
+                        {
+                            "name": "javafx-controls",
+                            "path": "/home/noahl/.m2/repository/org/openjfx/javafx-controls/17.0.2/javafx-controls-17.0.2.jar"
+                        },
+                        {
+                            "name": "javafx-controls",
+                            "classifier": "sources",
+                            "path": "/home/noahl/.m2/repository/org/openjfx/javafx-controls/17.0.2/javafx-controls-17.0.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.openjfx",
+                    "name": "javafx-graphics",
+                    "version": "17.0.2",
+                    "artifacts": [
+                        {
+                            "name": "javafx-graphics",
+                            "classifier": "linux",
+                            "path": "/home/noahl/.m2/repository/org/openjfx/javafx-graphics/17.0.2/javafx-graphics-17.0.2-linux.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.openjfx",
+                    "name": "javafx-fxml",
+                    "version": "17.0.2",
+                    "artifacts": [
+                        {
+                            "name": "javafx-fxml",
+                            "classifier": "win",
+                            "path": "/home/noahl/.m2/repository/org/openjfx/javafx-fxml/17.0.2/javafx-fxml-17.0.2-win.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "io.github.toolfactory",
+                    "name": "jvm-driver",
+                    "version": "9.6.0",
+                    "artifacts": [
+                        {
+                            "name": "jvm-driver",
+                            "path": "/home/noahl/.m2/repository/io/github/toolfactory/jvm-driver/9.6.0/jvm-driver-9.6.0.jar"
+                        },
+                        {
+                            "name": "jvm-driver",
+                            "classifier": "sources",
+                            "path": "/home/noahl/.m2/repository/io/github/toolfactory/jvm-driver/9.6.0/jvm-driver-9.6.0-sources.jar"
+                        }
+                    ]
+                },
+                {
                     "organization": "com.google.code.gson",
                     "name": "gson",
                     "version": "2.10.1",
@@ -175,88 +355,82 @@
                     ]
                 },
                 {
-                    "organization": "org.scala-lang.modules",
-                    "name": "scala-parallel-collections_3",
-                    "version": "1.0.4",
-                    "artifacts": [
-                        {
-                            "name": "scala-parallel-collections_3",
-                            "path": "/home/noahl/.m2/repository/org/scala-lang/modules/scala-parallel-collections_3/1.0.4/scala-parallel-collections_3-1.0.4.jar"
-                        },
-                        {
-                            "name": "scala-parallel-collections_3",
-                            "classifier": "sources",
-                            "path": "/home/noahl/.m2/repository/org/scala-lang/modules/scala-parallel-collections_3/1.0.4/scala-parallel-collections_3-1.0.4-sources.jar"
-                        }
-                    ]
-                },
-                {
-                    "organization": "org.scala-lang",
-                    "name": "scala3-library_3",
-                    "version": "3.3.1",
-                    "artifacts": [
-                        {
-                            "name": "scala3-library_3",
-                            "path": "/home/noahl/.m2/repository/org/scala-lang/scala3-library_3/3.3.1/scala3-library_3-3.3.1.jar"
-                        },
-                        {
-                            "name": "scala3-library_3",
-                            "classifier": "sources",
-                            "path": "/home/noahl/.m2/repository/org/scala-lang/scala3-library_3/3.3.1/scala3-library_3-3.3.1-sources.jar"
-                        }
-                    ]
-                },
-                {
-                    "organization": "local",
-                    "name": "jvm-driver",
-                    "version": "9.4.3",
-                    "artifacts": [
-                        {
-                            "name": "jvm-driver",
-                            "path": "/home/noahl/tests/scalafx/fli_scala/lib/jvm-driver-9.4.3.jar"
-                        }
-                    ]
-                },
-                {
                     "organization": "org.burningwave",
                     "name": "jvm-driver",
-                    "version": "8.14.1",
+                    "version": "8.15.0",
                     "artifacts": [
                         {
                             "name": "jvm-driver",
-                            "path": "/home/noahl/.m2/repository/org/burningwave/jvm-driver/8.14.1/jvm-driver-8.14.1.jar"
+                            "path": "/home/noahl/.m2/repository/org/burningwave/jvm-driver/8.15.0/jvm-driver-8.15.0.jar"
                         },
                         {
                             "name": "jvm-driver",
                             "classifier": "sources",
-                            "path": "/home/noahl/.m2/repository/org/burningwave/jvm-driver/8.14.1/jvm-driver-8.14.1-sources.jar"
+                            "path": "/home/noahl/.m2/repository/org/burningwave/jvm-driver/8.15.0/jvm-driver-8.15.0-sources.jar"
                         }
                     ]
                 },
                 {
-                    "organization": "local",
-                    "name": "jfoenix",
-                    "version": "19.0.1",
+                    "organization": "org.openjfx",
+                    "name": "javafx-graphics",
+                    "version": "17.0.2",
                     "artifacts": [
                         {
-                            "name": "jfoenix",
-                            "path": "/home/noahl/tests/scalafx/fli_scala/lib/jfoenix-19.0.1.jar"
-                        }
-                    ]
-                },
-                {
-                    "organization": "io.github.toolfactory",
-                    "name": "jvm-driver",
-                    "version": "9.4.3",
-                    "artifacts": [
-                        {
-                            "name": "jvm-driver",
-                            "path": "/home/noahl/.m2/repository/io/github/toolfactory/jvm-driver/9.4.3/jvm-driver-9.4.3.jar"
+                            "name": "javafx-graphics",
+                            "path": "/home/noahl/.m2/repository/org/openjfx/javafx-graphics/17.0.2/javafx-graphics-17.0.2.jar"
                         },
                         {
-                            "name": "jvm-driver",
+                            "name": "javafx-graphics",
                             "classifier": "sources",
-                            "path": "/home/noahl/.m2/repository/io/github/toolfactory/jvm-driver/9.4.3/jvm-driver-9.4.3-sources.jar"
+                            "path": "/home/noahl/.m2/repository/org/openjfx/javafx-graphics/17.0.2/javafx-graphics-17.0.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.openjfx",
+                    "name": "javafx-fxml",
+                    "version": "17.0.2",
+                    "artifacts": [
+                        {
+                            "name": "javafx-fxml",
+                            "classifier": "linux",
+                            "path": "/home/noahl/.m2/repository/org/openjfx/javafx-fxml/17.0.2/javafx-fxml-17.0.2-linux.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.openjfx",
+                    "name": "javafx-base",
+                    "version": "17.0.2",
+                    "artifacts": [
+                        {
+                            "name": "javafx-base",
+                            "classifier": "linux",
+                            "path": "/home/noahl/.m2/repository/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2-linux.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.openjfx",
+                    "name": "javafx-graphics",
+                    "version": "17.0.2",
+                    "artifacts": [
+                        {
+                            "name": "javafx-graphics",
+                            "classifier": "win",
+                            "path": "/home/noahl/.m2/repository/org/openjfx/javafx-graphics/17.0.2/javafx-graphics-17.0.2-win.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.openjfx",
+                    "name": "javafx-controls",
+                    "version": "17.0.2",
+                    "artifacts": [
+                        {
+                            "name": "javafx-controls",
+                            "classifier": "linux",
+                            "path": "/home/noahl/.m2/repository/org/openjfx/javafx-controls/17.0.2/javafx-controls-17.0.2-linux.jar"
                         }
                     ]
                 },

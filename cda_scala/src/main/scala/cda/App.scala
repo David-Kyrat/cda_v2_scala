@@ -18,7 +18,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 import com.jfoenix.controls.JFXTextField
 
-class App extends Application:
+/* class App extends Application:
     override def start(primaryStage: Stage): Unit =
         val subroot = new VBox(100)
         subroot.setPrefSize(500, 200)
@@ -31,7 +31,7 @@ class App extends Application:
         primaryStage.setTitle("Card Game with MaterialFX")
         primaryStage.setScene(scene)
         primaryStage.centerOnScreen()
-        primaryStage.show()
+        primaryStage.show() */
 
 /**
  * Hello world!
@@ -50,12 +50,10 @@ object App:
             val guiArgs = if Files.exists(abbrevFilePath) then Array(absAbbrevFilePath) else Array[String]()
             guiMain.start(guiArgs)
             val userResponse = guiMain.serializedOutput.get
-            // FIXME: Even when setting PandocCommand.exec(silent=false)
-            //    stderr is not printed to console. i.e. nothing tells us whether pandoc failed, and if it did => no way of knowing why
             // val userResponse = "#BM"
             modelMain.main(Array(userResponse))
         catch case e: Throwable => e.printStackTrace()
-        finally onExit()
+        // finally onExit()
 
     /* def main(args: Array[String]): Unit =
         println("Hello World!")
@@ -64,4 +62,4 @@ object App:
     /**
      * See `ch.view.jfxuserform.Main.silenceBurningWaveLogsAfterStageClose()` for more details.
      */
-    private def onExit(): Unit = jfxuserform.Main.silenceBurningWaveLogsAfterStageClose()
+    // private def onExit(): Unit = jfxuserform.Main.silenceBurningWaveLogsAfterStageClose()

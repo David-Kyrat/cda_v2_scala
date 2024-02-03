@@ -3,6 +3,12 @@ package cda.view.jfxuserform;
 import static cda.view.helpers.Nodes.addClass;
 import static javafx.scene.paint.Color.WHITE;
 
+import cda.view.helpers.Nodes;
+import cda.view.jfxuserform.utilities.Pair;
+import cda.view.jfxuserform.utilities.Quintuple;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -12,15 +18,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.BinaryOperator;
-
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXPasswordField;
-import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXTextField;
-
-import cda.view.helpers.Nodes;
-import cda.view.jfxuserform.utilities.Pair;
-import cda.view.jfxuserform.utilities.Quintuple;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -44,18 +41,22 @@ import javafx.scene.text.TextFlow;
  * GUI implementation of ChoosingForm
  */
 public final class ChoosingStage extends FancyStage {
-    private final static double topLblPrefW = 200, topLblPrefH = 27;
-    private final static String topLblText = """
-            Enter one ore more course-code separated by a comma ',' to generate their pdf.
-            To generate all the course in a  study plan, enter their abbreviation (or id if you have them) in the bottom field, and press Add.
-            When done, click on 'generate' the generation will begin.""";
-    private final static double usrLayoutX = 70, usrLayoutY = 123, usrPrefW = 264, usrPrefH = 35;
-    private final static double pwdLayoutX = usrLayoutX, pwdLayoutY = 207, pwdPrefW = usrPrefW, pwdPrefH = usrPrefH,
-                                mailLayoutY = 287;
-    private final static double btnLayoutX = 115, btnLayoutY = 294, btnPrefW = 69, btnPrefH = 50;
-    private final static String usrPromptTxt = "Course code", pwdPromptTxt = "Study-Plan Abbreviations",
-                                btnLoginText = "Generate";
-    private final static Color focusColor = WHITE, unfocusColor = WHITE;
+
+    private static final double topLblPrefW = 200, topLblPrefH = 27;
+    private static final String topLblText =
+        """
+        Enter one ore more course-code separated by a comma ',' to generate their pdf.
+        To generate all the course in a  study plan, enter their abbreviation (or id if you have them) in the bottom field, and press Add.
+        When done, click on 'generate' the generation will begin.""";
+    private static final double usrLayoutX = 70, usrLayoutY = 123, usrPrefW =
+        264, usrPrefH = 35;
+    private static final double pwdLayoutX = usrLayoutX, pwdLayoutY =
+        207, pwdPrefW = usrPrefW, pwdPrefH = usrPrefH, mailLayoutY = 287;
+    private static final double btnLayoutX = 115, btnLayoutY = 294, btnPrefW =
+        69, btnPrefH = 50;
+    private static final String usrPromptTxt = "Course code", pwdPromptTxt =
+        "Study-Plan Abbreviations", btnLoginText = "Generate";
+    private static final Color focusColor = WHITE, unfocusColor = WHITE;
 
     /**
      * root
@@ -87,11 +88,17 @@ public final class ChoosingStage extends FancyStage {
     private AbbrevDisplayer ad;
     private String serializedOutput;
 
-    /** @return Content to the file `abbrev.tsv` that will be displayed in the abbrevDisplayer */
-    List<String[]> getAbbrevFileContent() { return abbrevFileContent; }
+    /**
+     * @return Content to the file `abbrev.tsv` that will be displayed in the
+     *         abbrevDisplayer
+     */
+    List<String[]> getAbbrevFileContent() {
+        return abbrevFileContent;
+    }
 
     /**
      * Primary constructor of LoginStage that generates the default login Stage
+     *
      * @param abbrevFilePath String path to the abbreviation file
      */
     public ChoosingStage(String abbrevFilePath) {
@@ -104,18 +111,27 @@ public final class ChoosingStage extends FancyStage {
         this.courseField = tmp._3();
         this.studyPlanField = tmp._4();
         this.generateBtn = tmp._5();
-        this.abbrevBtn = (JFXButton)((Parent)loginBp.getBottom()).getChildrenUnmodifiable().get(0);
+        this.abbrevBtn =
+            (JFXButton) ((Parent) loginBp.getBottom()).getChildrenUnmodifiable()
+                .get(0);
         this.subroot().getChildren().add(loginBp);
 
         this.courseSelectionSet = new HashSet<>();
         this.spSelectionSet = new HashSet<>();
 
-        this.courseSelectionViewValue = new SimpleStringProperty("Course selection: ");
-        this.spSelectionViewValue = new SimpleStringProperty(spSelectionPropLabel);
+        this.courseSelectionViewValue =
+            new SimpleStringProperty("Course selection: ");
+        this.spSelectionViewValue =
+            new SimpleStringProperty(spSelectionPropLabel);
         Text courseSelectionView = Nodes.newTxt("", WHITE, 16);
         Text spSelectionView = Nodes.newTxt("", WHITE, 16);
         this.userInputSelectionView =
-            new TextFlow(courseSelectionView, new Text("\n"), spSelectionView, new Text("\n"));
+            new TextFlow(
+                courseSelectionView,
+                new Text("\n"),
+                spSelectionView,
+                new Text("\n")
+            );
 
         this.addBtn = new JFXButton("Add");
         addBtn.setButtonType(JFXButton.ButtonType.FLAT);
@@ -123,15 +139,24 @@ public final class ChoosingStage extends FancyStage {
         addBtn.getStyleClass().add("addBtn");
         addBtn.setOnMouseClicked(e -> handleAddBtn());
 
-        this.courseSelectionViewCtnr = Nodes.setUpNewHBox(100, Pos.CENTER_LEFT, true, addBtn, userInputSelectionView);
+        this.courseSelectionViewCtnr =
+            Nodes.setUpNewHBox(
+                100,
+                Pos.CENTER_LEFT,
+                true,
+                addBtn,
+                userInputSelectionView
+            );
         addClass(courseSelectionViewCtnr, "courseSelectionViewCtnr");
         HBox.setMargin(courseSelectionViewCtnr, new Insets(0, 0, 0, 20));
-        courseSelectionViewCtnr.prefWidthProperty().bind(loginFieldsCtnr.widthProperty());
+        courseSelectionViewCtnr
+            .prefWidthProperty()
+            .bind(loginFieldsCtnr.widthProperty());
 
         courseSelectionView.textProperty().bind(courseSelectionViewValue);
         spSelectionView.textProperty().bind(spSelectionViewValue);
 
-        /*loginBtn.setOnAction(e -> { handleAddBtn(); e.consume(); });*/
+        /* loginBtn.setOnAction(e -> { handleAddBtn(); e.consume(); }); */
         addBtn.setOnAction(e -> {
             handleAddBtn();
             e.consume();
@@ -153,19 +178,23 @@ public final class ChoosingStage extends FancyStage {
         abbrevFileContent = extractPairsFromTsv();
         this.ad = new AbbrevDisplayer(this);
 
-        // JavaFx Application should exit when this window is closed without clicking on generate button
-        this.onCloseRequestProperty().setValue(v -> {
-            PrintStream nullPrintStream = new PrintStream(OutputStream.nullOutputStream());
-            System.setOut(nullPrintStream);
-            System.setErr(nullPrintStream);
-            System.exit(0);
-        });
+        // JavaFx Application should exit when this window is closed without clicking on
+        // generate button
+        this.onCloseRequestProperty()
+            .setValue(v -> {
+                // PrintStream nullPrintStream = new PrintStream( OutputStream.nullOutputStream());
+                // System.setOut(nullPrintStream);
+                // System.setErr(nullPrintStream);
+                System.exit(0);
+            });
     }
 
     /**
      * Wrapper for what would be done in the ch.view.jfxuserform.Main class.
-     * i.e. show the stage, setup the form, center it on screen and size it to its content
-     * as well as handling other visual setups that are required to be performed after stage has been showed
+     * i.e. show the stage, setup the form, center it on screen and size it to its
+     * content
+     * as well as handling other visual setups that are required to be performed
+     * after stage has been showed
      */
     public void startAndShow() {
         this.scene().getStylesheets().add("/jfxuserform/login.css");
@@ -176,15 +205,18 @@ public final class ChoosingStage extends FancyStage {
     }
 
     /**
-     * @return Serialized output to give to scala `Model.Main.main()` or null if user didn't choose yet.
+     * @return Serialized output to give to scala `Model.Main.main()` or null if
+     *         user didn't choose yet.
      */
-    public String getSerializedOutput() { return serializedOutput; }
+    public String getSerializedOutput() {
+        return serializedOutput;
+    }
 
     /**
      * Auxiliary constructor that calls the primary one,
      * then just set the title for this stage
      *
-     * @param title Stage title
+     * @param title          Stage title
      * @param abbrevFilePath String path to the abbreviation file
      */
     public ChoosingStage(String title, String abbrevFilePath) {
@@ -198,16 +230,27 @@ public final class ChoosingStage extends FancyStage {
     public void setupChoosingFormAfterShow() {
         float factor = 0.4f;
         float maxFactor = 0.6f;
-        courseField.minWidthProperty().bind(loginFieldsCtnr.widthProperty().multiply(factor));
-        studyPlanField.minWidthProperty().bind(loginFieldsCtnr.widthProperty().multiply(factor));
-        courseField.maxWidthProperty().bind(loginFieldsCtnr.widthProperty().multiply(maxFactor));
-        studyPlanField.maxWidthProperty().bind(loginFieldsCtnr.widthProperty().multiply(maxFactor));
-        loginBp.minHeightProperty().bind(subroot().heightProperty().subtract(0));
+        courseField
+            .minWidthProperty()
+            .bind(loginFieldsCtnr.widthProperty().multiply(factor));
+        studyPlanField
+            .minWidthProperty()
+            .bind(loginFieldsCtnr.widthProperty().multiply(factor));
+        courseField
+            .maxWidthProperty()
+            .bind(loginFieldsCtnr.widthProperty().multiply(maxFactor));
+        studyPlanField
+            .maxWidthProperty()
+            .bind(loginFieldsCtnr.widthProperty().multiply(maxFactor));
+        loginBp
+            .minHeightProperty()
+            .bind(subroot().heightProperty().subtract(0));
         loginFieldsCtnr.getChildren().add(courseSelectionViewCtnr);
     }
 
     /**
-     * Returns a pair of strings, the first being the username and the second being the hash of the
+     * Returns a pair of strings, the first being the username and the second being
+     * the hash of the
      * password
      *
      * @return LoginInfos as pair of strings.
@@ -222,14 +265,22 @@ public final class ChoosingStage extends FancyStage {
 
     public String serializeOutput(List<String> datas, List<String> titles) {
         if (datas == null || datas.isEmpty()) return "";
-        if (titles == null || titles.size() < datas.size()) return String.join("#", datas);
-        BinaryOperator<String> formatter = (title, data) -> title + ":" + data + "#";
+        if (titles == null || titles.size() < datas.size()) return String.join(
+            "#",
+            datas
+        );
+        BinaryOperator<String> formatter = (title, data) ->
+            title + ":" + data + "#";
 
         var itd = datas.iterator();
         var itt = titles.iterator();
         // StringBuilder sb = new StringBuilder(itt.next() + ":" + itd.next() + "#");
-        StringBuilder sb = new StringBuilder(formatter.apply(itt.next(), itd.next()));
-        while (itd.hasNext() && itt.hasNext()) sb.append(formatter.apply(itt.next(), itd.next()));
+        StringBuilder sb = new StringBuilder(
+            formatter.apply(itt.next(), itd.next())
+        );
+        while (itd.hasNext() && itt.hasNext()) sb.append(
+            formatter.apply(itt.next(), itd.next())
+        );
         return sb.toString();
     }
 
@@ -239,9 +290,15 @@ public final class ChoosingStage extends FancyStage {
      *
      * @param _data abbreviation to add
      */
-    void addToSpSelection(String _data) { addToSelection(_data, spSelectionViewValue, spSelectionSet); }
+    void addToSpSelection(String _data) {
+        addToSelection(_data, spSelectionViewValue, spSelectionSet);
+    }
 
-    private void addToSelection(String _data, StringProperty spSelectionViewValue, Set<String> spSelectionSet) {
+    private void addToSelection(
+        String _data,
+        StringProperty spSelectionViewValue,
+        Set<String> spSelectionSet
+    ) {
         String data = _data.strip();
         if (data == null || data.isBlank()) return;
         String current = spSelectionViewValue.get();
@@ -255,7 +312,8 @@ public final class ChoosingStage extends FancyStage {
     }
 
     /**
-     * Retrieves the login information from the login fields, and if they are not empty, prints them
+     * Retrieves the login information from the login fields, and if they are not
+     * empty, prints them
      * to the console and calls the {@code login()} function
      */
     private void handleAddBtn() {
@@ -268,25 +326,32 @@ public final class ChoosingStage extends FancyStage {
     private void handleGenerateBtn() {
         if (courseSelectionSet.isEmpty() && spSelectionSet.isEmpty()) return;
         String courses = String.join(",", courseSelectionSet);
-        //System.out.println(courses);
+        // System.out.println(courses);
         String sp = String.join(",", spSelectionSet);
-        //System.out.println(sp);
+        // System.out.println(sp);
         List<String> whole = List.of(courses, sp);
         this.serializedOutput = serializeOutput(whole, null);
-        //System.out.println(serializedOutput);
+        // System.out.println(serializedOutput);
         Platform.exit();
     }
 
-    /* public void debug_signupScreen() { signupScreen(); }*/
+    /* public void debug_signupScreen() { signupScreen(); } */
 
     private List<String[]> extractPairsFromTsv() {
         try {
-            return Files.lines(Path.of(abbrevFilePath)).parallel().map(line -> line.split("\t")).toList();
-        } catch (IOException e) { throw new RuntimeException(e.getMessage()); }
+            return Files
+                .lines(Path.of(abbrevFilePath))
+                .parallel()
+                .map(line -> line.split("\t"))
+                .toList();
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     /**
-     * Handle what happens when user clicks on 1st button sign up. i.e. the one that will ask for
+     * Handle what happens when user clicks on 1st button sign up. i.e. the one that
+     * will ask for
      * user to create an account. Not the one to validate the created account info.
      */
     private void signupScreen() {
@@ -300,7 +365,13 @@ public final class ChoosingStage extends FancyStage {
         JFXButton acceptBtn = new JFXButton();
         acceptBtn.setText(text);
         acceptBtn.setTextAlignment(TextAlignment.CENTER);
-        Nodes.setLayoutAndPrefSize(acceptBtn, btnLayoutX, btnLayoutY, btnPrefW, btnPrefH);
+        Nodes.setLayoutAndPrefSize(
+            acceptBtn,
+            btnLayoutX,
+            btnLayoutY,
+            btnPrefW,
+            btnPrefH
+        );
         addClass(acceptBtn, "loginBtn");
         return acceptBtn;
     }
@@ -308,11 +379,25 @@ public final class ChoosingStage extends FancyStage {
     /**
      * Creates a choosing form with a label, two text fields and an accept button
      *
-     * @return A Quintuple of BorderPane, AnchorPane, JFXTextField, JFXPasswordField, JFXButton.
+     * @return A Quintuple of BorderPane, AnchorPane, JFXTextField,
+     *         JFXPasswordField, JFXButton.
      */
-    private Quintuple<BorderPane, VBox, JFXTextField, JFXTextField, JFXButton> createChoosingForm() {
+    private Quintuple<
+        BorderPane,
+        VBox,
+        JFXTextField,
+        JFXTextField,
+        JFXButton
+    > createChoosingForm() {
         Label topLbl = new Label(topLblText);
-        VBox lblBox = Nodes.setUpNewVBox(0, topLblPrefW * 2, topLblPrefH * 2.5, Pos.CENTER, true, topLbl);
+        VBox lblBox = Nodes.setUpNewVBox(
+            0,
+            topLblPrefW * 2,
+            topLblPrefH * 2.5,
+            Pos.CENTER,
+            true,
+            topLbl
+        );
         topLbl.setTextOverrun(OverrunStyle.ELLIPSIS);
         topLbl.setWrapText(true);
         topLbl.setTextAlignment(TextAlignment.CENTER);
@@ -322,12 +407,24 @@ public final class ChoosingStage extends FancyStage {
 
         JFXTextField usernameField = new JFXTextField();
         usernameField.setPromptText(usrPromptTxt);
-        Nodes.setLayoutAndPrefSize(usernameField, usrLayoutX, usrLayoutY, usrPrefW, usrPrefH);
+        Nodes.setLayoutAndPrefSize(
+            usernameField,
+            usrLayoutX,
+            usrLayoutY,
+            usrPrefW,
+            usrPrefH
+        );
         addClass(usernameField, "loginField");
 
         JFXTextField pwdField = new JFXTextField();
         pwdField.setPromptText(pwdPromptTxt);
-        Nodes.setLayoutAndPrefSize(pwdField, pwdLayoutX, pwdLayoutY, pwdPrefW, pwdPrefH);
+        Nodes.setLayoutAndPrefSize(
+            pwdField,
+            pwdLayoutX,
+            pwdLayoutY,
+            pwdPrefW,
+            pwdPrefH
+        );
         styleDefaultField(usernameField, focusColor, unfocusColor);
         styleDefaultField(pwdField, focusColor, unfocusColor);
         addClass(pwdField, "loginField");
@@ -337,17 +434,34 @@ public final class ChoosingStage extends FancyStage {
         this.abbrevBtn = createAbbrevBtn(signupLblText);
         abbrevBtn.setOnMouseClicked(me -> signupScreen());
 
-        VBox loginFieldsCtnr = Nodes.setUpNewVBox(10, Pos.TOP_CENTER, false, lblBox, usernameField, pwdField);
+        VBox loginFieldsCtnr = Nodes.setUpNewVBox(
+            10,
+            Pos.TOP_CENTER,
+            false,
+            lblBox,
+            usernameField,
+            pwdField
+        );
         BorderPane bp = new BorderPane(loginFieldsCtnr);
-        VBox bottom = Nodes.setUpNewVBox(1, Pos.CENTER, true, abbrevBtn, acceptBtn);
+        VBox bottom = Nodes.setUpNewVBox(
+            1,
+            Pos.CENTER,
+            true,
+            abbrevBtn,
+            acceptBtn
+        );
 
         bp.setBottom(bottom);
         BorderPane.setAlignment(bp.getBottom(), Pos.CENTER);
         acceptBtn.prefWidthProperty().bind(bp.widthProperty());
 
-        loginFieldsCtnr.minWidthProperty().bind(this.center().widthProperty().multiply(0.99));
+        loginFieldsCtnr
+            .minWidthProperty()
+            .bind(this.center().widthProperty().multiply(0.99));
 
-        loginFieldsCtnr.spacingProperty().bind(bp.heightProperty().multiply(0.14));
+        loginFieldsCtnr
+            .spacingProperty()
+            .bind(bp.heightProperty().multiply(0.14));
         // addClass(loginFieldsCtnr, "boxR");
 
         abbrevBtn.prefWidthProperty().bind(bp.widthProperty());
@@ -360,15 +474,28 @@ public final class ChoosingStage extends FancyStage {
         VBox.setVgrow(loginFieldsCtnr, Priority.SOMETIMES);
         VBox.setVgrow(topLbl, Priority.ALWAYS);
         VBox.setVgrow(bottom, Priority.SOMETIMES);
-        bp.heightProperty().addListener(
-            (observable, oldValue, newValue) -> lblBox.setPadding(new Insets(newValue.doubleValue() * 0.05, 0, 0, 0)));
+        bp
+            .heightProperty()
+            .addListener((observable, oldValue, newValue) ->
+                lblBox.setPadding(
+                    new Insets(newValue.doubleValue() * 0.05, 0, 0, 0)
+                )
+            );
 
-        return new Quintuple<>(bp, loginFieldsCtnr, usernameField, pwdField, acceptBtn);
+        return new Quintuple<>(
+            bp,
+            loginFieldsCtnr,
+            usernameField,
+            pwdField,
+            acceptBtn
+        );
     }
 
     /**
-     * Creates mail field for sign up menu but does not register it to a parent node yet. It creates
-     * a JFXTextField, sets its prompt text, styles it, adds a class to it, and sets its layout and
+     * Creates mail field for sign up menu but does not register it to a parent node
+     * yet. It creates
+     * a JFXTextField, sets its prompt text, styles it, adds a class to it, and sets
+     * its layout and
      * preferred size
      *
      * @return JFXTextField mail field.
@@ -378,13 +505,20 @@ public final class ChoosingStage extends FancyStage {
         mailField.setPromptText("Email");
         styleDefaultField(mailField, WHITE, WHITE);
         addClass(mailField, "loginField");
-        Nodes.setLayoutAndPrefSize(mailField, pwdLayoutX, mailLayoutY, pwdPrefW, pwdPrefH);
+        Nodes.setLayoutAndPrefSize(
+            mailField,
+            pwdLayoutX,
+            mailLayoutY,
+            pwdPrefW,
+            pwdPrefH
+        );
         mailField.prefWidthProperty().bind(studyPlanField.widthProperty());
         return mailField;
     }
 
     /**
-     * Generates sign up button Creates a button with a label and adds a border to it when the mouse
+     * Generates sign up button Creates a button with a label and adds a border to
+     * it when the mouse
      * enters the button.
      *
      * @return A JFXButton object.
@@ -397,49 +531,74 @@ public final class ChoosingStage extends FancyStage {
         abbrevBtn.setPrefHeight(signupLabelPrefH);
 
         abbrevBtn.setOnMouseEntered(me -> addClass(abbrevBtn, classBorder));
-        abbrevBtn.setOnMouseClicked(me -> abbrevBtn.getStyleClass().remove(classBorder));
-        abbrevBtn.setOnMousePressed(me -> abbrevBtn.getStyleClass().remove(classBorder));
-        abbrevBtn.setOnMouseReleased(me -> abbrevBtn.getStyleClass().remove(classBorder));
-        abbrevBtn.setOnMouseExited(me -> abbrevBtn.getStyleClass().remove(classBorder));
+        abbrevBtn.setOnMouseClicked(me ->
+            abbrevBtn.getStyleClass().remove(classBorder)
+        );
+        abbrevBtn.setOnMousePressed(me ->
+            abbrevBtn.getStyleClass().remove(classBorder)
+        );
+        abbrevBtn.setOnMouseReleased(me ->
+            abbrevBtn.getStyleClass().remove(classBorder)
+        );
+        abbrevBtn.setOnMouseExited(me ->
+            abbrevBtn.getStyleClass().remove(classBorder)
+        );
         return abbrevBtn;
     }
 
-    private void styleDefaultField(JFXTextField field, Paint focusColor, Paint unfocusColor) {
+    private void styleDefaultField(
+        JFXTextField field,
+        Paint focusColor,
+        Paint unfocusColor
+    ) {
         field.setFocusColor(focusColor);
         field.setUnFocusColor(unfocusColor);
         field.setLabelFloat(true);
     }
 
-    private void styleDefaultField(JFXPasswordField field, Paint focusColor, Paint unfocusColor) {
+    private void styleDefaultField(
+        JFXPasswordField field,
+        Paint focusColor,
+        Paint unfocusColor
+    ) {
         field.setFocusColor(focusColor);
         field.setUnFocusColor(unfocusColor);
         field.setLabelFloat(true);
     }
 
     /*
-    void addToStudyPlanSelection(String spAbbrev) {
-        if (!spSelectionViewValue.getValue().contains(spAbbrev)) {
-            String previous = spSelectionViewValue.getValueSafe();
-            String sep = previous.substring(spSelectionPropLabel.length()).isBlank() ? "" : ",";
-            spSelectionViewValue.setValue(previous + sep + spAbbrev);
-        }
-    }
-*/
+     * void addToStudyPlanSelection(String spAbbrev) {
+     * if (!spSelectionViewValue.getValue().contains(spAbbrev)) {
+     * String previous = spSelectionViewValue.getValueSafe();
+     * String sep = previous.substring(spSelectionPropLabel.length()).isBlank() ? ""
+     * : ",";
+     * spSelectionViewValue.setValue(previous + sep + spAbbrev);
+     * }
+     * }
+     */
 
     /**
      * Returns the bottom of the loginBp.
      *
      * @return The bottom of the BorderPane.
      */
-    //private VBox loginBottom() { return (VBox) loginBp.getBottom(); }
+    // private VBox loginBottom() { return (VBox) loginBp.getBottom(); }
 
     /*
-     * ======================================================= ******************* GETTERS *************************** =======================================================
+     * ======================================================= *******************
+     * GETTERS ***************************
+     * =======================================================
      */
-    //    public BorderPane loginBp() { return this.loginBp; }
-    public JFXTextField usernameField() { return this.courseField; }
+    // public BorderPane loginBp() { return this.loginBp; }
+    public JFXTextField usernameField() {
+        return this.courseField;
+    }
 
-    public JFXTextField pwdField() { return this.studyPlanField; }
+    public JFXTextField pwdField() {
+        return this.studyPlanField;
+    }
 
-    public JFXButton loginBtn() { return this.generateBtn; }
+    public JFXButton loginBtn() {
+        return this.generateBtn;
+    }
 }

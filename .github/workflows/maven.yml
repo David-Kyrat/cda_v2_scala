@@ -37,12 +37,16 @@ jobs:
           source "$HOME/.sdkman/bin/sdkman-init.sh"
       - name: install java
         run: |
-          source "/home/runner/.sdkman/bin/sdkman-init.sh"
+          source "$HOME/.sdkman/bin/sdkman-init.sh"
+          echo $HOME
           sdk install java 19.0.2.fx-librca
           export JAVA_HOME="$HOME/.sdkman/candidates/java/current"
+          export PATH="$JAVA_HOME/bin:$PATH"
 
       - name: test java and add to path
         run: |
+          source "$HOME/.sdkman/bin/sdkman-init.sh"
+          echo $PATH
           which java
           whereis java
           ls -la $(which java)

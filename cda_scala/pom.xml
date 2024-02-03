@@ -111,6 +111,7 @@
         <configuration>
           <source>${maven.compiler.source}</source>
           <target>${maven.compiler.target}</target>
+          <showWarnings>true</showWarnings>
         </configuration>
       </plugin>
 

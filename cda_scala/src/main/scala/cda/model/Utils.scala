@@ -159,9 +159,8 @@ object Utils {
             .zip(destPaths)
             .filterNot((_, dest) => Files.exists(dest))
             .foreach((src, dest) =>
-                println("extracting " + src + " to " + dest)
+                if VERBOSE then println("extracting " + src + " to " + dest)
                 val reader = new BufferedReader(new InputStreamReader(Utils.getClass.getResourceAsStream(src), UTF_8))
-                // val pw = new PrintWriter(Files.newBufferedWriter(dest))
                 val pw = Files.newBufferedWriter(dest)
                 reader.lines().forEach(pw.write(_))
                 pw.close()

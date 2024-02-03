@@ -88,7 +88,7 @@ case class PandocCommand(val pandoc_path: String, private val cmds: ArrayBuffer[
      * ```
      */
     def exec(silent: Boolean = true) =
-        if (VERBOSE) println(f"\n cmds:\n$this")
+        // if (VERBOSE) println(f"\n cmds:\n$this")
         if silent then
             val processLogger = ProcessLogger(_ => (), _ => ())
             cmds.map(pandoc_path +: _ run processLogger).toVector

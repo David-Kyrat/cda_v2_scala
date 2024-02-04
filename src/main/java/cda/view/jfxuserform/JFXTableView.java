@@ -5,11 +5,20 @@
  */
 package cda.view.jfxuserform;
 
+import static cda.view.helpers.Nodes.addClass;
+
+import cda.view.helpers.Nodes;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import io.github.palexdev.materialfx.controls.MFXTextField;
+import io.github.palexdev.materialfx.enums.FloatMode;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -22,14 +31,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
-import cda.view.helpers.Nodes;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import static cda.view.helpers.Nodes.addClass;
-
 
 /**
  * Wrapper around `com.jfoenix.control.JFXTreeTableView`.
@@ -46,9 +47,9 @@ public class JFXTableView {
     private final VBox parentRoot;
     private final JFXTreeTableView<VPair> tableView;
     private final Label label;
+    private MFXTextField filterField;
 
     private Label createLabel() {
-
         String labelTxt = "Double click to add a study-plan to selection.\n Enter a name in the search box below to filter the results.";
         Label lbl = new Label(labelTxt);
         lbl.setTextOverrun(OverrunStyle.ELLIPSIS);
@@ -61,12 +62,21 @@ public class JFXTableView {
         return lbl;
     }
 
+    private void styleField(MFXTextField field) {
+        addClass(field, "filterField");
+        field.setPadding(new Insets(0, 0, 0, 5));
+        field.setFloatMode(FloatMode.BORDER);
+    }
+
     /**
      * Jfoenix TreeTableView Wrapper for view the content of the abbreviation file
+     * 
      * @param abbrevFileContent content of file
-     * @param columnNames name of columns
+     * @param columnNames       name of columns
      */
-    public JFXTableView(List<String[]> abbrevFileContent, String... columnNames) {
+    public JFXTableView(
+            List<String[]> abbrevFileContent,
+            String... columnNames) {
         this.columnNames = Arrays.stream(columnNames).toList();
         this.abbrevPairList = FXCollections.observableArrayList(buildVPairs(abbrevFileContent));
 
@@ -78,40 +88,59 @@ public class JFXTableView {
         AtomicInteger i = new AtomicInteger();
         tableColumns.forEach(tc -> {
             tc.setPrefWidth(100);
-            tc.setCellValueFactory((TreeTableColumn.CellDataFeatures<VPair, String> param) -> {
-                if (tc.validateValue(param)) {
-                    return (i.getAndIncrement() % 2 == 0) ? param.getValue().getValue().name : param.getValue().getValue().id;
-                } else {
-                    return tc.getComputedValue(param);
-                }
-            });
+            tc.setCellValueFactory(
+                    (TreeTableColumn.CellDataFeatures<VPair, String> param) -> {
+                        if (tc.validateValue(param)) {
+                            return (i.getAndIncrement() % 2 == 0)
+                                    ? param.getValue().getValue().name
+                                    : param.getValue().getValue().id;
+                        } else {
+                            return tc.getComputedValue(param);
+                        }
+                    });
         });
 
-        TreeItem<VPair> rootItem = new RecursiveTreeItem<>(abbrevPairList, RecursiveTreeObject::getChildren);
+        TreeItem<VPair> rootItem = new RecursiveTreeItem<>(
+                abbrevPairList,
+                RecursiveTreeObject::getChildren);
         this.tableView = new JFXTreeTableView<>(rootItem);
         tableView.getStyleClass().addAll("tree-table-view");
         tableView.setShowRoot(false);
         tableView.setEditable(false);
         tableView.getColumns().setAll(tableColumns);
-        tableView.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY);
+        tableView.setColumnResizePolicy(
+                TreeTableView.CONSTRAINED_RESIZE_POLICY);
         // tableView.setColumnResizePolicy(TreeTableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
 
-        this.parentRoot = Nodes.setUpNewVBox(5, Pos.TOP_CENTER, true, createLabel(), tableView);
+        this.parentRoot = Nodes.setUpNewVBox(
+                5,
+                Pos.TOP_CENTER,
+                true,
+                createLabel(),
+                tableView);
 
-        JFXTextField filterField = new JFXTextField();
-        filterField.minWidthProperty().bind(tableView.widthProperty().multiply(0.8));
+        this.filterField = new MFXTextField();
+        styleField(filterField);
+        filterField
+                .minWidthProperty()
+                .bind(tableView.widthProperty().multiply(0.8));
 
         parentRoot.getChildren().add(filterField);
         this.label = new Label();
         label.getStyleClass().add("count-label");
 
-        //final VPair pair = pairProp.getValue();
-        filterField.textProperty().addListener((o, oldVal, newVal) ->
-                tableView.setPredicate(pairProperty ->
-                        pairProperty.getValue().nameIgnoreCase.contains(newVal.toLowerCase())
-                ));
+        // final VPair pair = pairProp.getValue();
+        filterField
+                .textProperty()
+                .addListener((o, oldVal, newVal) -> tableView.setPredicate(pairProperty -> pairProperty
+                        .getValue().nameIgnoreCase.contains(newVal.toLowerCase())));
         parentRoot.getChildren().add(label);
-        label.textProperty().bind(Bindings.createStringBinding(() -> tableView.getCurrentItemsCount() + " results.", tableView.currentItemsCountProperty()));
+        label
+                .textProperty()
+                .bind(
+                        Bindings.createStringBinding(
+                                () -> tableView.getCurrentItemsCount() + " results.",
+                                tableView.currentItemsCountProperty()));
         tableView.setPadding(new Insets(10, 0, 0, 0));
         VBox.setVgrow(tableView, Priority.ALWAYS);
         VBox.setVgrow(filterField, Priority.NEVER);
@@ -120,7 +149,8 @@ public class JFXTableView {
     }
 
     /**
-     * @return Selected abbreviation in the table (i.e. study plan abbreviation of the last row to have been clicked)
+     * @return Selected abbreviation in the table (i.e. study plan abbreviation of
+     *         the last row to have been clicked)
      */
     String getSelectedAbbreviation() {
         var selectedItem = tableView.getSelectionModel().getSelectedItem();
@@ -137,25 +167,33 @@ public class JFXTableView {
     }
 
     /**
-     * @return Parent-Node of Underlying `JFXTreeTableView` to be able to add it to other nodes
+     * @return Parent-Node of Underlying `JFXTreeTableView` to be able to add it to
+     *         other nodes
      */
     public VBox get() {
         return parentRoot;
     }
 
+    public MFXTextField filterField() {
+        return filterField;
+    }
     /**
      * Build the list of VPairs i.e. elements of table from the given list of
      * pairs (array of length 2)
+     * 
      * @param fileContent content of file
      * @return list of VPairs i.e. elements of this tableView
      */
     private List<VPair> buildVPairs(List<String[]> fileContent) {
-        return fileContent.parallelStream()
+        return fileContent
+                .parallelStream()
                 .map(arr -> new VPair(arr[0], arr[1]))
                 .toList();
     }
 
     private static final class VPair extends RecursiveTreeObject<VPair> {
+        
+        
         final SimpleStringProperty name;
         final SimpleStringProperty id;
         private final String nameIgnoreCase;
@@ -167,5 +205,17 @@ public class JFXTableView {
             this.nameIgnoreCase = name.toLowerCase();
             this.idClean = id.strip();
         }
+    }
+
+    /**
+     * When we interact with the textfield to filter results, 
+     * => application can't exit normally anymore. ctrl-c doesn't work, 
+     * close btn doesn't work it just make the app freeze.
+     * Hence trying to resolve it here by freing stuff, clearing the field...
+     */
+    public void cleanUp() {
+        filterField.clear();
+        filterField = null;
+        abbrevPairList.clear();
     }
 }

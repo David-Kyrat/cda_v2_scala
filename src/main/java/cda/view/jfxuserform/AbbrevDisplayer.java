@@ -30,7 +30,9 @@ public final class AbbrevDisplayer {
         MFXButton back = ChoosingStage.createAbbrevBtn("Back");
         back.getStyleClass().add("signupLabel");
         Nodes.bindWidthToParent(back, root);
-        back.setOnAction(e -> {
+        back.setOnMouseClicked(me -> {
+            tableView.cleanUp();
+            me.consume();
             stage.setScene(previousScene);
             stage.resetSize();
             stage.centerOnScreen();
@@ -50,23 +52,22 @@ public final class AbbrevDisplayer {
         this.previousScene = choosingStage.getScene();
         this.root = setupRoot();
         this.choosingStage = choosingStage;
-        this.tableView =
-            new JFXTableView(
+        this.tableView = new JFXTableView(
                 choosingStage.getAbbrevFileContent(),
                 "Name",
-                "Abbreviation"
-            );
+                "Abbreviation");
         root.setCenter(tableView.get());
         this.backButton = setupBackButton(choosingStage);
         backButton.setRippleAnimationSpeed(
-            backButton.getRippleAnimationSpeed() * 3
-        );
+                backButton.getRippleAnimationSpeed() * 3);
 
         root.setBottom(this.backButton);
         this.abbrevScene = new Scene(root);
         abbrevScene
-            .getStylesheets()
-            .addAll("jfxuserform/jfoenix-components.css");
+                .getStylesheets()
+                .addAll(
+                        "jfxuserform/jfoenix-components.css",
+                        "jfxuserform/abbrevDisplayer.css");
         resetSize(choosingStage);
         handleCopyOnclick();
     }
@@ -93,27 +94,26 @@ public final class AbbrevDisplayer {
                     // a study plan => hence give backButton as `source` and `dest` of the
                     // mouseEvent
                     MouseEvent fakeMe = new MouseEvent(
-                        backButton,
-                        backButton,
-                        MouseEvent.ANY,
-                        0,
-                        0,
-                        0,
-                        0,
-                        MouseButton.NONE,
-                        2,
-                        true,
-                        true,
-                        true,
-                        true,
-                        true,
-                        true,
-                        true,
-                        true,
-                        true,
-                        true,
-                        null
-                    );
+                            backButton,
+                            backButton,
+                            MouseEvent.ANY,
+                            0,
+                            0,
+                            0,
+                            0,
+                            MouseButton.NONE,
+                            2,
+                            true,
+                            true,
+                            true,
+                            true,
+                            true,
+                            true,
+                            true,
+                            true,
+                            true,
+                            true,
+                            null);
                     backButton.getRippleGenerator().generateRipple(fakeMe);
                     choosingStage.addToSpSelection(selectedAbbrev);
                 }

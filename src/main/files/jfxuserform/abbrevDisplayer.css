@@ -1,0 +1,32 @@
+.filterField {
+  -fx-background-color: TRANSPARENT;
+  -fx-font-weight: BOLD;
+  -fx-alignment: top-left;
+  /* -fx-border-color: #ffffff; */
+  -fx-border-width: 0.7;
+  -fx-border-style: hidden hidden solid hidden;
+  -fx-border-radius: 0;
+  -fx-font-size: 16;
+  -fx-background-color: WHITE;
+  -fx-border-color: black;
+  -fx-border-radius: 0;
+}
+
+.filterField:focus-within {
+  /* -fx-text-fill: #4059A9; */
+  -fx-border-color: #4059A9;
+  -fx-border-width: 2;
+  -fx-border-radius: 0;
+}
+
+.mfx-text-field .floating-text {
+  /* -fx-text-fill: #fafafa; */
+  -fx-text-fill: #cccccc;
+  -fx-background-color: none;
+}
+
+.mfx-text-field:focus-within .floating-text {
+  /* -fx-text-fill: #4059A9; */
+  -fx-text-fill: #ffffff;
+  -fx-background-color: none;
+}

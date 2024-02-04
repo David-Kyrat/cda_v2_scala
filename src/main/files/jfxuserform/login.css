@@ -1,91 +1,105 @@
 /* #2e354f */
 
 .loginTopLbl {
-    -fx-font-family: "System Bold";
-    -fx-font-size: 14.0;
-    -fx-font-weight: Bold;
-    -fx-text-fill: white;
+  -fx-font-family: "System Bold";
+  -fx-font-size: 14;
+  -fx-font-weight: Bold;
+  -fx-text-fill: white;
 }
 
-.loginField, .loginBtn {
-    -fx-font-size: 16.0;
-    /* -fx-text-fill: white; */
+.loginField,
+.loginBtn {
+  -fx-font-size: 16;
+  -fx-text-fill: white;
 }
 .loginField {
-    -fx-background-color: TRANSPARENT;
-    -fx-font-weight: BOLD;
-    -fx-prompt-text-fill: #808080;
-    -fx-alignment: top-left;
-    -mfx-focus-color: #4059A9;
-    -mfx-unfocus-color: #4d4d4d;
-    -fx-max-width: 300;
-    -fx-border-color: #808080;
-    /* -fx-text-fill: white; */
-    -fx-border-width: 0.7;
-    -fx-border-style: hidden hidden solid hidden;
+  -fx-background-color: TRANSPARENT;
+  /* -fx-font-weight: BOLD; */
+  -fx-prompt-text-fill: #808080;
+  -fx-alignment: top-left;
+  -mfx-focus-color: #4059a9;
+  -mfx-unfocus-color: #4d4d4d;
+  -fx-max-width: 300;
+  -fx-border-color: #ffffff;
+  -fx-border-width: 0.7;
+  -fx-border-style: hidden hidden solid hidden;
+  -fx-border-radius: 0;
+  -fx-font-size: 18;
 }
+
 .loginField:focus-within {
-    /* -fx-text-fill: #4059A9; */
-    -fx-border-color: #ffffff;
-    -fx-border-width: 1.3;
-}
-.lul:focus-within {
-    /* -fx-background-color: #4059A9; */
+  /* -fx-text-fill: #4059A9; */
+  -fx-border-color: #ffffff;
+  -fx-border-width: 2;
 }
 
-.signupLabel, .qrBtn, .addBtn {
-    -fx-font-size: 13.0;
-    /*-fx-text-fill: #8c90b3;*/
-    -fx-text-fill: #5b9cff;
-    -fx-font-style: italic;
-    -fx-font-weight: lighter;
-    /*-fx-background-color: #414f72;*/
-    -fx-background-color: #374361;
+.mfx-text-field .floating-text {
+  /* -fx-text-fill: #fafafa; */
+  -fx-text-fill: #cccccc;
+  -fx-background-color: none;
 }
 
-.signupLabelBorder{
-    /*-fx-text-fill: #b6b8ce;*/
-    -fx-text-fill: #90bcff;
-    -fx-font-style: italic;
-    -fx-background-color: #414f72;
-    /*-fx-border-color: #212945;*/
-    /*-fx-border-width: 1.5;*/
-    /*-fx-border-style: solid;*/
+.mfx-text-field:focus-within .floating-text {
+  /* -fx-text-fill: #4059A9; */
+  -fx-text-fill: #ffffff;
+  -fx-background-color: none;
+}
+
+
+.signupLabel,
+.qrBtn,
+.addBtn {
+  -fx-font-size: 13;
+  /*-fx-text-fill: #8c90b3;*/
+  -fx-text-fill: #5b9cff;
+  -fx-font-style: italic;
+  -fx-font-weight: lighter;
+  /*-fx-background-color: #414f72;*/
+  -fx-background-color: #374361;
+}
+
+.signupLabelBorder {
+  /*-fx-text-fill: #b6b8ce;*/
+  -fx-text-fill: #90bcff;
+  -fx-font-style: italic;
+  -fx-background-color: #414f72;
+  /*-fx-border-color: #212945;*/
+  /*-fx-border-width: 1.5;*/
+  /*-fx-border-style: solid;*/
 }
 
 .courseSelectionViewCtnr {
-    -fx-background-color: #2e354f;
-    -fx-border-color: #212945;
-    -fx-border-width: 1.5;
-    -fx-border-style: solid;
-    -fx-fill: white;
+  -fx-background-color: #2e354f;
+  -fx-border-color: #212945;
+  -fx-border-width: 1.5;
+  -fx-border-style: solid;
+  -fx-fill: white;
 }
 
-
 .lighterBorder {
-    -fx-border-color: #9c9eb1;
-    -fx-border-width: 1;
-    -fx-border-style: solid;
+  -fx-border-color: #9c9eb1;
+  -fx-border-width: 1;
+  -fx-border-style: solid;
 }
 
 .abbrevColumnContainer {
-    -fx-border-width: 2px;
-    -fx-border-style: solid;
-    -fx-font-size: 16.0;
-    -fx-font-weight: bold;
+  -fx-border-width: 2px;
+  -fx-border-style: solid;
+  -fx-font-size: 16;
+  -fx-font-weight: bold;
 }
 
 .addBtn {
-    -fx-font-style: normal;
-    -fx-font-weight: bold;
-    -fx-text-fill: white;
-    -fx-background-color: #4c5d87;
-    -fx-padding: 10px;
-    /*-fx-effect: dropshadow(gaussian, #131620, 12, 0.7, 0, 5);*/
+  -fx-font-style: normal;
+  -fx-font-weight: bold;
+  -fx-text-fill: white;
+  -fx-background-color: #4c5d87;
+  -fx-padding: 10px;
+  /*-fx-effect: dropshadow(gaussian, #131620, 12, 0.7, 0, 5);*/
 }
 
 .loginBtn {
-    -fx-background-color: #43BB73;
-    -fx-effect: dropshadow(gaussian, #131620, 20, 0.5, 0, 5);
-    -fx-background-radius: 0;
+  -fx-background-color: #43bb73;
+  -fx-effect: dropshadow(gaussian, #131620, 20, 0.5, 0, 5);
+  -fx-background-radius: 0;
 }

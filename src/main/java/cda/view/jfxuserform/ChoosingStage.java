@@ -52,12 +52,9 @@ public final class ChoosingStage extends FancyStage {
         Enter one ore more course-code separated by a comma ',' to generate their pdf.
         To generate all the course in a  study plan, enter their abbreviation (or id if you have them) in the bottom field, and press Add.
         When done, click on 'generate' the generation will begin.""";
-    private static final double usrLayoutX = 70, usrLayoutY = 123, usrPrefW =
-        264, usrPrefH = 35;
-    private static final double spLayoutX = usrLayoutX, spLayoutY =
-        207, pwdPrefW = usrPrefW, pwdPrefH = usrPrefH, mailLayoutY = 287;
-    private static final double btnLayoutX = 115, btnLayoutY = 294, btnPrefW =
-        69, btnPrefH = 50;
+    private static final double usrLayoutX = 70, usrLayoutY = 123, usrPrefW = 264, usrPrefH = 35;
+    private static final double spLayoutX = usrLayoutX, spLayoutY = 207, pwdPrefW = usrPrefW, pwdPrefH = usrPrefH, mailLayoutY = 287;
+    private static final double btnLayoutX = 115, btnLayoutY = 294, btnPrefW = 69, btnPrefH = 50;
     private static final String usrPromptTxt = "Course code", pwdPromptTxt =
         "Study-Plan Abbreviations", btnLoginText = "Generate";
     private static final Color focusColor = WHITE, unfocusColor = WHITE;
@@ -91,7 +88,7 @@ public final class ChoosingStage extends FancyStage {
     private final List<String[]> abbrevFileContent;
     private AbbrevDisplayer ad;
     private String serializedOutput;
-    private final AtomicBoolean isMFxInitialized = new AtomicBoolean( false);
+    private final AtomicBoolean isMFxInitialized = new AtomicBoolean(false);
 
     /**
      * @return Content to the file `abbrev.tsv` that will be displayed in the
@@ -155,7 +152,8 @@ public final class ChoosingStage extends FancyStage {
                 spSelectionView,
                 new Text("\n")
             );
-
+        this.userInputSelectionView.setTextAlignment(TextAlignment.LEFT);
+        this.userInputSelectionView.setPadding(new Insets(10, 0, 10, 0));
         this.addBtn = new MFXButton("Add");
         // addBtn.setButtonType(MFXButton.ButtonType.FLAT);
         addBtn.setButtonType(ButtonType.FLAT);
@@ -435,8 +433,7 @@ public final class ChoosingStage extends FancyStage {
             usrPrefH
         );
         addClass(usernameField, "loginField");
-        addClass(usernameField, "lul");
-        // addClass(usernameField, "mfx-text-field");
+        // addClass(usernameField, "lul");
 
         MFXTextField spField = new MFXTextField();
         // spField.setPromptText(pwdPromptTxt);
@@ -448,15 +445,10 @@ public final class ChoosingStage extends FancyStage {
             pwdPrefW,
             pwdPrefH
         );
-        styleDefaultField(usernameField, focusColor, unfocusColor);
-        styleDefaultField(spField, focusColor, unfocusColor);
-        addClass(spField, "loginField");
-        // addClass(spField, "mfx-text-field)");
-        // usernameField.setPadding(new Insets(0, 5, 5, 5));
-        usernameField.setFloatMode(FloatMode.BORDER);
-        spField.setFloatMode(FloatMode.BORDER);
-        usernameField.setTextFill(Color.RED);
-
+        // styleDefaultField(usernameField, focusColor, unfocusColor);
+        // styleDefaultField(spField, focusColor, unfocusColor);
+        for (MFXTextField field : new MFXTextField[]{usernameField, spField})  styleDefaultField(field);
+        
         MFXButton acceptBtn = setupAcceptBtn(btnLoginText);
         String signupLblText = "See list of abbreviation & select Study Plan";
         this.abbrevBtn = createAbbrevBtn(signupLblText);
@@ -550,11 +542,10 @@ public final class ChoosingStage extends FancyStage {
         return abbrevBtn;
     }
 
-    private void styleDefaultField(
-        MFXTextField field,
-        Paint focusColor,
-        Paint unfocusColor
-    ) {
+    private void styleDefaultField(MFXTextField field) {
+        addClass(field, "loginField");
+        field.setPadding(new Insets(5, 0, 5, 0));
+        field.setFloatMode(FloatMode.BORDER);
         // field.setFocusColor(focusColor);
         // field.setUnFocusColor(unfocusColor);
         // field.setLabelFloat(true);

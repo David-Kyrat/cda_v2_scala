@@ -18,7 +18,8 @@ public class FancyStage extends Stage {
     // scale to respect aspect ratio & keep default proportions (i.e. 446x411)
     //private final SimpleDoubleProperty scaleX = new SimpleDoubleProperty(1.2), scaleY = new SimpleDoubleProperty(1.5);
     private final static float scaleX = 1.4f, scaleY = 1.5f;
-    private final static double rootDefWidth = 446, rootDefHeight = 411;
+    // private final static double rootDefWidth = 446, rootDefHeight = 411;
+    private final static double rootDefWidth = 446, rootDefHeight = 511;
     private final static String bgColor = "#2e354f";
     private final static String subrootStyle = String.format("-fx-background-color: %s;", bgColor);
     private final Scene scene;

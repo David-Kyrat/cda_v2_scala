@@ -7,7 +7,6 @@ import cda.view.helpers.Nodes;
 import cda.view.jfxuserform.utilities.Pair;
 import cda.view.jfxuserform.utilities.Quintuple;
 import io.github.palexdev.materialfx.controls.MFXButton;
-// import com.jfoenix.controls.JFXTextField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.enums.ButtonType;
 import io.github.palexdev.materialfx.enums.FloatMode;

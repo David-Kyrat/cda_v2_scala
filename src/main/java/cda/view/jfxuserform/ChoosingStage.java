@@ -3,22 +3,25 @@ package cda.view.jfxuserform;
 import static cda.view.helpers.Nodes.addClass;
 import static javafx.scene.paint.Color.WHITE;
 
+import cda.view.helpers.Nodes;
+import cda.view.jfxuserform.utilities.Pair;
+import cda.view.jfxuserform.utilities.Quintuple;
+import io.github.palexdev.materialfx.controls.MFXButton;
+// import com.jfoenix.controls.JFXTextField;
+import io.github.palexdev.materialfx.controls.MFXTextField;
+import io.github.palexdev.materialfx.enums.ButtonType;
+import io.github.palexdev.materialfx.enums.FloatMode;
+import io.github.palexdev.materialfx.theming.JavaFXThemes;
+import io.github.palexdev.materialfx.theming.MaterialFXStylesheets;
+import io.github.palexdev.materialfx.theming.UserAgentBuilder;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BinaryOperator;
-
-import com.jfoenix.controls.JFXPasswordField;
-import com.jfoenix.controls.JFXTextField;
-
-import cda.view.helpers.Nodes;
-import cda.view.jfxuserform.utilities.Pair;
-import cda.view.jfxuserform.utilities.Quintuple;
-import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.enums.ButtonType;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -51,7 +54,7 @@ public final class ChoosingStage extends FancyStage {
         When done, click on 'generate' the generation will begin.""";
     private static final double usrLayoutX = 70, usrLayoutY = 123, usrPrefW =
         264, usrPrefH = 35;
-    private static final double pwdLayoutX = usrLayoutX, pwdLayoutY =
+    private static final double spLayoutX = usrLayoutX, spLayoutY =
         207, pwdPrefW = usrPrefW, pwdPrefH = usrPrefH, mailLayoutY = 287;
     private static final double btnLayoutX = 115, btnLayoutY = 294, btnPrefW =
         69, btnPrefH = 50;
@@ -64,8 +67,8 @@ public final class ChoosingStage extends FancyStage {
      */
     private final BorderPane loginBp;
     private final VBox loginFieldsCtnr;
-    private final JFXTextField courseField;
-    private final JFXTextField studyPlanField;
+    private final MFXTextField courseField;
+    private final MFXTextField studyPlanField;
     private final MFXButton generateBtn;
     private MFXButton abbrevBtn;
     private final MFXButton addBtn;
@@ -88,6 +91,7 @@ public final class ChoosingStage extends FancyStage {
     private final List<String[]> abbrevFileContent;
     private AbbrevDisplayer ad;
     private String serializedOutput;
+    private final AtomicBoolean isMFxInitialized = new AtomicBoolean( false);
 
     /**
      * @return Content to the file `abbrev.tsv` that will be displayed in the
@@ -97,6 +101,20 @@ public final class ChoosingStage extends FancyStage {
         return abbrevFileContent;
     }
 
+    public static void initMaterialFX() {
+        UserAgentBuilder
+            .builder()
+            .themes(JavaFXThemes.MODENA) // Optional if you don't need JavaFX's default theme, still recommended
+            // though
+            .themes(MaterialFXStylesheets.forAssemble(true)) // Adds the MaterialFX's default theme. The boolean
+            // argument is to include legacy controls
+            .setDeploy(true) // Whether to deploy each theme's assets on a temporary dir on the disk
+            .setResolveAssets(true) // Whether to try resolving @import statements and resources urls
+            .build() // Assembles all the added themes into a single CSSFragment (very powerful class
+            // check its documentation)
+            .setGlobal(); // Finally, sets the produced stylesheet as the global User-Agent stylesheet
+    }
+
     /**
      * Primary constructor of LoginStage that generates the default login Stage
      *
@@ -104,6 +122,10 @@ public final class ChoosingStage extends FancyStage {
      */
     public ChoosingStage(String abbrevFilePath) {
         super();
+        if (!isMFxInitialized.get()) {
+            initMaterialFX();
+            isMFxInitialized.set(true);
+        }
         this.serializedOutput = null;
         this.abbrevFilePath = abbrevFilePath;
         var tmp = createChoosingForm();
@@ -182,8 +204,7 @@ public final class ChoosingStage extends FancyStage {
 
         // JavaFx Application should exit when this window is closed without clicking on
         // generate button
-        this.onCloseRequestProperty()
-            .setValue(v -> System.exit(0));
+        this.onCloseRequestProperty().setValue(v -> System.exit(0));
     }
 
     /**
@@ -376,14 +397,14 @@ public final class ChoosingStage extends FancyStage {
     /**
      * Creates a choosing form with a label, two text fields and an accept button
      *
-     * @return A Quintuple of BorderPane, AnchorPane, JFXTextField,
-     *         JFXPasswordField, MFXButton.
+     * @return A Quintuple of BorderPane, VBox, TextField,
+     *         TextField, MFXButton.
      */
     private Quintuple<
         BorderPane,
         VBox,
-        JFXTextField,
-        JFXTextField,
+        MFXTextField,
+        MFXTextField,
         MFXButton
     > createChoosingForm() {
         Label topLbl = new Label(topLblText);
@@ -402,8 +423,10 @@ public final class ChoosingStage extends FancyStage {
 
         addClass(topLbl, "loginTopLbl");
 
-        JFXTextField usernameField = new JFXTextField();
-        usernameField.setPromptText(usrPromptTxt);
+        MFXTextField usernameField = new MFXTextField();
+        // usernameField.setPromptText(usrPromptTxt);
+        usernameField.setFloatingText(usrPromptTxt);
+
         Nodes.setLayoutAndPrefSize(
             usernameField,
             usrLayoutX,
@@ -412,19 +435,27 @@ public final class ChoosingStage extends FancyStage {
             usrPrefH
         );
         addClass(usernameField, "loginField");
+        addClass(usernameField, "lul");
+        // addClass(usernameField, "mfx-text-field");
 
-        JFXTextField pwdField = new JFXTextField();
-        pwdField.setPromptText(pwdPromptTxt);
+        MFXTextField spField = new MFXTextField();
+        // spField.setPromptText(pwdPromptTxt);
+        spField.setFloatingText(pwdPromptTxt);
         Nodes.setLayoutAndPrefSize(
-            pwdField,
-            pwdLayoutX,
-            pwdLayoutY,
+            spField,
+            spLayoutX,
+            spLayoutY,
             pwdPrefW,
             pwdPrefH
         );
         styleDefaultField(usernameField, focusColor, unfocusColor);
-        styleDefaultField(pwdField, focusColor, unfocusColor);
-        addClass(pwdField, "loginField");
+        styleDefaultField(spField, focusColor, unfocusColor);
+        addClass(spField, "loginField");
+        // addClass(spField, "mfx-text-field)");
+        // usernameField.setPadding(new Insets(0, 5, 5, 5));
+        usernameField.setFloatMode(FloatMode.BORDER);
+        spField.setFloatMode(FloatMode.BORDER);
+        usernameField.setTextFill(Color.RED);
 
         MFXButton acceptBtn = setupAcceptBtn(btnLoginText);
         String signupLblText = "See list of abbreviation & select Study Plan";
@@ -437,7 +468,7 @@ public final class ChoosingStage extends FancyStage {
             false,
             lblBox,
             usernameField,
-            pwdField
+            spField
         );
         BorderPane bp = new BorderPane(loginFieldsCtnr);
         VBox bottom = Nodes.setUpNewVBox(
@@ -479,38 +510,14 @@ public final class ChoosingStage extends FancyStage {
                 )
             );
 
+        usernameField.setMaxHeight(120);
         return new Quintuple<>(
             bp,
             loginFieldsCtnr,
             usernameField,
-            pwdField,
+            spField,
             acceptBtn
         );
-    }
-
-    /**
-     * Creates mail field for sign up menu but does not register it to a parent node
-     * yet. It creates
-     * a JFXTextField, sets its prompt text, styles it, adds a class to it, and sets
-     * its layout and
-     * preferred size
-     *
-     * @return JFXTextField mail field.
-     */
-    private JFXTextField createMailField() {
-        JFXTextField mailField = new JFXTextField();
-        mailField.setPromptText("Email");
-        styleDefaultField(mailField, WHITE, WHITE);
-        addClass(mailField, "loginField");
-        Nodes.setLayoutAndPrefSize(
-            mailField,
-            pwdLayoutX,
-            mailLayoutY,
-            pwdPrefW,
-            pwdPrefH
-        );
-        mailField.prefWidthProperty().bind(studyPlanField.widthProperty());
-        return mailField;
     }
 
     /**
@@ -544,23 +551,13 @@ public final class ChoosingStage extends FancyStage {
     }
 
     private void styleDefaultField(
-        JFXTextField field,
+        MFXTextField field,
         Paint focusColor,
         Paint unfocusColor
     ) {
-        field.setFocusColor(focusColor);
-        field.setUnFocusColor(unfocusColor);
-        field.setLabelFloat(true);
-    }
-
-    private void styleDefaultField(
-        JFXPasswordField field,
-        Paint focusColor,
-        Paint unfocusColor
-    ) {
-        field.setFocusColor(focusColor);
-        field.setUnFocusColor(unfocusColor);
-        field.setLabelFloat(true);
+        // field.setFocusColor(focusColor);
+        // field.setUnFocusColor(unfocusColor);
+        // field.setLabelFloat(true);
     }
 
     /*
@@ -582,16 +579,16 @@ public final class ChoosingStage extends FancyStage {
     // private VBox loginBottom() { return (VBox) loginBp.getBottom(); }
 
     /*
-     * ======================================================= *******************
-     * GETTERS ***************************
+     * =======================================================
+     * ******************* GETTERS ***************************
      * =======================================================
      */
     // public BorderPane loginBp() { return this.loginBp; }
-    public JFXTextField usernameField() {
+    public MFXTextField usernameField() {
         return this.courseField;
     }
 
-    public JFXTextField pwdField() {
+    public MFXTextField spField() {
         return this.studyPlanField;
     }
 

@@ -1,131 +1,135 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>cda</groupId>
-    <artifactId>cda_scala</artifactId>
-    <packaging>jar</packaging>
-    <version>2.0</version>
-    <name>cda_scala</name>
-    <properties>
-        <scala.version>3.3.1</scala.version>
-        <scala.maven.plugin.version>4.5.6</scala.maven.plugin.version>
-        <maven.compiler.source>19</maven.compiler.source> <!-- Use major version here -->
-        <maven.compiler.target>19</maven.compiler.target> <!-- Use major version here -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-    <url>http://maven.apache.org</url>
-    <dependencies>
-        <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala3-library_3</artifactId>
-            <version>${scala.version}</version>
-        </dependency>
-        <!-- Gson Dependency -->
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.10.1</version>
-        </dependency>
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>cda</groupId>
+  <artifactId>cda_scala</artifactId>
+  <packaging>jar</packaging>
+  <version>2.0</version>
+  <name>cda_scala</name>
+  <properties>
+    <scala.version>3.3.1</scala.version>
+    <scala.maven.plugin.version>4.5.6</scala.maven.plugin.version>
+    <maven.compiler.source>19</maven.compiler.source> <!-- Use major version here -->
+    <maven.compiler.target>19</maven.compiler.target> <!-- Use major version here -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala3-library_3</artifactId>
+      <version>${scala.version}</version>
+    </dependency>
+    <!-- Gson Dependency -->
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.10.1</version>
+    </dependency>
 
-        <!-- Scala Parallel Collections -->
-        <dependency>
-            <groupId>org.scala-lang.modules</groupId>
-            <artifactId>scala-parallel-collections_3</artifactId>
-            <version>1.0.4</version>
-        </dependency>
-        <dependency>
-            <groupId>us.ihmc</groupId>
-            <artifactId>jfoenix</artifactId>
-            <version>17-0.1.1</version>
-        </dependency>
+    <!-- Scala Parallel Collections -->
+    <dependency>
+      <groupId>org.scala-lang.modules</groupId>
+      <artifactId>scala-parallel-collections_3</artifactId>
+      <version>1.0.4</version>
+    </dependency>
+    <dependency>
+      <groupId>us.ihmc</groupId>
+      <artifactId>jfoenix</artifactId>
+      <version>17-0.1.1</version>
+    </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.burningwave/core -->
-        <dependency>
-            <groupId>org.burningwave</groupId>
-            <artifactId>core</artifactId>
-            <version>12.62.7</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.burningwave/jvm-driver -->
-        <dependency>
-            <groupId>org.burningwave</groupId>
-            <artifactId>jvm-driver</artifactId>
-            <version>8.15.0</version>
-        </dependency>
-    </dependencies>
-    <build>
-        <finalName>${project.groupId}</finalName>
+    <!-- https://mvnrepository.com/artifact/org.burningwave/core -->
+    <dependency>
+      <groupId>org.burningwave</groupId>
+      <artifactId>core</artifactId>
+      <version>12.62.7</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.burningwave/jvm-driver -->
+    <dependency>
+      <groupId>org.burningwave</groupId>
+      <artifactId>jvm-driver</artifactId>
+      <version>8.15.0</version>
+    </dependency>
+    <dependency>
+      <groupId>io.github.palexdev</groupId>
+      <artifactId>materialfx</artifactId>
+      <version>11.17.0</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <finalName>${project.groupId}</finalName>
+    <!-- Include resource directories -->
+    <resources>
+      <resource>
+        <directory>src/main/files</directory>
+      </resource>
+    </resources>
+    <plugins>
+      <!-- Scala Maven Plugin -->
+      <plugin>
+        <groupId>net.alchim31.maven</groupId>
+        <artifactId>scala-maven-plugin</artifactId>
+        <version>${scala.maven.plugin.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+              <goal>testCompile</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
 
-        <!-- Include resource directories -->
-        <resources>
-            <resource>
-                <directory>src/main/files</directory>
-            </resource>
-        </resources>
-        <plugins>
-            <!-- Scala Maven Plugin -->
-            <plugin>
-                <groupId>net.alchim31.maven</groupId>
-                <artifactId>scala-maven-plugin</artifactId>
-                <version>${scala.maven.plugin.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+      <!-- Maven Compiler Plugin (for Java sources if present) -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.12.1</version> <!-- Ensure using the latest version -->
+        <configuration>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
+        </configuration>
+      </plugin>
 
-            <!-- Maven Compiler Plugin (for Java sources if present) -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.12.1</version> <!-- Ensure using the latest version -->
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                </configuration>
-            </plugin>
-
-            <!-- Maven Assembly Plugin (for creating a fat jar) -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.3.0</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>cda.App</mainClass>
-                        </manifest>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                    <finalName>cda</finalName> <!-- Specify your custom JAR name here -->
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
-                        <phase>package</phase> <!-- bind to the packaging phase -->
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.0.0</version>
-                <configuration>
-                    <mainClass>cda.App</mainClass> <!-- Replace with your actual main class -->
-                    <arguments>
-                        <argument>verbose</argument>
-                    </arguments>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+      <!-- Maven Assembly Plugin (for creating a fat jar) -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.3.0</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>cda.App</mainClass>
+            </manifest>
+          </archive>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+          <finalName>cda</finalName> <!-- Specify your custom JAR name here -->
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id> <!-- this is used for inheritance merges -->
+            <phase>package</phase> <!-- bind to the packaging phase -->
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.0.0</version>
+        <configuration>
+          <mainClass>cda.App</mainClass> <!-- Replace with your actual main class -->
+          <arguments>
+            <argument>verbose</argument>
+          </arguments>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

@@ -3,21 +3,22 @@ package cda.view.jfxuserform;
 import static cda.view.helpers.Nodes.addClass;
 import static javafx.scene.paint.Color.WHITE;
 
-import cda.view.helpers.Nodes;
-import cda.view.jfxuserform.utilities.Pair;
-import cda.view.jfxuserform.utilities.Quintuple;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXPasswordField;
-import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.BinaryOperator;
+
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
+
+import cda.view.helpers.Nodes;
+import cda.view.jfxuserform.utilities.Pair;
+import cda.view.jfxuserform.utilities.Quintuple;
+import io.github.palexdev.materialfx.controls.MFXButton;
+import io.github.palexdev.materialfx.enums.ButtonType;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -65,9 +66,9 @@ public final class ChoosingStage extends FancyStage {
     private final VBox loginFieldsCtnr;
     private final JFXTextField courseField;
     private final JFXTextField studyPlanField;
-    private final JFXButton generateBtn;
-    private JFXButton abbrevBtn;
-    private final JFXButton addBtn;
+    private final MFXButton generateBtn;
+    private MFXButton abbrevBtn;
+    private final MFXButton addBtn;
 
     private HBox courseSelectionViewCtnr;
 
@@ -112,7 +113,7 @@ public final class ChoosingStage extends FancyStage {
         this.studyPlanField = tmp._4();
         this.generateBtn = tmp._5();
         this.abbrevBtn =
-            (JFXButton) ((Parent) loginBp.getBottom()).getChildrenUnmodifiable()
+            (MFXButton) ((Parent) loginBp.getBottom()).getChildrenUnmodifiable()
                 .get(0);
         this.subroot().getChildren().add(loginBp);
 
@@ -133,8 +134,9 @@ public final class ChoosingStage extends FancyStage {
                 new Text("\n")
             );
 
-        this.addBtn = new JFXButton("Add");
-        addBtn.setButtonType(JFXButton.ButtonType.FLAT);
+        this.addBtn = new MFXButton("Add");
+        // addBtn.setButtonType(MFXButton.ButtonType.FLAT);
+        addBtn.setButtonType(ButtonType.FLAT);
         addBtn.setPrefSize(100, 30);
         addBtn.getStyleClass().add("addBtn");
         addBtn.setOnMouseClicked(e -> handleAddBtn());
@@ -356,8 +358,8 @@ public final class ChoosingStage extends FancyStage {
         this.centerOnScreen();
     }
 
-    static JFXButton setupAcceptBtn(String text) {
-        JFXButton acceptBtn = new JFXButton();
+    static MFXButton setupAcceptBtn(String text) {
+        MFXButton acceptBtn = new MFXButton();
         acceptBtn.setText(text);
         acceptBtn.setTextAlignment(TextAlignment.CENTER);
         Nodes.setLayoutAndPrefSize(
@@ -375,14 +377,14 @@ public final class ChoosingStage extends FancyStage {
      * Creates a choosing form with a label, two text fields and an accept button
      *
      * @return A Quintuple of BorderPane, AnchorPane, JFXTextField,
-     *         JFXPasswordField, JFXButton.
+     *         JFXPasswordField, MFXButton.
      */
     private Quintuple<
         BorderPane,
         VBox,
         JFXTextField,
         JFXTextField,
-        JFXButton
+        MFXButton
     > createChoosingForm() {
         Label topLbl = new Label(topLblText);
         VBox lblBox = Nodes.setUpNewVBox(
@@ -424,7 +426,7 @@ public final class ChoosingStage extends FancyStage {
         styleDefaultField(pwdField, focusColor, unfocusColor);
         addClass(pwdField, "loginField");
 
-        JFXButton acceptBtn = setupAcceptBtn(btnLoginText);
+        MFXButton acceptBtn = setupAcceptBtn(btnLoginText);
         String signupLblText = "See list of abbreviation & select Study Plan";
         this.abbrevBtn = createAbbrevBtn(signupLblText);
         abbrevBtn.setOnMouseClicked(me -> signupScreen());
@@ -516,12 +518,12 @@ public final class ChoosingStage extends FancyStage {
      * it when the mouse
      * enters the button.
      *
-     * @return A JFXButton object.
+     * @return A MFXButton object.
      */
-    static JFXButton createAbbrevBtn(String text) {
+    static MFXButton createAbbrevBtn(String text) {
         double signupLabelPrefH = 45;
         String class1 = "signupLabel", classBorder = "signupLabelBorder";
-        JFXButton abbrevBtn = new JFXButton(text);
+        MFXButton abbrevBtn = new MFXButton(text);
         addClass(abbrevBtn, class1);
         abbrevBtn.setPrefHeight(signupLabelPrefH);
 
@@ -593,7 +595,7 @@ public final class ChoosingStage extends FancyStage {
         return this.studyPlanField;
     }
 
-    public JFXButton loginBtn() {
+    public MFXButton loginBtn() {
         return this.generateBtn;
     }
 }

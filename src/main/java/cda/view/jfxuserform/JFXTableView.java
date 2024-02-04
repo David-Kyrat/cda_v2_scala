@@ -16,9 +16,13 @@ import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.enums.FloatMode;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -47,7 +51,8 @@ public class JFXTableView {
     private final VBox parentRoot;
     private final JFXTreeTableView<VPair> tableView;
     private final Label label;
-    private MFXTextField filterField;
+    private final MFXTextField filterField;
+    private final static AtomicBoolean isCleanRegistered = new AtomicBoolean(false);
 
     private Label createLabel() {
         String labelTxt = "Double click to add a study-plan to selection.\n Enter a name in the search box below to filter the results.";
@@ -80,9 +85,9 @@ public class JFXTableView {
         this.columnNames = Arrays.stream(columnNames).toList();
         this.abbrevPairList = FXCollections.observableArrayList(buildVPairs(abbrevFileContent));
 
-        this.tableColumns = this.columnNames.stream()
+        this.tableColumns = new ArrayList<>(this.columnNames.stream()
                 .map(name -> new JFXTreeTableColumn<VPair, String>(name))
-                .toList();
+                .toList());
         this.tableColumns.forEach(tc -> tc.getStyleClass().addAll("table-view-column"));
 
         AtomicInteger i = new AtomicInteger();
@@ -146,6 +151,18 @@ public class JFXTableView {
         VBox.setVgrow(filterField, Priority.NEVER);
         VBox.setVgrow(label, Priority.NEVER);
         parentRoot.setPadding(new Insets(0, 0, 20, 0));
+
+        if (!isCleanRegistered.get()) {
+            isCleanRegistered.set(true);
+            /* Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                System.out.println("JFXTableView: ShutdownHook");
+                Platform.runLater(() -> {
+                    System.out.println("in app thread");
+                    cleanUp();
+                });
+            })); */
+        }
+            
     }
 
     /**
@@ -214,8 +231,13 @@ public class JFXTableView {
      * Hence trying to resolve it here by freing stuff, clearing the field...
      */
     public void cleanUp() {
+        // System.err.println("JFXTableView: in cleanUp");
         filterField.clear();
-        filterField = null;
         abbrevPairList.clear();
+        this.tableColumns.clear();
+        parentRoot.getChildren().clear();
+        /* this.filterField = null;
+        this.parentRoot = null; */
+        // System.err.println("JFXTableView: in cleanUp end");
     }
 }

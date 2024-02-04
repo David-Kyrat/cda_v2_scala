@@ -5,10 +5,14 @@ import io.github.palexdev.materialfx.controls.MFXButton;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Region;
 
 public final class AbbrevDisplayer {
 
@@ -70,6 +74,11 @@ public final class AbbrevDisplayer {
                         "jfxuserform/abbrevDisplayer.css");
         resetSize(choosingStage);
         handleCopyOnclick();
+        choosingStage.onCloseRequestProperty().set(v -> {
+            tableView.cleanUp();
+            Platform.exit();
+            System.exit(0);
+        });
     }
 
     static void copyToClipboard(String content) {

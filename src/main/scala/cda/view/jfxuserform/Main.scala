@@ -114,6 +114,12 @@ class Main extends Application {
      *       (i.e. until user filled the necessary data and clicked on the "Generate" button)
      */
     def start(args: Array[String]): Unit = {
+        Runtime.getRuntime.addShutdownHook(new Thread(() =>
+            val choosingStage = stageRef.get()
+            choosingStage.fxShutdownHooks.forEach(hook => hook.run())
+            // choosingStage.close()
+        ))
+
         Platform.startup(() => {
             this.init()
             val url = "https://raw.githubusercontent.com/David-Kyrat/Course-Description-Automation/master/files/res/abbrev.tsv"
@@ -134,7 +140,15 @@ class Main extends Application {
         jvmVersion = org.burningwave.core.assembler.StaticComponentContainer.JVMInfo.getVersion
     }
 
-    override def stop(): Unit = silenceBurningWaveLogsAfterStageClose()
+    override def stop(): Unit = {
+        println("Stopping JavaFX Application")
+        Utils.log("Stopping JavaFX Application")
+        val choosingStage = stageRef.get()
+        choosingStage.fxShutdownHooks.forEach(hook => hook.run())
+        choosingStage.close()
+    }
+
+    // override def stop(): Unit = silenceBurningWaveLogsAfterStageClose()
 
     /**
      * Exits JavaFx Application thread, and call the overridden `stop()` method from `javafx.Application`

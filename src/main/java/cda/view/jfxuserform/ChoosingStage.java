@@ -17,6 +17,7 @@ import io.github.palexdev.materialfx.theming.UserAgentBuilder;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -90,6 +91,8 @@ public final class ChoosingStage extends FancyStage {
     private String serializedOutput;
     private final AtomicBoolean isMFxInitialized = new AtomicBoolean(false);
 
+    protected final List<Runnable> fxShutdownHooks;
+
     /**
      * @return Content to the file `abbrev.tsv` that will be displayed in the
      *         abbrevDisplayer
@@ -119,6 +122,7 @@ public final class ChoosingStage extends FancyStage {
      */
     public ChoosingStage(String abbrevFilePath) {
         super();
+        this.fxShutdownHooks = new ArrayList<>();
         if (!isMFxInitialized.get()) {
             initMaterialFX();
             isMFxInitialized.set(true);
@@ -202,7 +206,10 @@ public final class ChoosingStage extends FancyStage {
 
         // JavaFx Application should exit when this window is closed without clicking on
         // generate button
-        this.onCloseRequestProperty().setValue(v -> System.exit(0));
+        this.onCloseRequestProperty().setValue(v -> {
+            Platform.exit();
+            System.exit(0);
+        });
     }
 
     /**

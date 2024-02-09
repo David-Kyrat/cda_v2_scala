@@ -31,7 +31,7 @@ class DepChecker(deps: Vector[String] = Vector("pandoc", "wkhtmltopdf")):
             return false
 
         val err = deps map (checkDep) forall identity
-        println("==============================================================\n")
+        println("===================================================\n")
         err
 
     /** Check for dependencies and exit if any is missing. (calls `this.checkDeps` and exit with exit code 1 when false was returned) */

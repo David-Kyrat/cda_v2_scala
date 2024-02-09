@@ -134,7 +134,6 @@ class Main extends Application {
             choosingStageRef.set(new ChoosingStage("Course Description Automation", abbrevFilePath))
             Main.setStage(choosingStage, show = false)
             addIconsToStage(choosingStage)
-            println("Starting JavaFX main Application")
             choosingStage.startAndShow()
         })
         // Waits for the JavaFX application to finish

@@ -21,7 +21,7 @@ import cda.view.StageFactory
  * to be able to see it in production.
  */
 // class ModalTextWindow(text: String) extends Application:
-class ModalTextWindow(text: String):
+class ModalTextWindow(text: String, width: Int = 600, height: Int = 600, fontSize: Int = 24):
     // override def start(primaryStage: Stage): Unit =
     private val done = new AtomicBoolean(false)
     def isDone: Boolean = done.get
@@ -41,13 +41,12 @@ class ModalTextWindow(text: String):
     def start(): ModalTextWindow =
         Platform.runLater(() =>
             val primaryStage = StageFactory.decoratedStage
-            val text = "Your text\n here"
-            val textFlow = new TextFlow(Nodes.newTxt(text, Color.BLACK, 24));
+            val textFlow = new TextFlow(Nodes.newTxt(text, Color.BLACK, fontSize));
             textFlow.setTextAlignment(TextAlignment.CENTER)
             textFlow.setTabSize(8)
             textFlow.setLineSpacing(2.5)
-            val root = Nodes.setUpNewVBox(20, 400, 400, Pos.CENTER, true, textFlow)
-            val scene = new Scene(root, 400, 400)
+            val root = Nodes.setUpNewVBox(0, width, height, Pos.CENTER, true, textFlow)
+            val scene = new Scene(root, width, height)
             primaryStage.setScene(scene)
             Main.setStage(primaryStage)
             primaryStage.setOnCloseRequest(_ => done.set(true))

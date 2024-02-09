@@ -50,18 +50,18 @@ object App:
     val dependencies = Vector("pandoc", "wkhtmltopdf")
 
     private def checkDep(): Boolean =
-        if !Files.exists(depcheckedPath) then 
+        if !Files.exists(depcheckedPath) then
             val stdout = System.out
             val depCheckerBinOutput = new ByteArrayOutputStream();
             val ps = new PrintStream(depCheckerBinOutput, true, "UTF-8")
             // redirect stdout to depCheckerOutput
             System.setOut(ps);
-            if !DepChecker(dependencies).checkDeps then return false 
+            if !DepChecker(dependencies).checkDeps then return false
             else Files.createFile(depcheckedPath)
             // collect output from depChecker
             val depCheckerStrOutput = depCheckerBinOutput.toString(UTF_8)
             System.setOut(stdout)
-            // ModalTextWindow(depCheckerStrOutput).startJavaFxRuntime()
+            ModalTextWindow(depCheckerStrOutput, 800, 800).startAndBlock()
         else println("Dependencies already checked")
         return true
 
@@ -70,20 +70,10 @@ object App:
             verbose = args.contains("verbose")
             val guiMain = new jfxuserform.Main()
             guiMain.initializeJavaFXToolkit()
-            val modalTextWindow = ModalTextWindow("Some \n new \n Text.").start()
-            modalTextWindow.waitDone()
-
-            // ModalTextWindow().start(new Stage(StageStyle.DECORATED))
-            // Application.launch(classOf[ModalTextWindow], args: _*)
-            // ModalTextWindow.launchApp("Test")
-            // JavaFXInitializer.main(Array())
 
             // System.exit(0)
-            // if !checkDep() then System.exit(1) // if requirements are not met, exit
-            println("stuff")
-            // System.exit(0)
+            if !checkDep() then System.exit(1) // if requirements are not met, exit
 
-            // guiMain.start(Array[String]())
             // launch gui and blocks until gui is closed
             val guiArgs =
                 if Files.exists(abbrevFilePath) then Array(absAbbrevFilePath)

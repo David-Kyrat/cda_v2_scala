@@ -13,6 +13,7 @@ import javafx.geometry.Pos
 import cda.view.jfxuserform.Main
 import javafx.stage.StageStyle
 import java.util.concurrent.atomic.AtomicBoolean
+import cda.view.StageFactory
 
 /**
  * Implements a modal window for displaying text.
@@ -23,6 +24,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 class ModalTextWindow(text: String):
     // override def start(primaryStage: Stage): Unit =
     def start(): Unit =
+        val primaryStage = StageFactory.decoratedStage
         val text = "Your text\n here"
         val textFlow = new TextFlow(Nodes.newTxt(text, Color.BLACK, 24));
         textFlow.setTextAlignment(TextAlignment.CENTER)

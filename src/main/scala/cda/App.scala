@@ -61,7 +61,9 @@ object App:
             guiMain.initializeJavaFXToolkit()
 
             // System.exit(0)
-            if !checkDep() then System.exit(1) // if requirements are not met, exit
+            if !checkDep() then
+                Platform.exit()
+                System.exit(1) // if requirements are not met, exit
 
             // launch gui and blocks until gui is closed
             val guiArgs =

@@ -36,10 +36,8 @@ class DepChecker(deps: Vector[String] = Vector("pandoc", "wkhtmltopdf")):
         val texts = new ArrayBuffer[Text]()
         texts += txt("     \tChecking for ") += dep(name) += txt("...\n")
         val succ = f"which $name" ! slt == 0
-        if !succ then
-            texts += txt(f"\t\t$notok ") += red(errMsg(name)) += txt(" \n     Please ensure it is installed.\n\n")
-        else
-            texts += txt(f"\t\t$ok ") += dep(name) += txt(" found !\n\n")
+        if !succ then texts += txt(f"\t\t$notok ") += red(errMsg(name)) += txt(" \n     Please ensure it is installed.\n\n")
+        else texts += txt(f"\t\t$ok ") += dep(name) += txt(" found !\n\n")
         (texts.toArray, succ)
 
     /** @return whether any of the depency is missing. True if they're all present. */
@@ -47,8 +45,15 @@ class DepChecker(deps: Vector[String] = Vector("pandoc", "wkhtmltopdf")):
         val textsAll = new ArrayBuffer[Text]()
         textsAll += txt("       ========== Checking for installed Dependecy ==========    \n\n")
 
-        if "which which" ! slt != 0 then
-            return (List[Text](underline("\twhich", fontWeight = 800), txt(" must be installed to check if a program is installed")), false)
+        if "which wich" ! slt != 0 then
+            return (
+                List[Text](
+                    txt("\t "),
+                    underline("\"which\"", fontWeight = 800),
+                    txt("  command must be installed to check\n\t if a program is installed...\n\t Cannot check if necessary programs are installed,\n\t generation might fail.")
+                ),
+                true // ignore dep checking
+            )
 
         val (txts, succs) = deps map checkDep unzip
         val succ = succs forall identity

@@ -33,15 +33,13 @@ class DepChecker(deps: Vector[String] = Vector("pandoc", "wkhtmltopdf")):
     private val notok = "\u274C"
 
     private def checkDep(name: String): (Array[Text], Boolean) =
-        // println(f"     Checking for ${c.dep(name)}...")
-        val succ = f"which $name" ! slt == 0
         val texts = new ArrayBuffer[Text]()
-        // if !succ then println(f" $notok  ${c.red(errMsg(name))} \n     Please ensure it is installed.\n")
-        // else println(f" $ok  ${c.dep(name)} found !\n")
+        texts += txt("     \tChecking for ") += dep(name) += txt("...\n")
+        val succ = f"which $name" ! slt == 0
         if !succ then
-            texts += txt(f"\t$notok ") += red(errMsg(name)) += txt(" \n     Please ensure it is installed.\n\n")
+            texts += txt(f"\t\t$notok ") += red(errMsg(name)) += txt(" \n     Please ensure it is installed.\n\n")
         else
-            texts += txt(f"\t$ok ") += dep(name) += txt(" found !\n\n")
+            texts += txt(f"\t\t$ok ") += dep(name) += txt(" found !\n\n")
         (texts.toArray, succ)
 
     /** @return whether any of the depency is missing. True if they're all present. */

@@ -41,6 +41,7 @@ class DepChecker(deps: Vector[String] = Vector("pandoc", "wkhtmltopdf")):
         if !succ then
             texts += txt(f"\t$notok ") += red(errMsg(name)) += txt(" \n     Please ensure it is installed.\n\n")
             // defTxt(f" $notok  ${c.red(errMsg(name))} \n     Please ensure it is installed.\n")
+            println(f" $notok  ${c.red(errMsg(name))} \n     Please ensure it is installed.\n")
         else
             // texts += txt(f"\t$ok ") += Nodes.newTxt(name, Color.BLUE, defFontSize, FontWeight.EXTRA_BOLD) += txt(" found !\n\n")
             texts += txt(f"\t$ok ") += dep(name) += txt(" found !\n\n")
@@ -50,19 +51,19 @@ class DepChecker(deps: Vector[String] = Vector("pandoc", "wkhtmltopdf")):
     /** @return whether any of the depency is missing. True if they're all present. */
     def checkDeps: (List[Text], Boolean) =
         val textsAll = new ArrayBuffer[Text]()
-        textsAll += txt("    ========== Checking for installed Dependecy ==========    \n\n")
+        textsAll += txt("       ========== Checking for installed Dependecy ==========    \n\n")
 
         // println("============== Checking for installed Dependecy ==============\n")
         if "which which" ! slt != 0 then
             // println(f" ${c.bold(c.underline("which"))} must be installed to check if a program is installed.")
             return (List[Text](underline("\twhich", fontWeight = 800), txt(" must be installed to check if a program is installed")), false)
 
-        val (txts, errs) = deps map checkDep unzip
-        val err = errs forall identity
+        val (txts, succs) = deps map checkDep unzip
+        val succ = succs forall identity
         textsAll ++= txts flatMap identity
         // println("===================================================\n")
-        textsAll += txt("   ================================================\n")
-        (textsAll.toList, err)
+        textsAll += txt("      ================================================\n")
+        (textsAll.toList, succ)
 
     /** Check for dependencies and exit if any is missing. (calls `this.checkDeps` and exit with exit code 1 when false was returned) */
     // def checkDepsOrExit(): Unit =
@@ -71,3 +72,4 @@ class DepChecker(deps: Vector[String] = Vector("pandoc", "wkhtmltopdf")):
 
 //
 // else println(f"\t${c.dep(name)} found at " + c.underline((f"which $name" !! slt).strip) + " !\n") no need display where it is instalelled
+

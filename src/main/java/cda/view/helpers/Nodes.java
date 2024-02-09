@@ -17,6 +17,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import cda.view.jfxuserform.ChoosingStage;
 
@@ -362,6 +363,14 @@ public final class Nodes {
 
     public static void addStyleSheet(Scene scene, String fileName) {
         scene.getStylesheets().add(ChoosingStage.class.getResource(fileName).toExternalForm());}
+
+    /**
+     * Create a textflow from a list of text
+     * @param texts          List of Text
+     */
+    public static TextFlow newTextFlow(List<Text> texts) {
+        return withAction(new TextFlow(), tf -> tf.getChildren().addAll(texts));
+    }
 
     /**
      * Adds debug css stylesheet to given scene

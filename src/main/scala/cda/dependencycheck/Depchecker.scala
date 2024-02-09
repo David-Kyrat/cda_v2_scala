@@ -32,7 +32,7 @@ class DepChecker(deps: Vector[String] = Vector("pandoc", "wkhtmltopdf")):
     private val notok = "\u274C"
 
     private def checkDep(name: String): (Array[Text], Boolean) =
-        println(f"     Checking for ${c.dep(name)}...")
+        // println(f"     Checking for ${c.dep(name)}...")
         val succ = f"which $name" ! slt == 0
         val texts = new ArrayBuffer[Text]()
         // if !succ then println(f" $notok  ${c.red(errMsg(name))} \n     Please ensure it is installed.\n")
@@ -46,21 +46,21 @@ class DepChecker(deps: Vector[String] = Vector("pandoc", "wkhtmltopdf")):
         (texts.toArray, succ)
 
     /** @return whether any of the depency is missing. True if they're all present. */
-    def checkDeps: (Array[Text], Boolean) =
+    def checkDeps: (List[Text], Boolean) =
         val textsAll = new ArrayBuffer[Text]()
         textsAll += txt("============== Checking for installed Dependecy ==============\n")
 
         // println("============== Checking for installed Dependecy ==============\n")
         if "which which" ! slt != 0 then
             println(f" ${c.bold(c.underline("which"))} must be installed to check if a program is installed.")
-            return (Array[Text](txt("install which")), false)
+            return (List[Text](txt("install which")), false)
 
         val (txts, errs) = deps map checkDep unzip
         val err = errs forall identity
         textsAll ++= txts flatMap identity
         // println("===================================================\n")
         textsAll += txt("===================================================\n")
-        (textsAll.toArray, err)
+        (textsAll.toList, err)
 
     /** Check for dependencies and exit if any is missing. (calls `this.checkDeps` and exit with exit code 1 when false was returned) */
     // def checkDepsOrExit(): Unit =

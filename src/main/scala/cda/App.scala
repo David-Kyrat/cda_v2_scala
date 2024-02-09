@@ -29,6 +29,12 @@ import cda.dependencycheck.DepChecker
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 import cda.view.jfxuserform.Main.globalStage
+import javafx.scene.text.TextFlow
+import cda.view.helpers.Nodes
+import collection.mutable.*
+import scala.jdk.CollectionConverters.*
+import java.util.Arrays
+import javafx.scene.text.Text
 
 object App:
     var verbose = false
@@ -43,13 +49,16 @@ object App:
             val depCheckerBinOutput = new ByteArrayOutputStream();
             val ps = new PrintStream(depCheckerBinOutput, true, "UTF-8")
             // redirect stdout to depCheckerOutput
-            System.setOut(ps);
-            if !DepChecker(dependencies).checkDeps then return false
-            else Files.createFile(depcheckedPath)
+            // System.setOut(ps);
+            val (txts, err) = DepChecker(dependencies).checkDeps
+            if err then return false
+            // else Files.createFile(depcheckedPath)
             // collect output from depChecker
-            val depCheckerStrOutput = depCheckerBinOutput.toString(UTF_8)
-            System.setOut(stdout)
-            ModalTextWindow(depCheckerStrOutput, 800, 800).startAndBlock()
+            // val depCheckerStrOutput = depCheckerBinOutput.toString(UTF_8)
+            // System.setOut(stdout)
+            val tf = Nodes.newTextFlow(txts.asJava)
+            ModalTextWindow(tf, 800, 800).startAndBlock()
+            // ModalTextWindow(depCheckerStrOutput, 800, 800).startAndBlock()
         else println("Dependencies already checked")
         return true
 

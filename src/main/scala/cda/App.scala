@@ -46,13 +46,9 @@ object App:
     private def checkDep(): Boolean =
         if !Files.exists(depcheckedPath) then
             var out = false
-            val stdout = System.out
-            val depCheckerBinOutput = new ByteArrayOutputStream();
-            val ps = new PrintStream(depCheckerBinOutput, true, "UTF-8")
             val (txts, succ) = DepChecker(dependencies).checkDeps
             if succ then out = true
-            val tf = Nodes.newTextFlow(txts.asJava)
-            ModalTextWindow(tf, 800, 800).startAndBlock()
+            ModalTextWindow(Nodes.newTextFlow(txts.asJava) , 800, 800).startAndBlock()
             return out
         else 
             println("Dependencies already checked")

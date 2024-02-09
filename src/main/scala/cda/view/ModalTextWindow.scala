@@ -31,36 +31,17 @@ class ModalTextWindow(text: String):
      * Usefull when doing some cli operations or print error message and we want the user
      * to be able to see it in production.
      *  When window gets a close request, it sets `ModalTextWindow.done` to `true`.
-     *  Therefore you should check put a `while !ModalTextWindow.isDone do {}` after calling this method
+     *  Therefore you should check put a `while !modalTextWindow.isDone do {}` after calling this method
+     *  @return `this` to be able to do
+     *  ```scala
+     *      val modalTextWindow = ModalTextWindow("Some \n new \n Text.").start()
+     *      while !modalTextWindow.isDone do {}
+     * ```
      */
-    def start(): Unit =
-        val primaryStage = StageFactory.decoratedStage
-        val text = "Your text\n here"
-        val textFlow = new TextFlow(Nodes.newTxt(text, Color.BLACK, 24));
-        textFlow.setTextAlignment(TextAlignment.CENTER)
-        textFlow.setTabSize(8)
-        textFlow.setLineSpacing(2.5)
-        val root = Nodes.setUpNewVBox(20, 400, 400, Pos.CENTER, true, textFlow)
-        val scene = new Scene(root, 400, 400)
-        primaryStage.setScene(scene)
-        Main.setStage(primaryStage)
-
-
-object ModalTextWindow:
-    private val done = new AtomicBoolean(false)
-    def isDone: Boolean = done.get
-
-    /**
-     * Starts a modal window for displaying text.
-     * Usefull when doing some cli operations or print error message and we want the user
-     * to be able to see it in production.
-     *  When window gets a close request, it sets `ModalTextWindow.done` to `true`.
-     *  Therefore you should check put a `while !ModalTextWindow.isDone do {}` after calling this method
-     *  @param - text to display
-     */
-    def start(text: String): Unit =
+    def start(): ModalTextWindow =
         Platform.runLater(() =>
             val primaryStage = StageFactory.decoratedStage
+            val text = "Your text\n here"
             val textFlow = new TextFlow(Nodes.newTxt(text, Color.BLACK, 24));
             textFlow.setTextAlignment(TextAlignment.CENTER)
             textFlow.setTabSize(8)
@@ -71,6 +52,21 @@ object ModalTextWindow:
             Main.setStage(primaryStage)
             primaryStage.setOnCloseRequest(_ => done.set(true))
         )
+        this
 
-    // def main(args: Array[String]): Unit =
-    //     Application.launch(classOf[ModalTextWindow], args: _*)
+    /**
+     * Starts a modal window for displaying text and blocks while user didn't close it.
+     * Usefull when doing some cli operations or print error message and we want the user
+     * to be able to see it in production.
+     *  When window gets a close request, it sets `ModalTextWindow.done` to `true`.
+     *  Therefore you should check put a `while !modalTextWindow.isDone do {}` after calling this method
+     */
+    def startAndBlock(): Unit =
+        this.start()
+        this.waitDone()
+
+    /**
+     * Wait (while loop) until `this.isDone` is true
+     */
+    def waitDone(): Unit =
+        while !this.isDone do {}

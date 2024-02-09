@@ -70,8 +70,8 @@ object App:
             verbose = args.contains("verbose")
             val guiMain = new jfxuserform.Main()
             guiMain.initializeJavaFXToolkit()
-            ModalTextWindow.start("Some \n new \n Text.")
-            while !ModalTextWindow.isDone do {}
+            val modalTextWindow = ModalTextWindow("Some \n new \n Text.").start()
+            modalTextWindow.waitDone()
 
             // ModalTextWindow().start(new Stage(StageStyle.DECORATED))
             // Application.launch(classOf[ModalTextWindow], args: _*)

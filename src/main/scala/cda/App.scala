@@ -45,25 +45,27 @@ object App:
 
     private def checkDep(): Boolean =
         if !Files.exists(depcheckedPath) then
+            var out = false
             val stdout = System.out
             val depCheckerBinOutput = new ByteArrayOutputStream();
             val ps = new PrintStream(depCheckerBinOutput, true, "UTF-8")
             // redirect stdout to depCheckerOutput
             // System.setOut(ps);
             val (txts, err) = DepChecker(dependencies).checkDeps
-            if err then return false
+            if !err then out = true
             // else Files.createFile(depcheckedPath)
             // collect output from depChecker
             // val depCheckerStrOutput = depCheckerBinOutput.toString(UTF_8)
             // System.setOut(stdout)
-            for (txt <- txts) {
-                println(txt.getText())
-            }
+            
             val tf = Nodes.newTextFlow(txts.asJava)
-            ModalTextWindow(tf, 800, 800).startAndBlock()
+            ModalTextWindow(tf, 800, 800, title = "Checking if necessary programs are installed...").startAndBlock()
+
+            return out
             // ModalTextWindow(depCheckerStrOutput, 800, 800).startAndBlock()
-        else println("Dependencies already checked")
-        return true
+        else 
+            println("Dependencies already checked")
+            return true
 
     def main(args: Array[String]): Unit =
         try

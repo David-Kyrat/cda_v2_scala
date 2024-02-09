@@ -58,12 +58,12 @@ class DepChecker(deps: Vector[String] = Vector("pandoc", "wkhtmltopdf")):
             // println(f" ${c.bold(c.underline("which"))} must be installed to check if a program is installed.")
             return (List[Text](underline("\twhich", fontWeight = 800), txt(" must be installed to check if a program is installed")), false)
 
-        val (txts, errs) = deps map checkDep unzip
-        val err = errs forall identity
+        val (txts, succs) = deps map checkDep unzip
+        val succ = succs forall identity
         textsAll ++= txts flatMap identity
         // println("===================================================\n")
         textsAll += txt("   ================================================\n")
-        (textsAll.toList, err)
+        (textsAll.toList, succ)
 
     /** Check for dependencies and exit if any is missing. (calls `this.checkDeps` and exit with exit code 1 when false was returned) */
     // def checkDepsOrExit(): Unit =

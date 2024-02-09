@@ -36,22 +36,25 @@ import scala.io.Source
 import scala.util.Failure
 import scala.util.Success
 import scala.util.Try
+import cda.dependencycheck.DepChecker
 
 object App:
     var verbose = false
     val abbrevFilePath: Path = pathOf(abbrevFilename)
     val absAbbrevFilePath: String = abbrevFilePath.normalize().toString
     val depcheckedPath: Path = pathOf(".depchecked")
+    val dependencies = Vector("pandoc", "wkhtmltopdf")
+
+    private def checkDep() =
+        if !Files.exists(depcheckedPath) then
+            DepChecker(dependencies).checkDepsOrExit()
+            Files.createFile(depcheckedPath)
+        else println("Dependencies already checked")
 
     def main(args: Array[String]): Unit =
         try
             verbose = args.contains("verbose")
-            if Files.exists(depcheckedPath) then 
-                println("Dependencies already checked")
-                println(f"${depcheckedPath.toAbsolutePath}")
-            else 
-                Files.createFile(depcheckedPath)
-                println("Checking dependencies")
+            checkDep()
             System.exit(0)
 
             val guiMain = new jfxuserform.Main()

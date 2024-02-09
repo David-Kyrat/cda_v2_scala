@@ -37,3 +37,4 @@ files
 .project
 
 !src/main/files
+**/.depchecked

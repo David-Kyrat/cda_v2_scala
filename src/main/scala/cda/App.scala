@@ -30,6 +30,7 @@ import java.nio.channels.ReadableByteChannel
 import java.nio.charset.StandardCharsets.UTF_8
 import java.nio.file.Files
 import java.nio.file.Path
+import java.nio.file.Paths
 import java.nio.file.StandardOpenOption.*
 import scala.io.Source
 import scala.util.Failure
@@ -40,10 +41,19 @@ object App:
     var verbose = false
     val abbrevFilePath: Path = pathOf(abbrevFilename)
     val absAbbrevFilePath: String = abbrevFilePath.normalize().toString
+    val depcheckedPath: Path = pathOf(".depchecked")
 
     def main(args: Array[String]): Unit =
         try
             verbose = args.contains("verbose")
+            if Files.exists(depcheckedPath) then 
+                println("Dependencies already checked")
+                println(f"${depcheckedPath.toAbsolutePath}")
+            else 
+                Files.createFile(depcheckedPath)
+                println("Checking dependencies")
+            System.exit(0)
+
             val guiMain = new jfxuserform.Main()
             // launch gui and blocks until gui is closed
             val guiArgs =
@@ -57,4 +67,3 @@ object App:
             case e: Throwable =>
                 Utils.log(s"Error: ${e.getMessage()}\n${e.getStackTrace.mkString("\n\t")}")
                 e.printStackTrace()
-

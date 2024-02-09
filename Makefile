@@ -5,7 +5,9 @@ all: package
 
 run: package
 	java -jar target/$(JARNAME).jar
-	
+
+brun: 
+	mvn compile exec:java
 
 log:
 	cat files/res/log/cda-err.log

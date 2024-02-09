@@ -3,6 +3,9 @@ package cda.dependencycheck
 import scala.sys.process._
 import language.postfixOps
 import Colorify as c
+import javafx.scene.paint.Color
+import javafx.scene.text.Text
+import cda.view.helpers.Nodes
 
 /**
  * Dependency checker for CDA Project
@@ -11,6 +14,16 @@ import Colorify as c
 class DepChecker(deps: Vector[String] = Vector("pandoc", "wkhtmltopdf")):
     // empty ProcessLogger
     val slt = ProcessLogger(line => (), line => ())
+    val defFontSize = 24
+    val defCol = Color.BLACK
+    def defTxt(text: String, fontSize: Int = defFontSize, color: Color = defCol, fontWeigth: Int = 400) = Nodes.newTxt(text, color, fontSize)
+
+    def redTxt(text: String, fontSize: Int = defFontSize, color: Color = Color.RED) = Nodes.newTxt(text, color, fontSize)
+    def BLUETxt(text: String, fontSize: Int = defFontSize, color: Color = Color.BLUE) = Nodes.newTxt(text, color, fontSize)
+    def GREENTxt(text: String, fontSize: Int = defFontSize, color: Color = Color.GREEN) = Nodes.newTxt(text, color, fontSize)
+
+    def boldTxt(text: String, fontSize: Int = defFontSize, color: Color = defCol) = defTxt(text, fontSize, color, 800)
+    def underline(text: String, fontSize: Int = defFontSize, color: Color = defCol) = Nodes.withAction(Nodes.newTxt(text, color, fontSize), _.setUnderline(true))
 
     private def errMsg(name: String) = name + " isn't installed or is not in $PATH (can't be found)"
     private val ok = "\u2705"

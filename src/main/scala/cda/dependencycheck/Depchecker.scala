@@ -41,6 +41,7 @@ class DepChecker(deps: Vector[String] = Vector("pandoc", "wkhtmltopdf")):
         if !succ then
             texts += txt(f"\t$notok ") += red(errMsg(name)) += txt(" \n     Please ensure it is installed.\n\n")
             // defTxt(f" $notok  ${c.red(errMsg(name))} \n     Please ensure it is installed.\n")
+            println(f" $notok  ${c.red(errMsg(name))} \n     Please ensure it is installed.\n")
         else
             // texts += txt(f"\t$ok ") += Nodes.newTxt(name, Color.BLUE, defFontSize, FontWeight.EXTRA_BOLD) += txt(" found !\n\n")
             texts += txt(f"\t$ok ") += dep(name) += txt(" found !\n\n")

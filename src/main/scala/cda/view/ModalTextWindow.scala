@@ -19,7 +19,8 @@ import java.util.concurrent.atomic.AtomicBoolean
  * Usefull when doing some cli operations or print error message and we want the user
  * to be able to see it in production.
  */
-class ModalTextWindow(text: String) extends Application:
+// class ModalTextWindow(text: String) extends Application:
+class ModalTextWindow(text: String):
     // override def start(primaryStage: Stage): Unit =
     def start(): Unit =
         val text = "Your text\n here"
@@ -29,8 +30,8 @@ class ModalTextWindow(text: String) extends Application:
         textFlow.setLineSpacing(2.5)
         val root = Nodes.setUpNewVBox(20, 400, 400, Pos.CENTER, true, textFlow)
         val scene = new Scene(root, 400, 400)
-        primaryStage.setScene(scene)
-        Main.setStage(primaryStage)
+        // primaryStage.setScene(scene)
+        // Main.setStage(primaryStage)
         // primaryStage.show()
         // primaryStage.centerOnScreen()
 
@@ -81,5 +82,5 @@ object ModalTextWindow:
             primaryStage.setOnCloseRequest(_ => done.set(true))
         )
 
-    def main(args: Array[String]): Unit =
-        Application.launch(classOf[ModalTextWindow], args: _*)
+    // def main(args: Array[String]): Unit =
+    //     Application.launch(classOf[ModalTextWindow], args: _*)

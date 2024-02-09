@@ -292,6 +292,34 @@ public final class Nodes {
         t1.setFill(color);
         return t1;
     }
+       
+    /**
+     * @param fontWeight as int (i.e. 200, 400, 600, 800, 1000)
+     * @return Matching FontWeight
+     */
+    public static FontWeight int2FontWeight(int fontWeight) {
+        return switch (fontWeight) {
+            case 200 -> FontWeight.LIGHT;
+            case 600 -> FontWeight.SEMI_BOLD;
+            case 800 -> FontWeight.BOLD;
+            case 1000 -> FontWeight.BLACK;
+            default -> FontWeight.MEDIUM;
+        };
+    }
+
+    /**
+     * @param message  String
+     * @param color    Color
+     * @param fontsize int
+     * @param fontWeight FontWeight
+     * @return new Text()
+     */
+    public static Text newTxt(String message, Color color, int fontsize, int fontWeight) {
+        Text t1 = new Text(message);
+        styleTxt(t1, t1.getFont().getName(), fontsize, int2FontWeight(fontWeight));
+        t1.setFill(color);
+        return t1;
+    }
 
     /**
      * @param message  String
@@ -312,12 +340,12 @@ public final class Nodes {
      * @param font       String
      * @param color      Color
      * @param fontsize   int
-     * @param fontWeight FontWeight
+     * @param fontWeight int
      * @return new Text()
      */
-    public static Text newTxt(String message, String font, Color color, int fontsize, FontWeight fontWeight) {
+    public static Text newTxt(String message, String font, Color color, int fontsize, int fontWeight) {
         Text t1 = new Text(message);
-        styleTxt(t1, font, fontsize, fontWeight);
+        styleTxt(t1, font, fontsize, int2FontWeight(fontWeight));
         t1.setFill(color);
         return t1;
     }

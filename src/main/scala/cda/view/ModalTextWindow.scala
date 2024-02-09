@@ -22,7 +22,7 @@ import cda.view.StageFactory
  */
 // class ModalTextWindow(text: String) extends Application:
 // class ModalTextWindow(text: String, width: Int = 600, height: Int = 600, fontSize: Int = 24):
-class ModalTextWindow(textFlow: TextFlow, width: Int = 600, height: Int = 600):
+class ModalTextWindow(textFlow: TextFlow, width: Int = 600, height: Int = 600, title: String = ""):
     // override def start(primaryStage: Stage): Unit =
     private val done = new AtomicBoolean(false)
     def isDone: Boolean = done.get
@@ -42,8 +42,9 @@ class ModalTextWindow(textFlow: TextFlow, width: Int = 600, height: Int = 600):
     def start(): ModalTextWindow =
         Platform.runLater(() =>
             val primaryStage = StageFactory.decoratedStage
+            if ! title.strip.isBlank then primaryStage.setTitle(title)
             // val textFlow = new TextFlow(Nodes.newTxt(text, Color.BLACK, fontSize));
-            textFlow.setTextAlignment(TextAlignment.CENTER)
+            textFlow.setTextAlignment(TextAlignment.LEFT)
             textFlow.setTabSize(8)
             textFlow.setLineSpacing(2.5)
             val root = Nodes.setUpNewVBox(0, width, height, Pos.CENTER, true, textFlow)

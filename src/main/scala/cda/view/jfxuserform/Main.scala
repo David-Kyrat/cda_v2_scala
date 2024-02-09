@@ -4,8 +4,8 @@ import cda.App.abbrevFilePath
 import cda.model.Utils
 import cda.model.Utils.abbrevFilename
 import cda.model.Utils.pathOf
-import cda.view.jfxuserform.Main.nullPrintStream
-import cda.view.jfxuserform.Main.silenceBurningWaveLogsAfterStageClose
+// import cda.view.jfxuserform.Main.nullPrintStream
+// import cda.view.jfxuserform.Main.silenceBurningWaveLogsAfterStageClose
 import javafx.application.Application
 import javafx.application.Platform
 import javafx.scene.image.Image
@@ -29,12 +29,24 @@ import java.util.List
 import java.util.concurrent.atomic.AtomicReference
 import scala.io.Source
 import scala.jdk.CollectionConverters.*
+import cda.view.jfxuserform.Main.globalStage
 
 class Main extends Application {
     private var jvmVersion: Int = 0
     private val ICONS_RES: util.List[String] = util.List.of("_x256")
     private val pattern: String = "jfxuserform/img/app-info-logo"
 
+    /**
+     * Ref to the stage of the choosing menu (i.e. the main stage)
+     * This variable needs to be an AtomicReference because it is accessed from several threads:
+     *  - The JavaFX Application Thread
+     *  - And the thread that calls `Main.main()`
+     *    Otherwise waiting in the main thread for the JavaFX Application to finish
+     *    (by checking in a loop if `stage != null`) holds (i.e. never ends)
+     */
+    private val choosingStageRef = new AtomicReference[ChoosingStage](null)
+    /** Alias for `choosingStageRef.get()` */
+    private def choosingStage = choosingStageRef.get()
     private val stdout = System.out
 
     // only load img when called
@@ -44,22 +56,11 @@ class Main extends Application {
     private def addIconsToStage(stage: Stage): Unit = stage.getIcons.addAll(getIcons)
 
     /**
-     * This variable needs to be an AtomicReference because it is accessed from several threads:
-     *  - The JavaFX Application Thread
-     *  - And the thread that calls `Main.main()`
-     *    Otherwise waiting in the main thread for the JavaFX Application to finish
-     *    (by checking in a loop if `stage != null`) holds (i.e. never ends)
-     */
-    private val stageRef = new AtomicReference[ChoosingStage](null)
-
-    private def stage = stageRef.get()
-
-    /**
      * @return Serialized output to give to scala `Model.Main.main()` or `None` if `stage` or `stage.getSerializedOutput` is null
      */
-    def serializedOutput: Option[String] = stage match {
+    def serializedOutput: Option[String] = choosingStage match {
         case null => None
-        case _    => Option(stage.getSerializedOutput)
+        case _    => Option(choosingStage.getSerializedOutput)
     }
 
     /**
@@ -90,44 +91,51 @@ class Main extends Application {
      *                     `Application.start()`
      */
     override def start(primaryStage: Stage): Unit = {
-        if (primaryStage != null) primaryStage.close()
+        /* if (primaryStage != null) primaryStage.close()
         // unique argument is the path to the abbreviations file
         val url = "https://raw.githubusercontent.com/David-Kyrat/Course-Description-Automation/master/files/res/abbrev.tsv"
         val abbrevFilePath = getParameters.getRaw.asScala.lastOption.getOrElse(dlAbbrevFile(url))
-        stageRef.set(new ChoosingStage("Course Description Automation", abbrevFilePath))
+        choosingStageRef.set(new ChoosingStage("Course Description Automation", abbrevFilePath))
         addIconsToStage(stage)
-        stage.startAndShow()
+        stage.startAndShow() */
+        // see if loop can be moved here
     }
 
-    /**
-     * temp method to start the JavaFx App "manually" from App.scala => TODO: Find a better way to do this
-     * needed because we need to access `this.serializedOutput` after exit of javafx app
-     */
+    def initializeJavaFXToolkit(): Unit = {
+        // Initialize the JavaFX Toolkit
+        Platform.startup(() => {
+            // Toolkit initialization logic goes here, if any.
+            this.init()
+        })
+    }
 
     /**
      * This method is used to start the JavaFX application manually.
      *  - It is a workaround to the standard JavaFX application lifecycle.
      *  - It is necessary because we need to access `this.serializedOutput` after the exit of the JavaFX application.
+     *  - It calls `this.init()` and `this.stop()` and registers a `Platform.exit()` on stage close request manually
      *
      * @param args Arguments given on command line
      * @note **This method blocks until the JavaFX application has finished.**
      *       (i.e. until user filled the necessary data and clicked on the "Generate" button)
      */
     def start(args: Array[String]): Unit = {
-        Runtime.getRuntime.addShutdownHook(new Thread(() =>
-            val choosingStage = stageRef.get()
-            choosingStage.fxShutdownHooks.forEach(hook => hook.run())
-            // choosingStage.close()
-        ))
-
-        Platform.startup(() => {
-            this.init()
+        // see if can be moved to init
+        /* Runtime.getRuntime.addShutdownHook(new Thread(() =>
+            val choosingStage = choosingStageRef.get()
+            choosingStage.fxShutdownHooks.forEach(_.run())
+        )) */
+        // Platform.startup(() => {
+        Platform.runLater(() => {
+            // this.init()
             val url = "https://raw.githubusercontent.com/David-Kyrat/Course-Description-Automation/master/files/res/abbrev.tsv"
             // Utils.log("Downloading abbreviations file from " + url)
             val abbrevFilePath = args.lastOption.getOrElse(dlAbbrevFile(url))
-            stageRef.set(new ChoosingStage("Course Description Automation", abbrevFilePath))
-            addIconsToStage(stage)
-            stage.startAndShow()
+            choosingStageRef.set(new ChoosingStage("Course Description Automation", abbrevFilePath))
+            Main.setStage(choosingStage, show = false)
+            addIconsToStage(choosingStage)
+            println("Starting JavaFX main Application")
+            choosingStage.startAndShow()
         })
         // Waits for the JavaFX application to finish
         while (serializedOutput.isEmpty) {}
@@ -143,8 +151,8 @@ class Main extends Application {
     override def stop(): Unit = {
         println("Stopping JavaFX Application")
         Utils.log("Stopping JavaFX Application")
-        val choosingStage = stageRef.get()
-        choosingStage.fxShutdownHooks.forEach(hook => hook.run())
+        val choosingStage = choosingStageRef.get
+        choosingStage.fxShutdownHooks.forEach(_.run())
         choosingStage.close()
     }
 
@@ -157,19 +165,47 @@ class Main extends Application {
 }
 
 object Main {
-    val nullPrintStream = PrintStream(nullOutputStream())
+    // private def globalStageRef = new AtomicReference[Stage](null)
+    private var stage: Stage = null
 
     /**
-     * Silences stdout and stderr after JFXApplication has finished to
-     * prevent org.Burningwave.* from flooding stdout & stderr with logs when JVM exits
+     * Stage that can be globally accessed and modified by every one.
+     * To avoid having to setup the javafx toolkit and handle case
+     * where would want to startup different stage at different times.
      */
-    def silenceBurningWaveLogsAfterStageClose(): Unit = {
+    def globalStage = stage
+
+    // closes previous stage if not null and set to next one
+    /**
+     * Set the global stage to a new stage and close the previous one if it wasn't null
+     * @param newStage the new stage to display
+     * @param show whether to show the stage after setting it
+     */
+    def setStage(newStage: Stage, show: Boolean = true) =
+        println("Setting new stage")
+        this.synchronized:
+            if globalStage != null then 
+                println("Closing previous stage")
+                globalStage.close()
+            if newStage != null then 
+                stage = newStage
+                if show then globalStage.show()
+}
+
+/* object Main {
+    val nullPrintStream = PrintStream(nullOutputStream()) */
+
+/**
+ * Silences stdout and stderr after JFXApplication has finished to
+ * prevent org.Burningwave.* from flooding stdout & stderr with logs when JVM exits
+ */
+/* def silenceBurningWaveLogsAfterStageClose(): Unit = {
         System.setOut(nullPrintStream)
         System.setErr(nullPrintStream)
-    }
-
+    } */
+/*
     def main(args: Array[String]): Unit = {
         Application.launch(classOf[Main], args: _*)
     }
 
-}
+} */

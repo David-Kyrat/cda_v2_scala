@@ -51,7 +51,6 @@ object App:
             // redirect stdout to depCheckerOutput
             // System.setOut(ps);
             val (txts, err) = DepChecker(dependencies).checkDeps
-            if err then return false
             // else Files.createFile(depcheckedPath)
             // collect output from depChecker
             // val depCheckerStrOutput = depCheckerBinOutput.toString(UTF_8)

@@ -47,9 +47,7 @@ class DepChecker(deps: Vector[String] = Vector("pandoc", "wkhtmltopdf")):
         val textsAll = new ArrayBuffer[Text]()
         textsAll += txt("       ========== Checking for installed Dependecy ==========    \n\n")
 
-        // println("============== Checking for installed Dependecy ==============\n")
         if "which which" ! slt != 0 then
-            // println(f" ${c.bold(c.underline("which"))} must be installed to check if a program is installed.")
             return (List[Text](underline("\twhich", fontWeight = 800), txt(" must be installed to check if a program is installed")), false)
 
         val (txts, succs) = deps map checkDep unzip

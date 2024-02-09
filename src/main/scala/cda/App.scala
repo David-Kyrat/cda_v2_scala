@@ -48,9 +48,9 @@ object App:
             var out = false
             val (txts, succ) = DepChecker(dependencies).checkDeps
             if succ then out = true
-            ModalTextWindow(Nodes.newTextFlow(txts.asJava) , 800, 800, title = "Checking if necessary program are installed...").startAndBlock()
+            ModalTextWindow(Nodes.newTextFlow(txts.asJava), 800, 500, title = "Checking if necessary program are installed...").startAndBlock()
             return out
-        else 
+        else
             println("Dependencies already checked")
             return true
 

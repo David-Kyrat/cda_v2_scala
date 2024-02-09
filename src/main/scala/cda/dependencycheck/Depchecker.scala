@@ -51,7 +51,7 @@ class DepChecker(deps: Vector[String] = Vector("pandoc", "wkhtmltopdf")):
     /** @return whether any of the depency is missing. True if they're all present. */
     def checkDeps: (List[Text], Boolean) =
         val textsAll = new ArrayBuffer[Text]()
-        textsAll += txt("    ========== Checking for installed Dependecy ==========    \n\n")
+        textsAll += txt("       ========== Checking for installed Dependecy ==========    \n\n")
 
         // println("============== Checking for installed Dependecy ==============\n")
         if "which which" ! slt != 0 then
@@ -62,7 +62,7 @@ class DepChecker(deps: Vector[String] = Vector("pandoc", "wkhtmltopdf")):
         val succ = succs forall identity
         textsAll ++= txts flatMap identity
         // println("===================================================\n")
-        textsAll += txt("   ================================================\n")
+        textsAll += txt("      ================================================\n")
         (textsAll.toList, succ)
 
     /** Check for dependencies and exit if any is missing. (calls `this.checkDeps` and exit with exit code 1 when false was returned) */

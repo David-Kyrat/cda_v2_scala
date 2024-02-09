@@ -56,6 +56,9 @@ object App:
             // collect output from depChecker
             // val depCheckerStrOutput = depCheckerBinOutput.toString(UTF_8)
             // System.setOut(stdout)
+            for (txt <- txts) {
+                println(txt.getText())
+            }
             val tf = Nodes.newTextFlow(txts.asJava)
             ModalTextWindow(tf, 800, 800).startAndBlock()
             // ModalTextWindow(depCheckerStrOutput, 800, 800).startAndBlock()

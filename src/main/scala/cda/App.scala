@@ -4,29 +4,18 @@ import cda.model.Utils
 import cda.model.Utils.abbrevFilename
 import cda.model.Utils.pathOf
 import cda.model.io.Serializer
-import cda.model.pandoc.Colorify
-import cda.model.pandoc.PandocCommand
-import cda.model.pandoc.PandocCommand.toVec
-import cda.model.pandoc.Timer.time_and_result
-import cda.model.pandoc.Timer.time_average
 import cda.model.Main as modelMain
 import cda.view.jfxuserform
 import com.jfoenix.controls.JFXTextField
 import javafx.application.Application
 import javafx.application.Platform
 import javafx.scene.Scene
-import javafx.scene.layout.BorderPane
-import javafx.scene.layout.VBox
 import javafx.stage.Stage
 
 import java.io.BufferedReader
 import java.io.FileOutputStream
 import java.io.InputStreamReader
 import java.io.PrintWriter
-import java.net.URL
-import java.nio.channels.Channels
-import java.nio.channels.FileChannel
-import java.nio.channels.ReadableByteChannel
 import java.nio.charset.StandardCharsets.UTF_8
 import java.nio.file.Files
 import java.nio.file.Path
@@ -39,7 +28,6 @@ import scala.util.Try
 import cda.dependencycheck.DepChecker
 import java.io.ByteArrayOutputStream
 import java.io.PrintStream
-import javafx.stage.StageStyle
 import cda.view.jfxuserform.Main.globalStage
 
 object App:

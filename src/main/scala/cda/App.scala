@@ -45,17 +45,15 @@ object App:
     val depcheckedPath: Path = pathOf(".depchecked")
     val dependencies = Vector("pandoc", "wkhtmltopdf")
 
-    private def checkDep() =
-        if !Files.exists(depcheckedPath) then
-            DepChecker(dependencies).checkDepsOrExit()
-            Files.createFile(depcheckedPath)
+    private def checkDep(): Boolean =
+        if !Files.exists(depcheckedPath) then if !DepChecker(dependencies).checkDeps then return false else Files.createFile(depcheckedPath)
         else println("Dependencies already checked")
+        return true
 
     def main(args: Array[String]): Unit =
         try
             verbose = args.contains("verbose")
-            checkDep()
-            System.exit(0)
+            if !checkDep() then System.exit(1) // if requirements are not met, exit
 
             val guiMain = new jfxuserform.Main()
             // launch gui and blocks until gui is closed

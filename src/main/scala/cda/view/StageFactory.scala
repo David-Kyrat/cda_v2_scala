@@ -33,3 +33,9 @@ object StageFactory:
      * NB: Must be called on JavaFx Thread !
      */
     def utilityStage = new Stage(StageStyle.UTILITY)
+
+    /**
+     * @return new "default" Stage (i.e. `new Stage()`).
+     * NB: Must be called on JavaFx Thread !
+     */
+    def defaultStage = new Stage()

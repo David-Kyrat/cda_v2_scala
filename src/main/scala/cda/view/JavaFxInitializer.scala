@@ -14,6 +14,7 @@ import javafx.scene.text.TextAlignment
 import javafx.geometry.Pos
 import cda.view.helpers.Nodes
 import javafx.scene.paint.Paint
+import cda.view.StageFactory
 
 object JavaFXInitializer {
 
@@ -31,7 +32,7 @@ object JavaFXInitializer {
     def createAndShowGUI(text: String): Unit = {
         // Ensure that this method is run on the JavaFX Application Thread
         Platform.runLater(() => {
-            val primaryStage = new Stage()
+            val primaryStage = StageFactory.decoratedStage
             val textFlow = new TextFlow(Nodes.newTxt(text, Color.BLACK, 24));
             textFlow.setTextAlignment(TextAlignment.CENTER)
             textFlow.setTabSize(8)

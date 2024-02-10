@@ -12,6 +12,9 @@ import javafx.scene.text.Font
 import javafx.scene.text.TextFlow
 import javafx.scene.Node
 import javafx.scene.layout.VBox
+import javafx.scene.layout.HBox
+import javafx.scene.image.ImageView
+import javafx.scene.image.Image
 
 /**
  * Dependency checker for CDA Project
@@ -22,11 +25,11 @@ class DepChecker(deps: Vector[String] = Vector("pandoc", "wkhtmltopdf")):
     val slt = ProcessLogger(line => (), line => ())
     val defFontSize = 24
     val defCol = Color.BLACK
-    def txt(text: String, fontSize: Int = defFontSize, color: Color = defCol, fontWeight: Int = 400) = 
+    def txt(text: String, fontSize: Int = defFontSize, color: Color = defCol, fontWeight: Int = 400) =
         Nodes.withAction(Nodes.newTxt(text, color, fontSize, fontWeight), _.setFont(Font.font("Noto Color Emoji", defFontSize)))
 
-    def red(text: String, fontSize: Int = defFontSize, color: Color = Color.RED) =     txt(text, fontSize, color)
-    def blue(text: String, fontSize: Int = defFontSize, color: Color = Color.BLUE) =   txt(text, fontSize, color)
+    def red(text: String, fontSize: Int = defFontSize, color: Color = Color.RED) = txt(text, fontSize, color)
+    def blue(text: String, fontSize: Int = defFontSize, color: Color = Color.BLUE) = txt(text, fontSize, color)
     def green(text: String, fontSize: Int = defFontSize, color: Color = Color.GREEN) = txt(text, fontSize, color)
 
     def bold(text: String, color: Color = defCol) = txt(text, color = color, 800)
@@ -53,7 +56,12 @@ class DepChecker(deps: Vector[String] = Vector("pandoc", "wkhtmltopdf")):
         if "which wich" ! slt != 0 then
             return (
                 List[T](
-                    VBox(txt("\t \u26A0 "), txt("ll")),
+                    HBox(
+                        20,
+                        txt("  "),
+                        new ImageView(new Image("https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Warning_Emoji.svg/768px-Warning_Emoji.svg.png", 50, 50, true, true))
+                    ),
+                    txt("   "),
                     underline("\"which\"", fontWeight = 800),
                     txt("  command must be installed to check\n\t if a program is installed...\n\t Cannot check if necessary programs are installed,\n\t generation might fail.")
                 ),

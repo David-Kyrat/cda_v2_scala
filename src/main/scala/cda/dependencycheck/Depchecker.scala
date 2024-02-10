@@ -8,6 +8,10 @@ import javafx.scene.text.Text
 import cda.view.helpers.Nodes
 import scala.collection.mutable.ArrayBuffer
 import javafx.scene.text.FontWeight
+import javafx.scene.text.Font
+import javafx.scene.text.TextFlow
+import javafx.scene.Node
+import javafx.scene.layout.VBox
 
 /**
  * Dependency checker for CDA Project
@@ -18,11 +22,12 @@ class DepChecker(deps: Vector[String] = Vector("pandoc", "wkhtmltopdf")):
     val slt = ProcessLogger(line => (), line => ())
     val defFontSize = 24
     val defCol = Color.BLACK
-    def txt(text: String, fontSize: Int = defFontSize, color: Color = defCol, fontWeight: Int = 400) = Nodes.newTxt(text, color, fontSize, fontWeight)
+    def txt(text: String, fontSize: Int = defFontSize, color: Color = defCol, fontWeight: Int = 400) = 
+        Nodes.withAction(Nodes.newTxt(text, color, fontSize, fontWeight), _.setFont(Font.font("Noto Color Emoji", defFontSize)))
 
-    def red(text: String, fontSize: Int = defFontSize, color: Color = Color.RED) = Nodes.newTxt(text, color, fontSize)
-    def blue(text: String, fontSize: Int = defFontSize, color: Color = Color.BLUE) = Nodes.newTxt(text, color, fontSize)
-    def green(text: String, fontSize: Int = defFontSize, color: Color = Color.GREEN) = Nodes.newTxt(text, color, fontSize)
+    def red(text: String, fontSize: Int = defFontSize, color: Color = Color.RED) =     txt(text, fontSize, color)
+    def blue(text: String, fontSize: Int = defFontSize, color: Color = Color.BLUE) =   txt(text, fontSize, color)
+    def green(text: String, fontSize: Int = defFontSize, color: Color = Color.GREEN) = txt(text, fontSize, color)
 
     def bold(text: String, color: Color = defCol) = txt(text, color = color, 800)
     def underline(text: String, color: Color = defCol, fontWeight: Int = 400) = Nodes.withAction(txt(text, color = color, fontWeight), _.setUnderline(true))
@@ -41,14 +46,14 @@ class DepChecker(deps: Vector[String] = Vector("pandoc", "wkhtmltopdf")):
         (texts.toArray, succ)
 
     /** @return whether any of the depency is missing. True if they're all present. */
-    def checkDeps: (List[Text], Boolean) =
-        val textsAll = new ArrayBuffer[Text]()
+    def checkDeps[T >: Node]: (List[T], Boolean) =
+        val textsAll = new ArrayBuffer[T]()
         textsAll += txt("       ========== Checking for installed Dependecy ==========    \n\n")
 
         if "which wich" ! slt != 0 then
             return (
-                List[Text](
-                    txt("\t "),
+                List[T](
+                    VBox(txt("\t \u26A0 "), txt("ll")),
                     underline("\"which\"", fontWeight = 800),
                     txt("  command must be installed to check\n\t if a program is installed...\n\t Cannot check if necessary programs are installed,\n\t generation might fail.")
                 ),

@@ -3,37 +3,21 @@ package cda;
 import cda.model.Utils
 import cda.model.Utils.abbrevFilename
 import cda.model.Utils.pathOf
-import cda.model.io.Serializer
 import cda.model.Main as modelMain
 import cda.view.jfxuserform
-import com.jfoenix.controls.JFXTextField
 import javafx.application.Application
 import javafx.application.Platform
-import javafx.scene.Scene
-import javafx.stage.Stage
 
-import java.io.BufferedReader
-import java.io.FileOutputStream
-import java.io.InputStreamReader
-import java.io.PrintWriter
-import java.nio.charset.StandardCharsets.UTF_8
 import java.nio.file.Files
 import java.nio.file.Path
-import java.nio.file.Paths
-import java.nio.file.StandardOpenOption.*
-import scala.io.Source
 import scala.util.Failure
 import scala.util.Success
 import scala.util.Try
 import cda.dependencycheck.DepChecker
-import java.io.ByteArrayOutputStream
-import java.io.PrintStream
 import cda.view.jfxuserform.Main.globalStage
 import javafx.scene.text.TextFlow
 import cda.view.helpers.Nodes
-import collection.mutable.*
 import scala.jdk.CollectionConverters.*
-import java.util.Arrays
 import javafx.scene.text.Text
 
 object App:

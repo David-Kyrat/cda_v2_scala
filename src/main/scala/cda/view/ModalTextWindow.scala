@@ -42,7 +42,7 @@ class ModalTextWindow(textFlow: TextFlow, width: Int = 600, height: Int = 600, t
     def start(): ModalTextWindow =
         Platform.runLater(() =>
             val primaryStage = StageFactory.decoratedStage
-            if ! title.strip.isBlank then primaryStage.setTitle(title)
+            if !title.strip.isBlank then primaryStage.setTitle(title)
             // val textFlow = new TextFlow(Nodes.newTxt(text, Color.BLACK, fontSize));
             textFlow.setTextAlignment(TextAlignment.LEFT)
             textFlow.setTabSize(8)

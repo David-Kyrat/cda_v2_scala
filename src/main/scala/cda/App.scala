@@ -32,6 +32,7 @@ object App:
             var out = false
             val (txts, succ) = DepChecker(dependencies).checkDeps
             if succ then out = true
+            Files.createFile(depcheckedPath)
             ModalTextWindow(Nodes.newTextFlow(txts.asJava), 800, 500, title = "Checking if necessary program are installed...").startAndBlock()
             return out
         else

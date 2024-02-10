@@ -25,14 +25,13 @@ class DepChecker(deps: Vector[String] = Vector("pandoc", "wkhtmltopdf")):
     val slt = ProcessLogger(line => (), line => ())
     val defFontSize = 24
     val defCol = Color.BLACK
-    def txt(text: String, fontSize: Int = defFontSize, color: Color = defCol, fontWeight: Int = 400) =
-        Nodes.withAction(Nodes.newTxt(text, color, fontSize, fontWeight), _.setFont(Font.font("Noto Color Emoji", defFontSize)))
+    def txt(text: String, fontSize: Int = defFontSize, color: Color = defCol, fontWeight: Int = 400) = Nodes.newTxt(text, color, fontSize, fontWeight)
 
     def red(text: String, fontSize: Int = defFontSize, color: Color = Color.RED) = txt(text, fontSize, color)
     def blue(text: String, fontSize: Int = defFontSize, color: Color = Color.BLUE) = txt(text, fontSize, color)
     def green(text: String, fontSize: Int = defFontSize, color: Color = Color.GREEN) = txt(text, fontSize, color)
 
-    def bold(text: String, color: Color = defCol) = txt(text, color = color, 800)
+    def bold(text: String, color: Color = defCol) = txt(text, color = color, 1000)
     def underline(text: String, color: Color = defCol, fontWeight: Int = 400) = Nodes.withAction(txt(text, color = color, fontWeight), _.setUnderline(true))
     def dep(text: String, fontSize: Int = defFontSize) = bold(text, Color.BLUE)
 
@@ -40,20 +39,32 @@ class DepChecker(deps: Vector[String] = Vector("pandoc", "wkhtmltopdf")):
     private val ok = "\u2705"
     private val notok = "\u274C"
 
-    private def checkDep(name: String): (Array[Text], Boolean) =
-        val texts = new ArrayBuffer[Text]()
+    private def checkDep[T >: Node](name: String): (ArrayBuffer[T], Boolean) =
+        val texts = new ArrayBuffer[T]()
         texts += txt("     \tChecking for ") += dep(name) += txt("...\n")
         val succ = f"which $name" ! slt == 0
+
         if !succ then texts += txt(f"\t\t$notok ") += red(errMsg(name)) += txt(" \n     Please ensure it is installed.\n\n")
-        else texts += txt(f"\t\t$ok ") += dep(name) += txt(" found !\n\n")
-        (texts.toArray, succ)
+        // else texts += txt(f"\t\t$ok ") += dep(name) += txt(" found !\n\n")
+        else
+            val okb = HBox(
+                10,
+                txt("\t   "),
+                new ImageView(
+                    new Image("https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Antu_mail-mark-notjunk.svg/1920px-Antu_mail-mark-notjunk.svg.png", 40, 40, true, true)
+                ),
+                dep(name),
+                txt(" found !\n\n")
+            )
+            texts += okb
+        (texts, succ)
 
     /** @return whether any of the depency is missing. True if they're all present. */
     def checkDeps[T >: Node]: (List[T], Boolean) =
         val textsAll = new ArrayBuffer[T]()
         textsAll += txt("       ========== Checking for installed Dependecy ==========    \n\n")
 
-        if "which wich" ! slt != 0 then
+        if "which which" ! slt != 0 then
             return (
                 List[T](
                     HBox(

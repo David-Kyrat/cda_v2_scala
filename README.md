@@ -14,13 +14,13 @@ refactored 100% in scala / integrated java.
 
 ## Dependencies
 
-- Java 19 (Liberica's JDK) (Installable with sdkman, see `./setup` script)
+- Java 17 (Liberica's JDK) (Installable with sdkman, see `./setup` script)
 - Pandoc 
 - Wkhtmltopdf
 
 The JDK needs to be specifically Liberica's one as it contains JavaFX, and does the linking of that library for us (i.e. no need to add cli options when running / compiling).
 
-It should work for Java >19 but has not been tested.
+It should work for Java >17 but has not been tested.
 
 
 ## Running the project
@@ -28,7 +28,7 @@ It should work for Java >19 but has not been tested.
 ```bash
 git clone https://github.com/David-Kyrat/cda_v2_scala.git
 cd cda_v2_scala
-# If you don't have Liberica's JDK for java19 installed (needs to be specifically Liberica's one as it contains JavaFX, and does the linking for us)
+# If you don't have Liberica's JDK for java17 installed (needs to be specifically Liberica's one as it contains JavaFX, and does the linking for us)
 ./setup
 make run
 ```

@@ -10,8 +10,8 @@
   <properties>
     <scala.version>3.3.1</scala.version>
     <scala.maven.plugin.version>4.5.6</scala.maven.plugin.version>
-    <maven.compiler.source>19</maven.compiler.source> <!-- Use major version here -->
-    <maven.compiler.target>19</maven.compiler.target> <!-- Use major version here -->
+    <maven.compiler.source>17</maven.compiler.source> <!-- Use major version here -->
+    <maven.compiler.target>17</maven.compiler.target> <!-- Use major version here -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <url>http://maven.apache.org</url>

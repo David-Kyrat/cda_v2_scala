@@ -4,7 +4,7 @@ curl -s "https://get.sdkman.io" | bash
 source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # installing java
-sdk install java 19.0.2.fx-librca <<< 'y'
+sdk install java 17.0.9.fx-librca <<< 'y'
 
 source "$HOME/.bashrc" || source "$HOME/.zshrc"
 source "$HOME/.sdkman/bin/sdkman-init.sh"

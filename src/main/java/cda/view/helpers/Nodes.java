@@ -382,7 +382,7 @@ public final class Nodes {
      * Create a textflow from a list of text
      * @param texts          List of Text
      */
-    public static TextFlow newTextFlow(List<Text> texts) {
+    public static <T extends Node> TextFlow newTextFlow(List<T> texts) {
         return withAction(new TextFlow(), tf -> tf.getChildren().addAll(texts));
     }
 

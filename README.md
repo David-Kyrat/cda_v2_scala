@@ -6,9 +6,13 @@ refactored 100% in scala / integrated java.
 
 
 <p align="center">
-  <img src="./src/main/files/res/screenshot1.png" height="300" hspace="10px">
+  <img src="./src/main/files/res/screenshot1.png" width="400" hspace="10px">
 
-  <img src="./src/main/files/res/screenshot2.png" height="300" hspace="10px">
+  <img src="./src/main/files/res/screenshot2.png" width="400" hspace="10px">
+</p>
+
+<p align="center">
+<img src="./src/main/files/res/output-example.png" height="600">
 </p>
 
 

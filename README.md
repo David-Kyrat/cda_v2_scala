@@ -2,9 +2,9 @@
 
 Application to automatically generate printable 1-2 page PDF of course descriptions.
 
-*[Course-Description-Automation](https://github.com/David-Kyrat/Course-Description-Automation) v2. Project directly integrated with the gui,
-refactored 100% in scala / integrated java for more coherence, stability and ease of deployment.
-(no more jar from a separate project for the gui and no more Rust)*
+> V2 of repository *[Course-Description-Automation](https://github.com/David-Kyrat/Course-Description-Automation). Project directly integrated with the gui,
+> refactored 100% in scala / integrated java for more coherence, stability and ease of deployment.
+> (no more jar from a separate project for the gui and no more Rust)*
 
 <div align="center">
 

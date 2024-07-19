@@ -1,20 +1,34 @@
-# Fancy-Login-Form
+# UNIGE Administration Project | Course Description Automator
 
-[Course-Description-Automation](https://github.com/David-Kyrat/Course-Description-Automation) Project directly integrated with the gui,
-refactored 100% in scala / integrated java.
-(no more jar from a separate project for the gui and no more Rust)
+Application to automatically generate printable 1-2 page PDF of course descriptions.
 
+*[Course-Description-Automation](https://github.com/David-Kyrat/Course-Description-Automation) v2. Project directly integrated with the gui,
+refactored 100% in scala / integrated java for more coherence, stability and ease of deployment.
+(no more jar from a separate project for the gui and no more Rust)*
+
+<div align="center">
+
+Made with:
+
+<a href="https://unige.ch/">![unige](https://tinyurl.com/unige-logo)</a>
+![Scala](https://img.shields.io/badge/Scala-DC322F?style=for-the-badge&logo=scala&logoColor=white)
+![Neovim](https://img.shields.io/badge/NeoVim-%2357A143.svg?&style=for-the-badge&logo=neovim&logoColor=white)
+
+### UI Screenshot
 
 <p align="center">
-  <img src="./src/main/files/res/screenshot1.png" width="400" hspace="10px">
+  <img src="./src/main/files/res/screenshot1.png" width="400" hspace="0px">
 
-  <img src="./src/main/files/res/screenshot2.png" width="400" hspace="10px">
+  <img src="./src/main/files/res/screenshot2.png" width="400" height="390" hspace="0px">
 </p>
+
+### Output Example
 
 <p align="center">
 <img src="./src/main/files/res/output-example.png" height="600">
 </p>
 
+</div>
 
 ## Dependencies
 
